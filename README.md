@@ -45,20 +45,20 @@ Explicacion de como se desarolla el proyecto. Tambien se añaden los archivos pa
 Para implementar la ejecución del código, colocar en terminal: python3 app.py
 
 ## Construido con:
-Ubuntu: Sistema operativo.
-Python: Lenguaje de programación.
-Atom: Editor de código.
-OTROS
+* Ubuntu: Sistema operativo.
+* Python: Lenguaje de programación.
+* Atom: Editor de código.
+* OTROS
 
-# Versiones
-## Versiones de herramientas: 
+## Versiones
+### Versiones de herramientas: 
 * Ubuntu 20.04 LTS 
 * Atom 1.57.0 
 
-## Versiones del desarrollo del codigo: 
+### Versiones del desarrollo del codigo: 
 * LINK REPOSITORIO
 
-# Autores
+## Autores
 * Francisca Castillo - Desarrollo del código y proyecto, narración README. 
 * Rocío Rodríguez - Desarrollo del código y proyecto, narración README.
 
