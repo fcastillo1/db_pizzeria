@@ -20,6 +20,22 @@ class App:
         # Título de la ventana
         self.root.title("APP Pizzería L'italiano")
 
+        boton_pedido = Button(self.root, text="Pedido", width=20).grid(column=0, row=1)
+        boton_cliente = Button(self.root, text="Cliente", width=20).grid(column=0, row=2)
+        boton_pizza = Button(self.root, text="Pizza", width=20).grid(column=0, row=3)
+        boton_repartidor = Button(self.root, text="Repartidor", width=20).grid(column=0, row=4)
+        boton_vehiculo = Button(self.root, text="Vehiculo", width=20).grid(column=0, row=5)
+
+        # Se define la funcionalidad para que boton salir funcione
+        def cerrar_ventana():
+            self.root.destroy()
+        # cambiar el grid x pack
+        boton_salir = Button(self.root, text="Salir", command=cerrar_ventana).grid(column=10, row=10)
+
+        #def mostrar_informacion():
+        #    self.root.destroy()
+        #boton_informacion = Button(self.root, text="Informacion", width=20, command=mostrar_informacion).grid(column=15, row=15)
+
         # Empieza a correr la interfaz.
         self.root.mainloop()
 
