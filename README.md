@@ -41,6 +41,8 @@ Explicacion de como se desarolla el proyecto. Tambien se añaden los archivos pa
 2. Instalar [algo]: 
 * pip install matplotlib
 
+sudo apt-get install python3-pil.imagetk
+
 ## Ejecutando pruebas
 Para implementar la ejecución del código, colocar en terminal: python3 app.py
 
