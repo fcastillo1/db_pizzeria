@@ -22,3 +22,31 @@ class DB_pizzeria:
             print(error)
             # Termina la aplicación
             exit()
+
+    def run_select(self, sql):#Función que corre un select
+        #sql se un string con un select en lenguaje sql
+        try:
+            self.cursor.execute(sql)#ejecuta
+            result = self.cursor.fetchall() #Guarda el resultado en result
+        except mysql.connector.Error as err:#Si no resulta, avisa
+            print("No se pueden obtener los datos")
+            print(err)
+        return result#Retorna result
+
+    def run_select_filter(self, sql, params):
+        try:
+            self.cursor.execute(sql, params)
+            result = self.cursor.fetchall()
+        except mysql.connector.Error as err:
+            print("No se pueden obtener los datos")
+            print(err)
+        return result
+
+    def run_sql(self, sql, params):
+        try:
+            self.cursor.execute(sql, params)
+            self.db.commit()
+        except mysql.connector.Error as err:
+            print("No se puede realizar la sql")
+            print(err)
+
