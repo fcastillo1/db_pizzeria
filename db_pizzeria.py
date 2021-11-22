@@ -1,12 +1,16 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import mysql.connector
+from tkinter import messagebox
 
 class DB_pizzeria:
     def __init__(self):
         self.db = None
         self.cursor = None
 
-        # Intenta conectarse a db_pizzeria
         try:
+            # Intenta conectarse a db_pizzeria
             self.db = mysql.connector.connect(
             host="localhost",
             user="pizza",
@@ -16,22 +20,28 @@ class DB_pizzeria:
             self.cursor = self.db.cursor()
             print("Se ha conectado exitosamente.")
 
-        except mysql.connector.Error as error:
-            # Avisa del error
+        except mysql.connector.Error as err:
+            # Avisa del error generado
             print("No se ha conectado. Reintente.")
-            print(error)
+            print(err)
             # Termina la aplicación
             exit()
 
-    def run_select(self, sql):#Función que corre un select
-        #sql se un string con un select en lenguaje sql
+    # Función que corre una consulta select
+    def run_select(self, sql):
         try:
-            self.cursor.execute(sql)#ejecuta
-            result = self.cursor.fetchall() #Guarda el resultado en result
-        except mysql.connector.Error as err:#Si no resulta, avisa
+            # Ejecuta el select
+            self.cursor.execute(sql)
+            # Guarda el resultado del cursor
+            resultado = self.cursor.fetchall()
+
+        except mysql.connector.Error as err:
+            # Avisa del error al hacer select
             print("No se pueden obtener los datos")
             print(err)
-        return result#Retorna result
+
+        # Retorna resultado del select
+        return resultado
 
     def run_select_filter(self, sql, params):
         try:
@@ -42,11 +52,16 @@ class DB_pizzeria:
             print(err)
         return result
 
+    # Corre una consulta de inserción, actualización o eliminación
     def run_sql(self, sql, params):
         try:
+            # Ejecuta consulta
             self.cursor.execute(sql, params)
+            # Cambios en la base de datos
             self.db.commit()
+
         except mysql.connector.Error as err:
-            print("No se puede realizar la sql")
+            messagebox.showerror("ERROR", "No se puede ejecutar la operación")
             print(err)
+
 
