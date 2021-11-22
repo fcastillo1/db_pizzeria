@@ -7,7 +7,7 @@ from PIL import Image, ImageTk
 #
 from db_pizzeria import DB_pizzeria
 #from graficos import graficos
-#from jugador import jugador
+from cliente import cliente
 #from equipo import equipo
 class App:
     def __init__(self, db):
@@ -22,21 +22,9 @@ class App:
         self.root.title(" APP Pizzeria l'italiano ") # se añade el titulo de la app
         self.root.config(bg="light cyan") # se añade color al fondo de la ventana
 
-        # se construyen algunos de los botones que son parte de la app
-        boton_pedido = Button(self.root, text="Pedido", width=20).place(x=15, y=20)
-        boton_cliente = Button(self.root, text="Cliente", width=20).place(x=15, y=80)
-        boton_pizza = Button(self.root, text="Pizza", width=20).place(x=15, y=140)
-        boton_repartidor = Button(self.root, text="Repartidor", width=20).place(x=15, y=200)
-        boton_vehiculo = Button(self.root, text="Vehiculo", width=20).place(x=15, y=260)
-
-        # Se define la funcionalidad para que boton salir funcione
-        def cerrar_ventana():
-            self.root.destroy()
-        # se genera un boton para salir (cerrar app)
-        boton_salir = Button(self.root, text="Salir", command=cerrar_ventana, width=20).place(x=350, y=400)
         # se crea mediante self._ el menu de opciones utiles para el usuario
         self.__crearMenu()
-        #self.__crea_botones_principales()
+        self.__crearBotones()
         self.__agregarImagenInicial()
 
         # Empieza a correr la interfaz.
@@ -79,9 +67,21 @@ class App:
         label.image = photo
         label.pack()
 
+    def __crearBotones(self):
+        # se construyen algunos de los botones que son parte de la app
+        boton_pedido = Button(self.root, text="Pedido", width=20).place(x=15, y=20)
+        boton_cliente = Button(self.root, text="Cliente", width=20, command=self.__mostrar_cliente).place(x=15, y=80)
+        boton_pizza = Button(self.root, text="Pizza", width=20).place(x=15, y=140)
+        boton_repartidor = Button(self.root, text="Repartidor", width=20).place(x=15, y=200)
+        boton_vehiculo = Button(self.root, text="Vehiculo", width=20).place(x=15, y=260)
+
+        # Se define la funcionalidad para que boton salir funcione
+        # se genera un boton para salir (cerrar app)
+        boton_salir = Button(self.root, text="Salir", command=self.root.destroy, width=20).place(x=350, y=400)
+
     # muestra ventana equipos.
-    #def __mostrar_equipos(self):
-        #equipo(self.root, self.db)
+    def __mostrar_cliente(self):
+        cliente(self.root, self.db)
 
     # muestra ventana jugadores.
     #def __mostrar_jugadores(self, button):
