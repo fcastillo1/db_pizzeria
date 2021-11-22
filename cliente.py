@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-# import mysql.connector
 
 class cliente:
     def __init__(self, root, db):
@@ -45,14 +44,14 @@ class cliente:
         b4 = tk.Button(self.root, text="Ver clientes").place(x = 450, y = 350, width = 150, height = 50)
 
     def llenar_treeview_cliente(self):
-        # sql = """select rut_cli, nom_clie, ape_clie, tel_clie, dir_clie
-        # from cliente;"""
-        #
-        # data = self.db.run_select(sql)
+        sql = """select rut_cli, nom_clie, ape_clie, tel_clie, dir_clie
+        from cliente;"""
 
-        mycursor = self.db.cursor("select rut_cli, nom_clie, ape_clie, tel_clie, dir_clie from cliente")
-        mycursor.execute("")
-        data = mycursor.fetchall()
+        data = self.db.run_select(sql)
+
+        # mycursor = self.db.cursor("select rut_cli, nom_clie, ape_clie, tel_clie, dir_clie from cliente")
+        # mycursor.execute("")
+        # data = mycursor.fetchall()
 
         # if(data != self.data):
         #     self.treeview.delete(*self.treeview.get_children())#Elimina todos los rows del treeview
@@ -133,5 +132,21 @@ class insertar_cliente:
             values (%(rut)s, %(nombre)s, %(apellido)s, %(telefono)s, %(direccion)s)"""
         self.db.run_sql(sql, {"rut": self.rut.get(),"nombre": self.nombre.get(),
         "apellido": self.apellido.get(), "telefono": self.telefono.get(), "direccion": self.direccion.get()})
+
+        # consulta = ("""insert cliente (rut_cli, nom_clie,
+        # ape_clie, tel_clie, dir_clie) values (%(rut)s, %(nombre)s, %(apellido)s,
+        # %(telefono)s, %(direccion)s)""")
+        #
+        # data = {"rut": self.rut.get(),"nombre": self.nombre.get(),
+        # "apellido": self.apellido.get(), "telefono": self.telefono.get(), "direccion": self.direccion.get()}
+        #
+        # try:
+        #     cursor.execute(consulta, data)
+        #     self.cursor.comit()
+        # except:
+        #     self.cursor.rollback()
+        #
+        # self.cursor.close()
+
         self.insert_datos.destroy()
         # self.padre.llenar_treeview_jugador()
