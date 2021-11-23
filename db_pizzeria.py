@@ -18,7 +18,7 @@ class DB_pizzeria:
             database="db_pizzeria")
 
             self.cursor = self.db.cursor()
-            print("Se ha conectado exitosamente.")
+            print("Se ha conectado exitosamente a la DB.")
 
         except mysql.connector.Error as err:
             # Avisa del error generado
@@ -57,11 +57,10 @@ class DB_pizzeria:
         try:
             # Ejecuta consulta
             self.cursor.execute(sql, params)
+            messagebox.showinfo(message="Operacion Realizada con Exito", title="Aviso")
             # Cambios en la base de datos
             self.db.commit()
 
         except mysql.connector.Error as err:
-            messagebox.showerror("ERROR", "No se puede ejecutar la operación")
+            messagebox.showerror(message="No se puede realizar la operacion", title="Error")
             print(err)
-
-
