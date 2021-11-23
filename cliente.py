@@ -13,6 +13,7 @@ class cliente:
         self.root = tk.Toplevel()
         self.root.geometry('600x400')
         self.root.title("Clientes")
+        self.root.config(bg="light cyan")
         self.root.resizable(width = 0, height = 0)
 
         # Ventana nueva
@@ -46,13 +47,13 @@ class cliente:
 
     def __crear_botones_cliente(self):
         b1 = tk.Button(self.root, text = "Insertar cliente",
-            command = self.__insertar_cliente)
+            command = self.__insertar_cliente, bg='snow', fg='green')
         b1.place(x = 0, y = 350, width = 150, height = 50)
-        b2 = tk.Button(self.root, text = "Modificar cliente")
+        b2 = tk.Button(self.root, text = "Modificar cliente", bg='snow', fg='orange')
         b2.place(x = 150, y = 350, width = 150, height = 50)
-        b3 = tk.Button(self.root, text = "Eliminar cliente")
+        b3 = tk.Button(self.root, text = "Eliminar cliente", bg='snow', fg='red')
         b3.place(x = 300, y = 350, width = 150, height = 50)
-        b4 = tk.Button(self.root, text = "Salir", command=self.root.destroy)
+        b4 = tk.Button(self.root, text = "Salir", command=self.root.destroy, bg='red', fg='white')
         b4.place(x = 450, y = 350, width = 150, height = 50)
 
     def llenar_treeview_cliente(self):
@@ -141,12 +142,12 @@ class insertar_cliente:
     def __config_button(self):
         # Crea botón aceptar ingreso y se enlaza a evento
         btn_ok = tk.Button(self.insert_datos, text = "Aceptar",
-            command = self.__insertar)
+            command = self.__insertar, bg='green', fg='white')
         btn_ok.place(x=100, y =160, width = 80, height = 20)
 
         # Crea botón para cancelar ingreso y se destruye ventana
         btn_cancel = tk.Button(self.insert_datos, text = "Cancelar",
-            command = self.insert_datos.destroy)
+            command = self.insert_datos.destroy, bg='red', fg='white')
         btn_cancel.place(x=210, y =160, width = 80, height = 20)
 
     def __insertar(self): #Insercion en la base de datos.
@@ -207,4 +208,3 @@ class insertar_cliente:
 #         self.insert_datos.destroy()
 #         self.padre.llenar_treeview_jugador()
 #
-
