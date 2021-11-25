@@ -81,6 +81,12 @@ class cliente:
 
     def __insertar_cliente(self):
         insertar_cliente(self.db, self)
+        
+    def __delete_cliente(self):
+        if messagebox.askyesno(message="¿Realmente quieres borrar el registro?", title = "Alerta")==True:
+            operation = "DELETE FROM cliente where rut_clie = %(rut_clie)s"
+            self.db.run_sql(operation, {"rut_clie": self.treeview.focus()})
+            self.llenar_treeview_cliente()
 
     # def __modificar_cliente(self):
     #     if(self.treeview.focus() != ""):
