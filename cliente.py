@@ -1,8 +1,10 @@
+
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 
 class cliente:
     def __init__(self, root, db):
@@ -54,7 +56,7 @@ class cliente:
         b2 = tk.Button(self.root, text = "Modificar cliente", bg='snow',
             fg='orange')
         b2.place(x = 150, y = 350, width = 150, height = 50)
-        b3 = tk.Button(self.root, text = "Eliminar cliente", bg='snow', fg='red')
+        b3 = tk.Button(self.root, text = "Eliminar cliente", bg='snow', fg='red', command = self.__eliminar_cliente)
         b3.place(x = 300, y = 350, width = 150, height = 50)
         b4 = tk.Button(self.root, text = "Salir", command=self.root.destroy, bg='red', fg='white')
         b4.place(x = 450, y = 350, width = 150, height = 50)
@@ -81,12 +83,14 @@ class cliente:
 
     def __insertar_cliente(self):
         insertar_cliente(self.db, self)
-        
-    def __delete_cliente(self):
+
+    def __eliminar_cliente(self):
         if messagebox.askyesno(message="¿Realmente quieres borrar el registro?", title = "Alerta")==True:
             operation = "DELETE FROM cliente where rut_clie = %(rut_clie)s"
             self.db.run_sql(operation, {"rut_clie": self.treeview.focus()})
             self.llenar_treeview_cliente()
+
+
 
     # def __modificar_cliente(self):
     #     if(self.treeview.focus() != ""):
@@ -180,6 +184,7 @@ class insertar_cliente:
 
         self.insert_datos.destroy()
         self.padre.llenar_treeview_cliente()
+
 
 # class modificar_cliente:
 #     def __init__(self, db, padre, row_data):
