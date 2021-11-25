@@ -3,6 +3,7 @@
 
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 
 class ciudad:
     def __init__(self, root, db):
@@ -12,7 +13,7 @@ class ciudad:
         # Toplevel es una ventana que está un nivel arriba que la principal
         self.root = tk.Toplevel()
         self.root.geometry('600x400')
-        self.root.title("Clientes")
+        self.root.title("Ciudad")
         self.root.config(bg="light cyan")
         self.root.resizable(width = 0, height = 0)
 
@@ -45,7 +46,7 @@ class ciudad:
         b2 = tk.Button(self.root, text = "Modificar ciudad", bg='snow',
             fg='orange')
         b2.place(x = 150, y = 350, width = 150, height = 50)
-        b3 = tk.Button(self.root, text = "Eliminar ciudad", bg='snow', fg='red')
+        b3 = tk.Button(self.root, text = "Eliminar ciudad", bg='snow', fg='red', command = self.__eliminar_ciudad)
         b3.place(x = 300, y = 350, width = 150, height = 50)
         b4 = tk.Button(self.root, text = "Salir", command=self.root.destroy, bg='red', fg='white')
         b4.place(x = 450, y = 350, width = 150, height = 50)
@@ -71,6 +72,12 @@ class ciudad:
 
     def __insertar_ciudad(self):
         insertar_ciudad(self.db, self)
+
+    def __eliminar_ciudad(self):
+        if messagebox.askyesno(message="¿Realmente quieres borrar la ciudad?", title = "Alerta")==True:
+            operation = "DELETE FROM ciudad where id_ciudad = %(id_ciudad)s"
+            self.db.run_sql(operation, {"id_ciudad": self.treeview.focus()})
+            self.llenar_treeview_ciudad()
 
 class insertar_ciudad:
     def __init__(self, db, padre):
@@ -122,7 +129,7 @@ class insertar_ciudad:
         sql = """insert ciudad (id_ciudad, nom_ciudad) values (%(id)s, %(nombre)s)"""
 
         # Se ejecuta consulta
-        self.db.run_sql(sql, {"id": self.rut.get(),"nombre": self.nombre.get()})
+        self.db.run_sql(sql, {"id": self.id.get(),"nombre": self.nombre.get()})
 
         self.insert_datos.destroy()
         self.padre.llenar_treeview_ciudad()
