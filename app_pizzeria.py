@@ -11,6 +11,7 @@ from PIL import Image, ImageTk
 # Se importa database
 from db_pizzeria import DB_pizzeria
 from cliente import cliente
+from ciudad import ciudad
 
 class App:
     def __init__(self, db):
@@ -33,14 +34,14 @@ class App:
         # Empieza a correr la interfaz.
         self.root.mainloop()
 
-
     def __crearBotones(self):
         # Se construyen algunos de los botones que son parte de la app
-        boton_pedido = Button(self.root, text="Pedido", width=20, bg='snow', fg='black').place(x=15, y=20)
-        boton_cliente = Button(self.root, text="Cliente", command = self.__mostrar_cliente, width=20 , bg='snow', fg='black').place(x=15, y=80)
-        boton_pizza = Button(self.root, text="Pizza", width=20 , bg='snow', fg='black').place(x=15, y=140)
-        boton_repartidor = Button(self.root, text="Repartidor", width=20 , bg='snow', fg='black').place(x=15, y=200)
-        boton_vehiculo = Button(self.root, text="Vehiculo", width=20 , bg='snow', fg='black').place(x=15, y=260)
+        boton_ciudad = Button(self.root, text="Ciudad", command = self.__mostrar_ciudad, width=20, bg='snow', fg='black').place(x=15, y=20)
+        boton_cliente = Button(self.root, text="Cliente", command = self.__mostrar_cliente, width=20 , bg='snow', fg='black').place(x=15, y=140)
+        boton_pedido = Button(self.root, text="Pedido", width=20, bg='snow', fg='black').place(x=15, y=80)
+        boton_pizza = Button(self.root, text="Pizza", width=20 , bg='snow', fg='black').place(x=15, y=200)
+        boton_repartidor = Button(self.root, text="Repartidor", width=20 , bg='snow', fg='black').place(x=15, y=260)
+        boton_vehiculo = Button(self.root, text="Vehiculo", width=20 , bg='snow', fg='black').place(x=15, y=320)
         boton_r = Button(self.root, text="Salir", command=self.root.destroy, width=20, bg='red', fg='white').place(x=350, y=400)
 
     def __crearMenu(self):
@@ -66,7 +67,7 @@ class App:
     def __agregarImagenInicial(self):
         frame = LabelFrame(self.root, text="", relief=tk.FLAT)
         # se define la ubicacion del frame
-        frame.place(x=215, y=10)
+        frame.place(x = 215, y=10)
         # se define cual sera la imagen de la pizzeria a partir de un archivo
         imagen_pizzeria = "imagenpizza.jpg"
         # se abirira la imagen obtenida
@@ -80,6 +81,9 @@ class App:
 
     def __mostrar_cliente(self):
         cliente(self.root, self.db)
+
+    def __mostrar_ciudad(self):
+        ciudad(self.root, self.db)
 
 def main():
     # Conecta a la base de datos
