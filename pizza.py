@@ -98,14 +98,15 @@ class pizza:
         insertar_pizza(self.db, self)
 
     def __eliminar_pizza(self):
-        if messagebox.askyesno(message="¿Realmente quieres borrar el registro?", title = "Alerta")== True:
-            opEliminar = "DELETE FROM pizza where id_piz = %(id_piz)s"
-            self.db.run_sql(opEliminar, {"id_piz": self.treeview.focus()})
-            self.llenar_treeview_pizza()
+        if(self.treeview.focus() != ""):
+            if messagebox.askyesno(message="¿Realmente quieres borrar el registro?", title = "Alerta")== True:
+                opEliminar = "DELETE FROM pizza where id_piz = %(id_piz)s"
+                self.db.run_sql(opEliminar, {"id_piz": self.treeview.focus()})
+                self.llenar_treeview_pizza()
 
     def __modificar_pizza(self):
-        if messagebox.askyesno(message="¿Realmente quieres modificar el registro?", title = "Alerta")== True:
-            if(self.treeview.focus() != ""):
+        if(self.treeview.focus() != ""):
+            if messagebox.askyesno(message="¿Realmente quieres modificar el registro?", title = "Alerta")== True:
                 opModificar = """SELECT id_piz, nom_piz, precio_piz, nom_tam from pizza
                 join tamano on pizza.id_tam = tamano.id_tam WHERE id_piz = %(id)s"""
 
@@ -246,3 +247,4 @@ class modificar_pizza:
 
         self.insert_datos.destroy()
         self.padre.llenar_treeview_tamano()
+
