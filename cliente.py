@@ -63,11 +63,11 @@ class cliente:
 
     def llenar_treeview_cliente(self):
         # Se obtienen clientes ingresados
-        sql = """select rut_clie, nom_clie, ape_clie, tel_clie, dir_clie, nom_ciudad
+        opTreeview = """SELECT rut_clie, nom_clie, ape_clie, tel_clie, dir_clie, nom_ciudad
         from cliente join ciudad on cliente.id_ciudad = ciudad.id_ciudad;"""
 
         # Guarda info obtenida tras la consulta
-        data = self.db.run_select(sql)
+        data = self.db.run_select(opTreeview)
 
         # Evalúa si el contenido de la tabla en la app es distinto al de la db
         if(data != self.data):
@@ -85,20 +85,21 @@ class cliente:
         insertar_cliente(self.db, self)
 
     def __eliminar_cliente(self):
-        if messagebox.askyesno(message="¿Realmente quieres borrar el registro?", title = "Alerta")==True:
-            operation = "DELETE FROM cliente where rut_clie = %(rut_clie)s"
-            self.db.run_sql(operation, {"rut_clie": self.treeview.focus()})
+        if messagebox.askyesno(message="¿Realmente quieres borrar el registro?", title = "Alerta")== True:
+            opEliminar = "DELETE FROM cliente where rut_clie = %(rut_clie)s"
+            self.db.run_sql(opEliminar, {"rut_clie": self.treeview.focus()})
             self.llenar_treeview_cliente()
 
     def __modificar_cliente(self):
-        if(self.treeview.focus() != ""):
-            sql = """SELECT rut_clie, nom_clie, ape_clie, tel_clie, dir_clie,
-            nom_ciudad from cliente join ciudad on cliente.id_ciudad = ciudad.id_ciudad
-            where rut_clie = %(rut)s"""
+        if messagebox.askyesno(message="¿Realmente quieres modificar el registro?", title = "Alerta")== True:
+            if(self.treeview.focus() != ""):
+                opModificar = """SELECT rut_clie, nom_clie, ape_clie, tel_clie, dir_clie,
+                nom_ciudad from cliente join ciudad on cliente.id_ciudad = ciudad.id_ciudad
+                WHERE rut_clie = %(rut)s"""
 
-            # Se consulta en la tabla cliente por el rut del registro a modificar
-            mod_select = self.db.run_select_filter(sql, {"rut": self.treeview.focus()})[0]
-            modificar_cliente(self.db, self, mod_select)
+                # Se consulta en la tabla cliente por el rut del registro a modificar
+                mod_select = self.db.run_select_filter(opModificar, {"rut": self.treeview.focus()})[0]
+                modificar_cliente(self.db, self, mod_select)
 
 class insertar_cliente:
     def __init__(self, db, padre):
@@ -152,8 +153,8 @@ class insertar_cliente:
         self.combo["values"], self.ids = self.__llenar_combo()
 
     def __llenar_combo(self):
-        sql = "select id_ciudad, nom_ciudad from ciudad"
-        self.data = self.db.run_select(sql)
+        opLCombo = "SELECT id_ciudad, nom_ciudad FROM ciudad"
+        self.data = self.db.run_select(opLCombo)
         return [i[1] for i in self.data], [i[0] for i in self.data]
 
     def __config_button(self):
@@ -169,11 +170,11 @@ class insertar_cliente:
 
     def __insertar(self): #Insercion en la base de datos.
         # Inserción de cliente
-        sql = """insert cliente (rut_clie, nom_clie, ape_clie, tel_clie, dir_clie, id_ciudad)
+        opInsert = """INSERT cliente (rut_clie, nom_clie, ape_clie, tel_clie, dir_clie, id_ciudad)
                 values (%(rut)s, %(nombre)s, %(apellido)s, %(telefono)s, %(direccion)s, %(ciudad)s)"""
 
         # Se ejecuta consulta
-        self.db.run_sql(sql, {"rut": self.rut.get(),"nombre": self.nombre.get(),
+        self.db.run_sql(opInsert, {"rut": self.rut.get(),"nombre": self.nombre.get(),
         "apellido": self.apellido.get(), "telefono": self.telefono.get(), "direccion": self.direccion.get(),
             "ciudad": self.ids[self.combo.current()]})
 
@@ -246,11 +247,11 @@ class modificar_cliente:
         btn_cancel.place(x = 210, y = 200, width = 80, height = 20)
 
     def __modificar(self): #Insercion en la base de datos.
-        sql = """update cliente set rut_clie = %(rut)s, nom_clie = %(nombre)s,
+        opEdicion = """UPDATE cliente set rut_clie = %(rut)s, nom_clie = %(nombre)s,
             ape_clie = %(apellido)s, tel_clie = %(telefono)s, dir_clie = %(direccion)s,
-            id_ciudad = %(ciudad)s"""
+            id_ciudad = %(ciudad)s WHERE rut_clie = %(rut)s"""
 
-        self.db.run_sql(sql, {"rut": self.rut.get(),"nombre": self.nombre.get(),
+        self.db.run_sql(opEdicion, {"rut": self.rut.get(),"nombre": self.nombre.get(),
         "apellido": self.apellido.get(), "telefono": self.telefono.get(), "direccion": self.direccion.get(),
             "ciudad": self.ids[self.combo.current()]})
 
@@ -258,7 +259,6 @@ class modificar_cliente:
         self.padre.llenar_treeview_cliente()
 
     def __llenar_combo(self):
-        sql = "select id_ciudad, nom_ciudad from ciudad"
-        self.data = self.db.run_select(sql)
+        opLlenar = "SELECT id_ciudad, nom_ciudad FROM ciudad"
+        self.data = self.db.run_select(opLlenar)
         return [i[1] for i in self.data], [i[0] for i in self.data]
-
