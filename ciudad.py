@@ -20,7 +20,7 @@ class ciudad:
         # Ventana nueva
         self.root.transient(root)
 
-        # Visualización de clientes registrados en la base de datos
+        # Visualización de ciudades registradas en la base de datos
         self.__config_treeview_ciudad()
 
         # Se crean los botones para indicar operaciones CRUD
@@ -44,9 +44,10 @@ class ciudad:
             fg='green', command = self.__insertar_ciudad)
         b1.place(x = 0, y = 350, width = 150, height = 50)
         b2 = tk.Button(self.root, text = "Modificar ciudad", bg='snow',
-            fg='orange')
+            fg='orange', command = self.__modificar_ciudad)
         b2.place(x = 150, y = 350, width = 150, height = 50)
-        b3 = tk.Button(self.root, text = "Eliminar ciudad", bg='snow', fg='red', command = self.__eliminar_ciudad)
+        b3 = tk.Button(self.root, text = "Eliminar ciudad", bg='snow',
+            fg='red', command = self.__eliminar_ciudad)
         b3.place(x = 300, y = 350, width = 150, height = 50)
         b4 = tk.Button(self.root, text = "Salir", command=self.root.destroy, bg='red', fg='white')
         b4.place(x = 450, y = 350, width = 150, height = 50)
@@ -79,6 +80,17 @@ class ciudad:
             self.db.run_sql(operation, {"id_ciudad": self.treeview.focus()})
             self.llenar_treeview_ciudad()
 
+            b3 = tk.Button(self.root, text = "Eliminar ciudad", bg='snow', fg='red', command = self.__eliminar_ciudad)
+
+    def __modificar_ciudad(self):
+        if messagebox.askyesno(message="¿Realmente quieres modificar el registro?", title = "Alerta")== True:
+            if(self.treeview.focus() != ""):
+                opModificar = """SELECT id_ciudad, nom_ciudad from ciudad where id_ciudad = %(id_ciudad)s"""
+
+                # Se consulta en la tabla ciudad por el id del registro a modificar
+                mod_select = self.db.run_select_filter(opModificar, {"id_ciudad": self.treeview.focus()})[0]
+                modificar_ciudad(self.db, self, mod_select)
+
 class insertar_ciudad:
     def __init__(self, db, padre):
         self.padre = padre
@@ -100,14 +112,14 @@ class insertar_ciudad:
         self.insert_datos.resizable(width=0, height=0)
 
     def __config_label(self):
-        # Definición de entradas de texto para la clase cliente
+        # Definición de entradas de texto para la clase ciudad
         id_lab = tk.Label(self.insert_datos, text = "ID: ")
         id_lab.place(x = 10, y = 10, width = 120, height = 20)
         nom_lab = tk.Label(self.insert_datos, text = "NOMBRE: ")
         nom_lab.place(x = 10, y = 40, width = 120, height = 20)
 
     def __config_entry(self):
-        # Se obtiene texto para ingresar clientes
+        # Se obtiene texto para ingresar ciudad
         self.id = tk.Entry(self.insert_datos)
         self.id.place(x = 110, y = 10, width = 150, height = 20)
         self.nombre = tk.Entry(self.insert_datos)
@@ -132,4 +144,62 @@ class insertar_ciudad:
         self.db.run_sql(sql, {"id": self.id.get(),"nombre": self.nombre.get()})
 
         self.insert_datos.destroy()
+        self.padre.llenar_treeview_ciudad()
+
+
+class modificar_ciudad:
+    def __init__(self, db, padre, mod_select):
+        self.padre = padre
+        self.db = db
+        self.mod_select = mod_select
+        self.insert_datos = tk.Toplevel()
+        self.__config_window()
+        self.__config_label()
+        self.__config_entry()
+        self.__config_button()
+
+    def __config_window(self):
+        # Ajustes de ventana
+        self.insert_datos.geometry('300x250')
+        self.insert_datos.title("Modificar ciudad")
+        self.insert_datos.resizable(width=0, height=0)
+
+    def __config_label(self):
+        # Definición de entradas de texto para la clase ciudad
+        id_lab = tk.Label(self.insert_datos, text = "ID: ")
+        id_lab.place(x = 10, y = 10, width = 120, height = 20)
+        nom_lab = tk.Label(self.insert_datos, text = "Nombre: ")
+        nom_lab.place(x = 10, y = 40, width = 120, height = 20)
+
+    def __config_entry(self):
+        # Se obtiene texto para ingresar ciudades
+        self.id = tk.Entry(self.insert_datos)
+        self.id.place(x = 110, y = 10, width = 150, height = 20)
+        self.nombre = tk.Entry(self.insert_datos)
+        self.nombre.place(x = 110, y = 40, width = 150, height = 20)
+
+        # Se insertan datos actuales del registro
+        self.id.insert(0, self.mod_select[0])
+        self.nombre.insert(0, self.mod_select[1])
+
+    def __config_button(self):
+        # Crea botón aceptar y se enlaza a evento para modificar la ciudad
+        btn_ok = tk.Button(self.insert_datos, text = "Aceptar",
+            command = self.__modificar, bg = 'green', fg = 'white')
+        btn_ok.place(x = 100, y = 200, width = 80, height = 20)
+
+        # Crea botón para cancelar modificación y se destruye ventana
+        btn_cancel = tk.Button(self.insert_datos, text = "Cancelar",
+            command = self.insert_datos.destroy, bg='red', fg='white')
+        btn_cancel.place(x = 210, y = 200, width = 80, height = 20)
+
+    def __modificar(self):
+        # Modificar registro
+        opEdicion = """update ciudad set id_ciudad = %(id)s, nom_ciudad = %(nombre)s
+        where id_ciudad = %(id)s"""
+
+        self.db.run_sql(opEdicion, {"id": self.id.get(),"nombre": self.nombre.get()})
+
+        self.insert_datos.destroy()
+        # Se actualizan registros en la ventana principal (padre)
         self.padre.llenar_treeview_ciudad()
