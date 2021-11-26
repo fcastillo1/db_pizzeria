@@ -49,7 +49,8 @@ class ciudad:
         b3 = tk.Button(self.root, text = "Eliminar ciudad", bg='snow',
             fg='red', command = self.__eliminar_ciudad)
         b3.place(x = 300, y = 350, width = 150, height = 50)
-        b4 = tk.Button(self.root, text = "Salir", command=self.root.destroy, bg='red', fg='white')
+        b4 = tk.Button(self.root, text = "Salir", bg='red', fg='white',
+            command=self.root.destroy)
         b4.place(x = 450, y = 350, width = 150, height = 50)
 
     def llenar_treeview_ciudad(self):
@@ -75,20 +76,21 @@ class ciudad:
         insertar_ciudad(self.db, self)
 
     def __eliminar_ciudad(self):
-        if messagebox.askyesno(message="¿Realmente quieres borrar la ciudad?", title = "Alerta")==True:
-            operation = "DELETE FROM ciudad where id_ciudad = %(id_ciudad)s"
-            self.db.run_sql(operation, {"id_ciudad": self.treeview.focus()})
-            self.llenar_treeview_ciudad()
+        if(self.treeview.focus() != ""):
+            if messagebox.askyesno(message="¿Realmente quieres borrar la ciudad?", title = "Alerta")==True:
+                operation = "DELETE FROM ciudad where id_ciudad = %(id)s"
+                self.db.run_sql(operation, {"id": self.treeview.focus()})
+                self.llenar_treeview_ciudad()
 
-            b3 = tk.Button(self.root, text = "Eliminar ciudad", bg='snow', fg='red', command = self.__eliminar_ciudad)
+                b3 = tk.Button(self.root, text = "Eliminar ciudad", bg='snow', fg='red', command = self.__eliminar_ciudad)
 
     def __modificar_ciudad(self):
-        if messagebox.askyesno(message="¿Realmente quieres modificar el registro?", title = "Alerta")== True:
-            if(self.treeview.focus() != ""):
-                opModificar = """SELECT id_ciudad, nom_ciudad from ciudad where id_ciudad = %(id_ciudad)s"""
+        if(self.treeview.focus() != ""):
+            if messagebox.askyesno(message="¿Realmente quieres modificar el registro?", title = "Alerta")== True:
+                opModificar = """SELECT id_ciudad, nom_ciudad from ciudad where id_ciudad = %(id)s"""
 
                 # Se consulta en la tabla ciudad por el id del registro a modificar
-                mod_select = self.db.run_select_filter(opModificar, {"id_ciudad": self.treeview.focus()})[0]
+                mod_select = self.db.run_select_filter(opModificar, {"id": self.treeview.focus()})[0]
                 modificar_ciudad(self.db, self, mod_select)
 
 class insertar_ciudad:
@@ -115,7 +117,7 @@ class insertar_ciudad:
         # Definición de entradas de texto para la clase ciudad
         id_lab = tk.Label(self.insert_datos, text = "ID: ")
         id_lab.place(x = 10, y = 10, width = 120, height = 20)
-        nom_lab = tk.Label(self.insert_datos, text = "NOMBRE: ")
+        nom_lab = tk.Label(self.insert_datos, text = "Nombre: ")
         nom_lab.place(x = 10, y = 40, width = 120, height = 20)
 
     def __config_entry(self):
