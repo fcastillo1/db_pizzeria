@@ -6,7 +6,9 @@ import tkinter as tk
 from tkinter import Menu
 from tkinter import LabelFrame, Label, Frame
 from tkinter import Button
+from tkinter import PhotoImage
 from PIL import Image, ImageTk
+
 
 # Se importa database
 from db_pizzeria import DB_pizzeria
@@ -21,7 +23,7 @@ class App:
 
         # Creación de ventana principal
         self.root = tk.Tk()
-        self.root.geometry("700x500")
+        self.root.geometry("750x550")
         # Título de la ventana
         self.root.title("APP Pizzería l'italiano")
         # Se añade color al fondo de la ventana
@@ -35,21 +37,59 @@ class App:
         # Empieza a correr la interfaz.
         self.root.mainloop()
 
+
     def __crearBotones(self):
-        # Se construyen algunos de los botones que son parte de la app
+        #imagen boton ciudad
+        image_ciudad = Image.open("/home/francisca/Documentos/db_pizzeria-main/ciudad.jpg")
+        image_ciudad = image_ciudad.resize((63, 45), Image.ANTIALIAS)
+        self.reset_img1 = ImageTk.PhotoImage(image_ciudad)
 
-        # Ajustes de imagen
-        image = Image.open("/home/rocio/Documentos/U/2021-2/db/proyecto/c1.jpg")
-        image = image.resize((280, 100), Image.ANTIALIAS)
-        self.reset_img = ImageTk.PhotoImage(image)
+        #imagen boton pedido
+        image_pedido = Image.open("/home/francisca/Documentos/db_pizzeria-main/pedido.jpg")
+        image_pedido = image_pedido.resize((63, 45), Image.ANTIALIAS)
+        self.reset_img2 = ImageTk.PhotoImage(image_pedido)
 
-        boton_ciudad = Button(self.root, text= "Ciudades", image = self.reset_img, compound = 'top', command = self.__mostrar_ciudad, width=200, bg='snow', fg='black').place(x=15, y=20)
-        boton_cliente = Button(self.root, text="Clientes", command = self.__mostrar_cliente, width=20 , bg='snow', fg='black').place(x=15, y=180)
-        boton_pedido = Button(self.root, text="Pedido", width=20, bg='snow', fg='black').place(x=15, y=220)
-        boton_pizza = Button(self.root, text="Pizza", command = self.__mostrar_pizza, width=20, bg='snow', fg='black').place(x=15, y=260)
-        boton_repartidor = Button(self.root, text="Repartidor", width=20 , bg='snow', fg='black').place(x=15, y=300)
-        boton_vehiculo = Button(self.root, text="Vehiculo", width=20 , bg='snow', fg='black').place(x=15, y=340)
-        boton_r = Button(self.root, text="Salir", command=self.root.destroy, width=20, bg='red', fg='white').place(x=350, y=400)
+        #imagen boton cliente
+        image_cliente = Image.open("/home/francisca/Documentos/db_pizzeria-main/cliente.jpg")
+        image_cliente = image_cliente.resize((63, 45), Image.ANTIALIAS)
+        self.reset_img3 = ImageTk.PhotoImage(image_cliente)
+
+        #imagen boton pizza
+        image_pizza = Image.open("/home/francisca/Documentos/db_pizzeria-main/pizza.jpg")
+        image_pizza = image_pizza.resize((63, 45), Image.ANTIALIAS)
+        self.reset_img4 = ImageTk.PhotoImage(image_pizza)
+        image_cliente = Image.open("/home/francisca/Documentos/db_pizzeria-main/cliente.jpg")
+        image_cliente = image_cliente.resize((63, 45), Image.ANTIALIAS)
+        self.reset_img3 = ImageTk.PhotoImage(image_cliente)
+
+        #imagen boton pizza
+        image_pizza = Image.open("/home/francisca/Documentos/db_pizzeria-main/pizza.jpg")
+        image_pizza = image_pizza.resize((63, 45), Image.ANTIALIAS)
+        self.reset_img4 = ImageTk.PhotoImage(image_pizza)
+
+        #imagen boton repartidor
+        image_repartidor = Image.open("/home/francisca/Documentos/db_pizzeria-main/repartidor.jpg")
+        image_repartidor = image_repartidor.resize((63, 45), Image.ANTIALIAS)
+        self.reset_img5 = ImageTk.PhotoImage(image_repartidor)
+
+        #imagen boton repartidor
+        image_repartidor = Image.open("/home/francisca/Documentos/db_pizzeria-main/repartidor.jpg")
+        image_repartidor = image_repartidor.resize((63, 45), Image.ANTIALIAS)
+        self.reset_img5 = ImageTk.PhotoImage(image_repartidor)
+
+        #imagen boton vehiculo
+        image_vehiculo = Image.open("/home/francisca/Documentos/db_pizzeria-main/vehiculo.jpg")
+        image_vehiculo = image_vehiculo.resize((63, 45), Image.ANTIALIAS)
+        self.reset_img6 = ImageTk.PhotoImage(image_vehiculo)
+
+        # creacion de los botones
+        boton_ciudad = Button(self.root, text = "Ciudades", image = self.reset_img1, compound = 'top', command = self.__mostrar_ciudad, width=135, bg='snow', fg='black').place(x=10, y=10)
+        boton_cliente = Button(self.root, text ="Cliente",  image = self.reset_img2, compound = 'top', command = self.__mostrar_cliente, width=135 , bg='snow', fg='black').place(x=10, y=95)
+        boton_pedido = Button(self.root, text ="Pedido",  image = self.reset_img3, compound = 'top',width=135, bg='snow', fg='black').place(x=10, y=180)
+        boton_pizza = Button(self.root, text ="Pizza", image = self.reset_img4, compound = 'top', width=135 , bg='snow', fg='black', command = self.__mostrar_pizza).place(x=10, y=265)
+        boton_repartidor = Button(self.root, text ="Repartidor",  image = self.reset_img5, compound = 'top', width=135 , bg='snow', fg='black').place(x=10, y=350)
+        boton_vehiculo = Button(self.root, text ="Vehiculo",  image = self.reset_img6, compound = 'top', width=135 , bg='snow', fg='black').place(x=10, y=435)
+        boton_salir = Button(self.root, text ="Salir", command=self.root.destroy, width=20, bg='red', fg='white').place(x=375, y=475)
 
     def __crearMenu(self):
         menu_opciones = Menu(self.root)
@@ -71,10 +111,13 @@ class App:
         # dentro del boton de AYUDA, existira uno que detalle para guiar al usuario
         help_menu.add_command(label = "Ayuda")
 
+    def __mostrar_informacion(self):
+        ventana(self.root, self.db)
+
     def __agregarImagenInicial(self):
         frame = LabelFrame(self.root, text="", relief=tk.FLAT)
         # se define la ubicacion del frame
-        frame.place(x = 215, y=10)
+        frame.place(x = 240, y=60)
         # se define cual sera la imagen de la pizzeria a partir de un archivo
         imagen_pizzeria = "imagenpizza.jpg"
         # se abirira la imagen obtenida
