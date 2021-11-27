@@ -12,6 +12,7 @@ from PIL import Image, ImageTk
 from db_pizzeria import DB_pizzeria
 from cliente import cliente
 from ciudad import ciudad
+from pizza import pizza
 
 class App:
     def __init__(self, db):
@@ -36,12 +37,18 @@ class App:
 
     def __crearBotones(self):
         # Se construyen algunos de los botones que son parte de la app
-        boton_ciudad = Button(self.root, text="Ciudad", command = self.__mostrar_ciudad, width=20, bg='snow', fg='black').place(x=15, y=20)
-        boton_cliente = Button(self.root, text="Cliente", command = self.__mostrar_cliente, width=20 , bg='snow', fg='black').place(x=15, y=140)
-        boton_pedido = Button(self.root, text="Pedido", width=20, bg='snow', fg='black').place(x=15, y=80)
-        boton_pizza = Button(self.root, text="Pizza", width=20 , bg='snow', fg='black').place(x=15, y=200)
-        boton_repartidor = Button(self.root, text="Repartidor", width=20 , bg='snow', fg='black').place(x=15, y=260)
-        boton_vehiculo = Button(self.root, text="Vehiculo", width=20 , bg='snow', fg='black').place(x=15, y=320)
+
+        # Ajustes de imagen
+        image = Image.open("/home/rocio/Documentos/U/2021-2/db/proyecto/c1.jpg")
+        image = image.resize((280, 100), Image.ANTIALIAS)
+        self.reset_img = ImageTk.PhotoImage(image)
+
+        boton_ciudad = Button(self.root, text= "Ciudades", image = self.reset_img, compound = 'top', command = self.__mostrar_ciudad, width=200, bg='snow', fg='black').place(x=15, y=20)
+        boton_cliente = Button(self.root, text="Clientes", command = self.__mostrar_cliente, width=20 , bg='snow', fg='black').place(x=15, y=180)
+        boton_pedido = Button(self.root, text="Pedido", width=20, bg='snow', fg='black').place(x=15, y=220)
+        boton_pizza = Button(self.root, text="Pizza", command = self.__mostrar_pizza, width=20, bg='snow', fg='black').place(x=15, y=260)
+        boton_repartidor = Button(self.root, text="Repartidor", width=20 , bg='snow', fg='black').place(x=15, y=300)
+        boton_vehiculo = Button(self.root, text="Vehiculo", width=20 , bg='snow', fg='black').place(x=15, y=340)
         boton_r = Button(self.root, text="Salir", command=self.root.destroy, width=20, bg='red', fg='white').place(x=350, y=400)
 
     def __crearMenu(self):
@@ -50,7 +57,7 @@ class App:
 
         # se contruye el menu de la informacion con su color
         information_menu = Menu(menu_opciones, tearoff = 0, bg ="white")
-        menu_opciones.add_cascade(label = "Informacion", menu=information_menu)
+        menu_opciones.add_cascade(label = "Información", menu=information_menu)
         # dentro del boton de informacion, existira uno que detalle acerca de la app y desarrolladores
         information_menu.add_command(label = "Acerca de App")
         # se genera un espacio
@@ -85,6 +92,9 @@ class App:
     def __mostrar_ciudad(self):
         ciudad(self.root, self.db)
 
+    def __mostrar_pizza(self):
+        pizza(self.root, self.db)
+
 def main():
     # Conecta a la base de datos
     db = DB_pizzeria()
@@ -94,3 +104,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
