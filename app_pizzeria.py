@@ -15,6 +15,8 @@ from db_pizzeria import DB_pizzeria
 from cliente import cliente
 from ciudad import ciudad
 from pizza import pizza
+from vehiculo import vehiculo
+from repartidor import repartidor
 
 class App:
     def __init__(self, db):
@@ -79,8 +81,8 @@ class App:
         boton_cliente = Button(self.root, text = "Cliente",  image = self.reset_img2, compound = 'top', command = self.__mostrar_cliente, width=135 , bg='snow', fg='black').place(x=10, y=95)
         boton_pedido = Button(self.root, text = "Pedido",  image = self.reset_img3, compound = 'top',width=135, bg='snow', fg='black').place(x=10, y=180)
         boton_pizza = Button(self.root, text = "Pizza", image = self.reset_img4, compound = 'top', width=135 , bg='snow', fg='black', command = self.__mostrar_pizza).place(x=10, y=265)
-        boton_repartidor = Button(self.root, text = "Repartidor",  image = self.reset_img5, compound = 'top', width=135 , bg='snow', fg='black').place(x=10, y=350)
-        boton_vehiculo = Button(self.root, text = "Vehiculo",  image = self.reset_img6, compound = 'top', width=135 , bg='snow', fg='black').place(x=10, y=435)
+        boton_repartidor = Button(self.root, text = "Repartidor",  image = self.reset_img5, compound = 'top', command = self.__mostrar_repartidor, width=135 , bg='snow', fg='black').place(x=10, y=350)
+        boton_vehiculo = Button(self.root, text = "Vehiculo",  image = self.reset_img6, compound = 'top', command = self.__mostrar_vehiculo, width=135 , bg='snow', fg='black').place(x=10, y=435)
         boton_salir = Button(self.root, text = "Salir", command = self.root.destroy, width=20, bg='red', fg='white').place(x=375, y=475)
 
     def __crearMenu(self):
@@ -134,6 +136,12 @@ class App:
 
     def __mostrar_pizza(self):
         pizza(self.root, self.db)
+
+    def __mostrar_vehiculo(self):
+        vehiculo(self.root, self.db)
+
+    def __mostrar_repartidor(self):
+        repartidor(self.root, self.db)
 
 def main():
     # Conecta a la base de datos
