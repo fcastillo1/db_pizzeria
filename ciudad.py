@@ -82,8 +82,6 @@ class ciudad:
                 self.db.run_sql(operation, {"id": self.treeview.focus()})
                 self.llenar_treeview_ciudad()
 
-                b3 = tk.Button(self.root, text = "Eliminar ciudad", bg='snow', fg='red', command = self.__eliminar_ciudad)
-
     def __modificar_ciudad(self):
         if(self.treeview.focus() != ""):
             if messagebox.askyesno(message="¿Realmente quieres modificar el registro?", title = "Alerta")== True:
