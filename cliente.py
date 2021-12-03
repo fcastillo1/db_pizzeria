@@ -235,6 +235,11 @@ class modificar_cliente:
         self.direccion.insert(0, self.mod_select[4])
         self.combo.insert(0, self.mod_select[5])
 
+    def __llenar_combo(self):
+        opLlenar = "SELECT id_ciudad, nom_ciudad FROM ciudad"
+        self.data = self.db.run_select(opLlenar)
+        return [i[1] for i in self.data], [i[0] for i in self.data]
+
     def __config_button(self):
         # Crea botón aceptar y se enlaza a evento para modificar cliente
         btn_ok = tk.Button(self.insert_datos, text = "Aceptar",
@@ -246,7 +251,7 @@ class modificar_cliente:
             command = self.insert_datos.destroy, bg='red', fg='white')
         btn_cancel.place(x = 210, y = 200, width = 80, height = 20)
 
-    def __modificar(self): #Insercion en la base de datos.
+    def __modificar(self): 
         opEdicion = """UPDATE cliente set rut_clie = %(rut)s, nom_clie = %(nombre)s,
             ape_clie = %(apellido)s, tel_clie = %(telefono)s, dir_clie = %(direccion)s,
             id_ciudad = %(ciudad)s WHERE rut_clie = %(rut)s"""
@@ -258,7 +263,3 @@ class modificar_cliente:
         self.insert_datos.destroy()
         self.padre.llenar_treeview_cliente()
 
-    def __llenar_combo(self):
-        opLlenar = "SELECT id_ciudad, nom_ciudad FROM ciudad"
-        self.data = self.db.run_select(opLlenar)
-        return [i[1] for i in self.data], [i[0] for i in self.data]
