@@ -43,13 +43,19 @@ class DB_pizzeria:
         # Retorna resultado del select
         return resultado
 
+    # Función que corre una consulta select para un registro específico
     def run_select_filter(self, sql, params):
         try:
+            # Ejecuta consulta
             self.cursor.execute(sql, params)
             result = self.cursor.fetchall()
+
         except mysql.connector.Error as err:
+            # Avisa del error
             print("No se pueden obtener los datos")
             print(err)
+
+        # Retorna resultado del select
         return result
 
     # Corre una consulta de inserción, actualización o eliminación
@@ -57,10 +63,13 @@ class DB_pizzeria:
         try:
             # Ejecuta consulta
             self.cursor.execute(sql, params)
-            messagebox.showinfo(message="Operacion Realizada con Exito", title="Aviso")
+            texto = "Operación realizada con éxito"
+            messagebox.showinfo(message = texto, title = "Aviso")
             # Cambios en la base de datos
             self.db.commit()
 
         except mysql.connector.Error as err:
-            messagebox.showerror(message="No se puede realizar la operacion", title="Error")
+            # Da cuenta del error
+            texto_error = "No se puede realizar la operación"
+            messagebox.showerror(message = texto_error, title = "Error")
             print(err)
