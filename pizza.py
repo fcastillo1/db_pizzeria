@@ -54,11 +54,11 @@ class pizza:
         menubar = Menu(self.root)
         self.root.config(menu = menubar)
 
-        # Se construye el menu de la informacion con su color
-        information_menu = Menu(menubar, tearoff = 0, bg = "white")
-        menubar.add_cascade(label = "Opciones", menu = information_menu)
+        # Se construye el menú de la información con su color
+        info_menu = Menu(menubar, tearoff = 0, bg = "white")
+        menubar.add_cascade(label = "Opciones", menu = info_menu)
 
-        information_menu.add_command(label = "Ver tamaños", command = self.__mostrar_tamano)
+        info_menu.add_command(label = "Ver tamaños", command = self.__mostrar_tamano)
 
     def __crear_botones_pizza(self):
         b1 = tk.Button(self.root, text = "Insertar pizza", bg='snow',
@@ -156,8 +156,17 @@ class insertar_pizza:
         self.nombre.place(x = 110, y = 40, width = 150, height = 20)
         self.precio = tk.Entry(self.insert_datos)
         self.precio.place(x = 110, y = 70, width = 150, height = 20)
-        self.tamano = tk.Entry(self.insert_datos)
-        self.tamano.place(x = 110, y = 100, width = 150, height = 20)
+
+        # Combobox para elegir el tamaño de pizza
+        self.combo = ttk.Combobox(self.insert_datos)
+        self.combo.place(x = 110, y = 100, width = 150, height= 20)
+        self.combo["values"], self.ids = self.__llenar_combo()
+
+    def __llenar_combo(self):
+        opLCombo = "SELECT id_tam, nom_tam FROM tamano"
+        self.data = self.db.run_select(opLCombo)
+        # Se muestra nom_tam
+        return [i[1] for i in self.data], [i[0] for i in self.data]
 
     def __config_button(self):
         # Crea botón aceptar ingreso y se enlaza a evento
@@ -177,7 +186,7 @@ class insertar_pizza:
 
         # Se ejecuta consulta
         self.db.run_sql(opInsert, {"id": self.id.get(),"nombre": self.nombre.get(),
-        "precio": self.precio.get(), "tamano": self.tamano.get()})
+        "precio": self.precio.get(), "tamano": self.ids[self.combo.current()]})
 
         self.insert_datos.destroy()
         self.padre.llenar_treeview_pizza()
@@ -218,14 +227,23 @@ class modificar_pizza:
         self.nombre.place(x = 110, y = 40, width = 150, height = 20)
         self.precio = tk.Entry(self.insert_datos)
         self.precio.place(x = 110, y = 70, width = 150, height = 20)
-        self.tamano = tk.Entry(self.insert_datos)
-        self.tamano.place(x = 110, y = 100, width = 150, height = 20)
+
+        # Combobox
+        self.combo = ttk.Combobox(self.insert_datos)
+        self.combo.place(x = 110, y = 100, width = 150, height= 20)
+        self.combo["values"], self.ids = self.__llenar_combo()
 
         # Se insertan valores actuales
         self.id.insert(0, self.mod_select[0])
         self.nombre.insert(0, self.mod_select[1])
         self.precio.insert(0, self.mod_select[2])
-        self.tamano.insert(0, self.mod_select[3])
+        self.combo.insert(0, self.mod_select[3])
+
+    def __llenar_combo(self):
+        opLCombo = "SELECT id_tam, nom_tam FROM tamano"
+        self.data = self.db.run_select(opLCombo)
+        # Se muestra nom_tam
+        return [i[1] for i in self.data], [i[0] for i in self.data]
 
     def __config_button(self):
         # Crea botón aceptar y se enlaza a evento para modificar pizza
@@ -238,13 +256,14 @@ class modificar_pizza:
             command = self.insert_datos.destroy, bg='red', fg='white')
         btn_cancel.place(x = 210, y = 200, width = 80, height = 20)
 
-    def __modificar(self): #Insercion en la base de datos.
+    def __modificar(self):
         opEdicion = """UPDATE pizza set id_piz = %(id)s, nom_piz = %(nombre)s,
             precio_piz = %(precio)s, id_tam = %(tamano)s WHERE id_piz = %(id)s"""
 
         self.db.run_sql(opEdicion, {"id": self.id.get(),"nombre": self.nombre.get(),
-        "precio": self.precio.get(), "tamano": self.tamano.get()})
+        "precio": self.precio.get(), "tamano": self.ids[self.combo.current()]})
 
         self.insert_datos.destroy()
-        self.padre.llenar_treeview_tamano()
+        self.padre.llenar_treeview_pizza()
+
 
