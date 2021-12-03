@@ -27,105 +27,102 @@ class App:
         # Título de la ventana
         self.root.title("APP Pizzería l'italiano")
         # Se añade color al fondo de la ventana
-        self.root.config(bg="light cyan")
+        self.root.config(bg = "light cyan")
 
         self.__crearBotones()
-        # Se crea mediante self._ el menu de opciones utiles para el usuario
+        # Se crea mediante self._ el menu de opciones útiles para el usuario
         self.__crearMenu()
         self.__agregarImagenInicial()
 
-        # Empieza a correr la interfaz.
+        # Empieza a correr la interfaz
         self.root.mainloop()
 
 
     def __crearBotones(self):
-        #imagen boton ciudad
-        image_ciudad = Image.open("/home/francisca/Documentos/db_pizzeria-main/ciudad.jpg")
+        # Imagen botón ciudad
+        image_ciudad = Image.open("ciudad.jpg")
         image_ciudad = image_ciudad.resize((63, 45), Image.ANTIALIAS)
         self.reset_img1 = ImageTk.PhotoImage(image_ciudad)
 
-        #imagen boton pedido
-        image_pedido = Image.open("/home/francisca/Documentos/db_pizzeria-main/pedido.jpg")
+        # Imagen botón pedido
+        image_pedido = Image.open("pedido.jpg")
         image_pedido = image_pedido.resize((63, 45), Image.ANTIALIAS)
         self.reset_img2 = ImageTk.PhotoImage(image_pedido)
 
-        #imagen boton cliente
-        image_cliente = Image.open("/home/francisca/Documentos/db_pizzeria-main/cliente.jpg")
+        # Imagen botón cliente
+        image_cliente = Image.open("cliente.jpg")
         image_cliente = image_cliente.resize((63, 45), Image.ANTIALIAS)
         self.reset_img3 = ImageTk.PhotoImage(image_cliente)
 
-        #imagen boton pizza
-        image_pizza = Image.open("/home/francisca/Documentos/db_pizzeria-main/pizza.jpg")
-        image_pizza = image_pizza.resize((63, 45), Image.ANTIALIAS)
-        self.reset_img4 = ImageTk.PhotoImage(image_pizza)
-        image_cliente = Image.open("/home/francisca/Documentos/db_pizzeria-main/cliente.jpg")
+        # Imagen botón cliente
+        image_cliente = Image.open("cliente.jpg")
         image_cliente = image_cliente.resize((63, 45), Image.ANTIALIAS)
         self.reset_img3 = ImageTk.PhotoImage(image_cliente)
 
-        #imagen boton pizza
-        image_pizza = Image.open("/home/francisca/Documentos/db_pizzeria-main/pizza.jpg")
+        # Imagen botón pizza
+        image_pizza = Image.open("pizza.jpg")
         image_pizza = image_pizza.resize((63, 45), Image.ANTIALIAS)
         self.reset_img4 = ImageTk.PhotoImage(image_pizza)
 
-        #imagen boton repartidor
-        image_repartidor = Image.open("/home/francisca/Documentos/db_pizzeria-main/repartidor.jpg")
+        # Imagen botón repartidor
+        image_repartidor = Image.open("repartidor.jpg")
         image_repartidor = image_repartidor.resize((63, 45), Image.ANTIALIAS)
         self.reset_img5 = ImageTk.PhotoImage(image_repartidor)
 
-        #imagen boton repartidor
-        image_repartidor = Image.open("/home/francisca/Documentos/db_pizzeria-main/repartidor.jpg")
-        image_repartidor = image_repartidor.resize((63, 45), Image.ANTIALIAS)
-        self.reset_img5 = ImageTk.PhotoImage(image_repartidor)
-
-        #imagen boton vehiculo
-        image_vehiculo = Image.open("/home/francisca/Documentos/db_pizzeria-main/vehiculo.jpg")
+        # Imagen botón vehículo
+        image_vehiculo = Image.open("vehiculo.jpg")
         image_vehiculo = image_vehiculo.resize((63, 45), Image.ANTIALIAS)
         self.reset_img6 = ImageTk.PhotoImage(image_vehiculo)
 
-        # creacion de los botones
+        # Creación de los botones principales
         boton_ciudad = Button(self.root, text = "Ciudades", image = self.reset_img1, compound = 'top', command = self.__mostrar_ciudad, width=135, bg='snow', fg='black').place(x=10, y=10)
-        boton_cliente = Button(self.root, text ="Cliente",  image = self.reset_img2, compound = 'top', command = self.__mostrar_cliente, width=135 , bg='snow', fg='black').place(x=10, y=95)
-        boton_pedido = Button(self.root, text ="Pedido",  image = self.reset_img3, compound = 'top',width=135, bg='snow', fg='black').place(x=10, y=180)
-        boton_pizza = Button(self.root, text ="Pizza", image = self.reset_img4, compound = 'top', width=135 , bg='snow', fg='black', command = self.__mostrar_pizza).place(x=10, y=265)
-        boton_repartidor = Button(self.root, text ="Repartidor",  image = self.reset_img5, compound = 'top', width=135 , bg='snow', fg='black').place(x=10, y=350)
-        boton_vehiculo = Button(self.root, text ="Vehiculo",  image = self.reset_img6, compound = 'top', width=135 , bg='snow', fg='black').place(x=10, y=435)
-        boton_salir = Button(self.root, text ="Salir", command=self.root.destroy, width=20, bg='red', fg='white').place(x=375, y=475)
+        boton_cliente = Button(self.root, text = "Cliente",  image = self.reset_img2, compound = 'top', command = self.__mostrar_cliente, width=135 , bg='snow', fg='black').place(x=10, y=95)
+        boton_pedido = Button(self.root, text = "Pedido",  image = self.reset_img3, compound = 'top',width=135, bg='snow', fg='black').place(x=10, y=180)
+        boton_pizza = Button(self.root, text = "Pizza", image = self.reset_img4, compound = 'top', width=135 , bg='snow', fg='black', command = self.__mostrar_pizza).place(x=10, y=265)
+        boton_repartidor = Button(self.root, text = "Repartidor",  image = self.reset_img5, compound = 'top', width=135 , bg='snow', fg='black').place(x=10, y=350)
+        boton_vehiculo = Button(self.root, text = "Vehiculo",  image = self.reset_img6, compound = 'top', width=135 , bg='snow', fg='black').place(x=10, y=435)
+        boton_salir = Button(self.root, text = "Salir", command = self.root.destroy, width=20, bg='red', fg='white').place(x=375, y=475)
 
     def __crearMenu(self):
         menu_opciones = Menu(self.root)
-        self.root.config(menu=menu_opciones)
+        self.root.config(menu = menu_opciones)
 
-        # se contruye el menu de la informacion con su color
-        information_menu = Menu(menu_opciones, tearoff = 0, bg ="white")
-        menu_opciones.add_cascade(label = "Información", menu=information_menu)
-        # dentro del boton de informacion, existira uno que detalle acerca de la app y desarrolladores
-        information_menu.add_command(label = "Acerca de App")
-        # se genera un espacio
-        information_menu.add_separator()
-        # se genera un boton r, que pirmitira destuir la ventana
-        information_menu.add_command(label = "Salir", command=self.root.destroy)
+        # Se construye el menú de la información con su color
+        info_menu = Menu(menu_opciones, tearoff = 0, bg = "white")
+        menu_opciones.add_cascade(label = "Información", menu = info_menu)
 
-        # se contruye el menu de ayuda con su color
-        help_menu = Menu(menu_opciones, tearoff = 0, bg="white")
-        menu_opciones.add_cascade(label = "Ayuda", menu=help_menu)
-        # dentro del boton de AYUDA, existira uno que detalle para guiar al usuario
+        # Dentro del botón de informacion, hay un botón que detalla acerca de
+        # la app y desarrolladores
+        info_menu.add_command(label = "Acerca de App")
+
+        # Se genera un espacio
+        info_menu.add_separator()
+
+        # Se genera un boton para destruir la ventana
+        info_menu.add_command(label = "Salir", command = self.root.destroy)
+
+        # Se construye el menú de ayuda con su color
+        help_menu = Menu(menu_opciones, tearoff = 0, bg = "white")
+        menu_opciones.add_cascade(label = "Ayuda", menu = help_menu)
+
+        # Dentro del botón de AYUDA, existirá uno para guiar al usuario
         help_menu.add_command(label = "Ayuda")
 
     def __mostrar_informacion(self):
         ventana(self.root, self.db)
 
     def __agregarImagenInicial(self):
-        frame = LabelFrame(self.root, text="", relief=tk.FLAT)
-        # se define la ubicacion del frame
-        frame.place(x = 240, y=60)
-        # se define cual sera la imagen de la pizzeria a partir de un archivo
-        imagen_pizzeria = "imagenpizza.jpg"
-        # se abirira la imagen obtenida
-        image = Image.open(imagen_pizzeria)
-        # se define el tamaño de la imagen
+        frame = LabelFrame(self.root, text = "", relief = tk.FLAT)
+        # Se define la ubicación del frame
+        frame.place(x = 240, y = 60)
+
+        # Imagen principal de la ventana abierta a partir de un archivo
+        image = Image.open("imagenpizza.jpg")
+
+        # Se define el tamaño de la imagen
         photo = ImageTk.PhotoImage(image.resize((450, 350), Image.ANTIALIAS))
-        # se hace un label con el frame e imagen
-        label = Label(frame, image=photo)
+        # Se hace un label con el frame e imagen
+        label = Label(frame, image = photo)
         label.image = photo
         label.pack()
 
