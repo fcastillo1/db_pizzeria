@@ -13,8 +13,8 @@ class tamano:
         # Toplevel es una ventana que está un nivel arriba que la principal
         self.root = tk.Toplevel()
         self.root.geometry('600x400')
-        self.root.title("Tamaños")
-        self.root.config(bg="light cyan")
+        self.root.title("Tamaños de pizza")
+        self.root.config(bg = "light cyan")
         self.root.resizable(width = 0, height = 0)
 
         # Ventana nueva
@@ -80,8 +80,6 @@ class tamano:
                 operation = "DELETE FROM tamano where id_tam = %(id_tam)s"
                 self.db.run_sql(operation, {"id_tam": self.treeview.focus()})
                 self.llenar_treeview_tamano()
-
-                b3 = tk.Button(self.root, text = "Eliminar tamanño", bg='snow', fg='red', command = self.__eliminar_ciudad)
 
     def __modificar_tamano(self):
         if(self.treeview.focus() != ""):
@@ -197,10 +195,11 @@ class modificar_tamano:
     def __modificar(self):
         # Modificar registro
         opEdicion = """update tamano set id_tam = %(id)s, nom_tam = %(nombre)s
-        where id_tamd = %(id)s"""
+        where id_tam = %(id)s"""
 
         self.db.run_sql(opEdicion, {"id": self.id.get(),"nombre": self.nombre.get()})
 
         self.insert_datos.destroy()
         # Se actualizan registros en la ventana principal (padre)
         self.padre.llenar_treeview_tamano()
+
