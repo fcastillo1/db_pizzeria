@@ -17,6 +17,9 @@ from ciudad import ciudad
 from pizza import pizza
 from vehiculo import vehiculo
 from repartidor import repartidor
+from pedido import pedido
+from informacion import informacion
+from ayuda import ayuda
 
 class App:
     def __init__(self, db):
@@ -79,11 +82,13 @@ class App:
         # Creación de los botones principales
         boton_ciudad = Button(self.root, text = "Ciudades", image = self.reset_img1, compound = 'top', command = self.__mostrar_ciudad, width=135, bg='snow', fg='black').place(x=10, y=10)
         boton_cliente = Button(self.root, text = "Cliente",  image = self.reset_img2, compound = 'top', command = self.__mostrar_cliente, width=135 , bg='snow', fg='black').place(x=10, y=95)
-        boton_pedido = Button(self.root, text = "Pedido",  image = self.reset_img3, compound = 'top',width=135, bg='snow', fg='black').place(x=10, y=180)
+        boton_pedido = Button(self.root, text = "Pedido",  image = self.reset_img3, compound = 'top' , command = self.__mostrar_pedido,  width=135, bg='snow', fg='black').place(x=10, y=180)
         boton_pizza = Button(self.root, text = "Pizza", image = self.reset_img4, compound = 'top', width=135 , bg='snow', fg='black', command = self.__mostrar_pizza).place(x=10, y=265)
         boton_repartidor = Button(self.root, text = "Repartidor",  image = self.reset_img5, compound = 'top', command = self.__mostrar_repartidor, width=135 , bg='snow', fg='black').place(x=10, y=350)
         boton_vehiculo = Button(self.root, text = "Vehiculo",  image = self.reset_img6, compound = 'top', command = self.__mostrar_vehiculo, width=135 , bg='snow', fg='black').place(x=10, y=435)
         boton_salir = Button(self.root, text = "Salir", command = self.root.destroy, width=20, bg='red', fg='white').place(x=375, y=475)
+
+
 
     def __crearMenu(self):
         menu_opciones = Menu(self.root)
@@ -95,7 +100,8 @@ class App:
 
         # Dentro del botón de informacion, hay un botón que detalla acerca de
         # la app y desarrolladores
-        info_menu.add_command(label = "Acerca de App")
+        info_menu.add_command(label = "Acerca de App", command = self.__mostrar_informacion)
+        #self.message (text = "Esta aplicacion fue desarrollada por", bg = "cyan")
 
         # Se genera un espacio
         info_menu.add_separator()
@@ -108,10 +114,8 @@ class App:
         menu_opciones.add_cascade(label = "Ayuda", menu = help_menu)
 
         # Dentro del botón de AYUDA, existirá uno para guiar al usuario
-        help_menu.add_command(label = "Ayuda")
+        help_menu.add_command(label = "Ayuda", command = self.__mostrar_ayuda)
 
-    def __mostrar_informacion(self):
-        ventana(self.root, self.db)
 
     def __agregarImagenInicial(self):
         frame = LabelFrame(self.root, text = "", relief = tk.FLAT)
@@ -128,11 +132,21 @@ class App:
         label.image = photo
         label.pack()
 
+
+    def __mostrar_informacion(self):
+        informacion(self.root, self.db)
+
+    def __mostrar_ayuda(self):
+        ayuda(self.root, self.db)
+
     def __mostrar_cliente(self):
         cliente(self.root, self.db)
 
     def __mostrar_ciudad(self):
         ciudad(self.root, self.db)
+
+    def __mostrar_pedido(self):
+        pedido(self.root, self.db)
 
     def __mostrar_pizza(self):
         pizza(self.root, self.db)
