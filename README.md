@@ -1,6 +1,7 @@
-# Base de datos (NOMBRE)
+# APLICACIÓN PIZZERIA IL ITALIANO
 Proyecto Base de Datos Unidad 3
-[NOMBRE] es un programa que permite visualizar 
+
+La aplicación desarrollada es un programa que permite visualizar distintas áreas importantes de una pizzería ubicada en Talca. Dicha pizzería puede realizar repartos en dos ciudades: Talca y Maule. 
 
 ## Comenzando
 ### --- PROBLEMÁTICA ---
