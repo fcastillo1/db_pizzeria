@@ -1,7 +1,7 @@
 # APLICACIÓN PIZZERIA IL ITALIANO
 ### Proyecto Base de Datos Unidad 3
 
-La aplicación desarrollada es un programa que permite visualizar distintas áreas importantes de una pizzería ubicada en Talca. La aplicación permite manejar diversos puntos e información relevante de los mismos, tal como:
+La aplicación desarrollada es un programa que permite visualizar distintas áreas importantes de una pizzería ubicada en Talca. Esta app permite manejar diversos puntos e información relevante de los mismos, tal como:
 
 * Clientes: Cuenta con el rut, nombre, apellido, teléfono, dirección y ciudad. Cada cliente cuenta con una única dirección en la base de datos, con el fin de realizar el reparto.
 * Ciudades: Se maneja el nombre de la ciudad.
@@ -15,7 +15,14 @@ La aplicación desarrollada es un programa que permite visualizar distintas áre
 El desarrollo de la aplicación surge en función de la problemática que posee esta pizzería al momento de organizar el listado de pizzas que pueden vender, los pedidos que recibe, los clientes que realizan esos pedidos, los vehículos posee, el vehículo usado para cada pedido (y sus características), los repartidores que se encargan de transportar cada pedido, entre otros. Asimismo, es relevante mencionar que esta pizzería tiene la posibilidad de realizar repartos a Talca y Maule, por lo que es esencial contar con una forma eficiente de organización.
 
 ### DESARROLLO
-Explicacion de como se desarolla el proyecto. Tambien se añaden los archivos para solucionar la problematica son:
+El desarrollo de este proyecto ha contemplado los siguientes pasos:
+1. Realizar un modelo en MySQL Workbench. En MySQL Workbench se ha conseguido identificar las distintas tablas necesarias para solucionar la problemática, las cuales son: CIUDAD, CLIENTE, PEDIDO, PEDIDO_HAS_PIZZA, PIZZA, TAMANO, REPARTIDOR, VEHICHULO y TIPO. 
+2. Exportar esquema a MySQL. A partir de este modelo y de la generación de 9 tablas, se procede a exportar el diseño del esquema al servidor MySQL a una base de datos previamente creada en el mismo, la cual recibe el nombre de _db_pizzeria. 
+3. Conectar la base de datos con la aplicación. Inicialmente, se ha creado un usuario con una clave específica para que este usuario cuente con todos los privilegios. Luego, se ha iniciado el trabajo de la aplicación como tal en Atom, utilizando Python y Tkinter, y en un archivo específico se ha realizado la conexión. A continuación, se listan los archivos trabajados:
+* Relacionado con la conexión a la base de datos: db_pizzeria.py
+* Archivo central o main: app_pizeria.py
+* Extras: ayuda.py
+
 
 ## Prerequisitos
 * Sistema operativo Linux versión igual o superior a 18.04
@@ -65,8 +72,8 @@ Para implementar la ejecución del código, colocar en terminal: python3 app.py
 * Ubuntu 20.04 LTS 
 * Atom 1.57.0 
 
-### Versiones del desarrollo del codigo: 
-* LINK REPOSITORIO
+### Versiones del desarrollo del código: 
+* https://github.com/fcastillo1/db_pizzeria
 
 ## Autores
 * Francisca Castillo - Desarrollo del código y proyecto, narración README. 
