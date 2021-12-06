@@ -1,22 +1,20 @@
 # APLICACIÓN PIZZERIA IL ITALIANO
-Proyecto Base de Datos Unidad 3
+### Proyecto Base de Datos Unidad 3
 
-La aplicación desarrollada es un programa que permite visualizar distintas áreas importantes de una pizzería ubicada en Talca. Dicha pizzería cuenta con distintos vehículos y repartidores, ya que realiza repartos a domicilio en dos ciudades: Talca y Maule. La aplicación permite manejar diversos puntos e información relevante de los mismos, tal como:
+La aplicación desarrollada es un programa que permite visualizar distintas áreas importantes de una pizzería ubicada en Talca. La aplicación permite manejar diversos puntos e información relevante de los mismos, tal como:
 
 * Clientes: Cuenta con el rut, nombre, apellido, teléfono, dirección y ciudad. Cada cliente cuenta con una única dirección en la base de datos, con el fin de realizar el reparto.
 * Ciudades: Se maneja el nombre de la ciudad.
 * Pedidos: Para cada pedido, se cuenta con un código (id), dinero total, cliente que ha efectuado el pedido, repartidor y el vehículo en el que se realiza la entrega.
 * Repartidores: Cuenta con el rut, nombre, apellido y teléfono.
-* Vehículos
-* Tipos
-* Pizzas
-* Tamaños
+* Vehículos: Cuenta con un código (id), patente opcional en caso de que se trabaje con bicicleta y el tipo de vehículo (por ejemplo: moto, bicicleta o auto).
+* Pizzas: Contiene información del código de la pizza, nombre de la pizza,tamaño y el precio correspondiente.
 
 ## Comenzando
-### --- PROBLEMÁTICA ---
-La problemática
+### PROBLEMÁTICA
+El desarrollo de la aplicación surge en función de la problemática que posee esta pizzería al momento de organizar el listado de pizzas que pueden vender, los pedidos que recibe, los clientes que realizan esos pedidos, los vehículos posee, el vehículo usado para cada pedido (y sus características), los repartidores que se encargan de transportar cada pedido, entre otros. Asimismo, es relevante mencionar que esta pizzería tiene la posibilidad de realizar repartos a Talca y Maule, por lo que es esencial contar con una forma eficiente de organización.
 
-### ---- DESARROLLO ----
+### DESARROLLO
 Explicacion de como se desarolla el proyecto. Tambien se añaden los archivos para solucionar la problematica son:
 
 ## Prerequisitos
