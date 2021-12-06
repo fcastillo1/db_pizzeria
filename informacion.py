@@ -1,34 +1,46 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# Importan librerias principales a usar en Tkinter
 import tkinter as tk
 from tkinter import ttk
 from tkinter import Button
 from tkinter import Message
 
+# Se define la clase informacion que mostrara mas detalles acerca de la app al usuario
 class informacion:
     def __init__(self, root, db):
+        # Se actualiza atributo con la database
         self.db = db
         self.data = []
-
-        # Toplevel es una ventana que está un nivel arriba que la principal
+        # Se crea una nueva ventana superior a la principal
         self.root = tk.Toplevel()
+        # Se define el tamano de la ventana
         self.root.geometry('300x200')
+        # Se define el título de la ventana
         self.root.title("Informacion APP")
+        # Se añade color al fondo de la ventana
         self.root.config(bg="light cyan")
+        # Esta opcion permite cambiar el tamano de la venta segun las necesidades del usuario
         self.root.resizable(width = 0, height = 0)
         self.root.transient(root)
 
-        self.__informacion_botones()
+        # Se llama a cada una de las funciones que permiten su funcionamiento
+        self.__funcion_boton()
         self.__crear_mensaje()
 
+    # Se crea la funcion que permite el funcionamiento del boton aceptar
+    def __funcion_boton(self):
+        # se define el nombre del boton, su texto y algunos detalles de su formtato
+        boton_aceptar = Button(self.root, text="Aceptar", command=self.root.destroy, bg='green', fg='white')
+        # Se establece la ubicacion del boton
+        boton_aceptar.place(x=110, y= 150)
 
-    def __informacion_botones(self):
-        exit_button = Button(self.root, text="Aceptar", command=self.root.destroy, bg='green', fg='white')
-        exit_button.place(x=110, y= 150)
-        #self.root.mainloop()
-
+    # Esta funcion sera la encargada de crear el mensaje
     def __crear_mensaje(self):
-        msg = Message(self.root, text = "VERSION 1.1.1 Esta aplicacion fue desarrollada por Francisca Castillo y Rocio Rodriguez para la creacion de la pizzeria Il Italiano", bg="light cyan")
-        msg.pack()
+        # se imprime el mensaje que el usuario podra ver en pantalla
+        mensaje_informacion = Message(self.root, text = "VERSION 1.1.1 Esta aplicacion fue desarrollada por Francisca Castillo y Rocio Rodriguez para la creacion de la pizzeria Il Italiano", bg="light cyan")
+        # permitira el posicionamiento del mensaje
+        mensaje_informacion.pack()
+        # Empieza a correr la interfaz
         self.root.mainloop()
