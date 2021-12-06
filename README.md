@@ -37,9 +37,7 @@ El desarrollo de este proyecto ha contemplado los siguientes pasos:
   * Ejecutar comando: lsb_release -a (versión de Ubuntu)
   * En donde: Se corrobora qué versión se tiene instalada actualmente, debido a que se pueden presentar problemas si esta no es compatible con la aplicación que se está desarrollando. 
   
-2. Si la versión de Ubuntu es superior a 18.04, no debería problemas con las importaciones de librería pymol, necesaria para el desarrollo del programa y la visualización de las proteínas (obtiene el generado de la imagen del archivo PDB). Se puede instalar con el siguiente comando:
-  * sudo apt-get install python3-pymol
-  * En donde: Se descarga pymol para poder visualizar las estructuras sin problemas, en cuanto a la visualización del objeto indicado por el usuario.
+2. Si la versión de Ubuntu es superior a 18.04 no debería existir complicaciones.
 
 ### Lenguaje de programación
 1. Corroborar la versión de Python disponible actualmente para poder ejecutar el código sin errores. 
