@@ -50,16 +50,28 @@ El desarrollo de este proyecto ha contemplado los siguientes pasos:
    * Ejecutar el siguiente comando tar xvf python-3.8.5.tgz cd Python-3.8.5 ./configure --prefix= make -j4 make install
  
 ### Librerías
-1. Instalar [algo]: 
+1. Instalar mysql-connector: 
 * pip install mysql-connector-python
 * 
-2. Instalar [algo]: 
+2. Instalar matplotlib: 
 * pip install matplotlib
 
 sudo apt-get install python3-pil.imagetk
 
 ## Ejecutando pruebas
-Para implementar la ejecución del código, colocar en terminal: python3 app.py
+
+En MySQL se deben ejecutar los siguientes pasos:
+1. Crear la base de datos: 
+* create database db_pizzeria;
+2. Cargar el archivo dump: 
+* COMANDO
+3. Crear el usuario que permite la conexión a la app:
+* create user 'pizza'@'localhost' identified by 'Password123#@!';
+* grant all privileges on db_pizzeria.* to 'pizza'@'localhost';
+* flush privileges;
+
+Fuera de MySQL, colocar en terminal: 
+* python3 db_pizzeria.py
 
 ## Construido con:
 * Ubuntu: Sistema operativo.
