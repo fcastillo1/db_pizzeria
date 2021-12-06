@@ -20,7 +20,7 @@ El desarrollo de este proyecto ha contemplado los siguientes pasos:
 2. Exportar esquema a MySQL. A partir de este modelo y de la generación de 9 tablas, se procede a exportar el diseño del esquema al servidor MySQL a una base de datos previamente creada en el mismo, la cual recibe el nombre de _db_pizzeria. 
 3. Conectar la base de datos con la aplicación. Inicialmente, se ha creado un usuario con una clave específica para que este usuario cuente con todos los privilegios. Luego, se ha iniciado el trabajo de la aplicación como tal en Atom, utilizando Python y Tkinter, y en un archivo específico se ha realizado la conexión. A continuación, se listan los archivos trabajados:
 * Relacionado con la conexión a la base de datos: db_pizzeria.py
-* Archivo central o main: app_pizeria.py
+** Archivo central o main: app_pizeria.py
 * Extras: ayuda.py
 
 
