@@ -231,6 +231,7 @@ class modificar_vehiculo:
         self.combo["values"], self.ids = self.__llenar_combo()
 
         # Se insertan valores actuales
+        self.id_viejo = self.mod_select[0]
         self.id.insert(0, self.mod_select[0])
         self.patente.insert(0, self.mod_select[1])
         self.combo.insert(0, self.mod_select[2])
@@ -254,10 +255,10 @@ class modificar_vehiculo:
 
     def __modificar(self):
         opEdicion = """UPDATE vehiculo set id_veh = %(id)s, patente = %(patente)s,
-            id_tipo = %(tipo)s WHERE id_veh = %(id)s"""
+            id_tipo = %(tipo)s WHERE id_veh = %(id_viejo)s"""
 
         self.db.run_sql(opEdicion, {"id": self.id.get(),"patente": self.patente.get(),
-        "tipo": self.ids[self.combo.current()]})
+        "tipo": self.ids[self.combo.current()], "id_viejo": self.id_viejo})
 
         self.insert_datos.destroy()
         self.padre.llenar_treeview_vehiculo()
