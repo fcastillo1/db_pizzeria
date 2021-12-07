@@ -238,21 +238,23 @@ class modificar_ciudad:
 
     # Se define la clase que vera la configuracion del boton
     def __configuracion_boton(self):
-        # Crea botón aceptar y se enlaza a evento para modificar la ciudad
+        # Crea botón aceptar y se enlaza a evento para modificar la ciudad tambien se añaden parametros para mejorar el formato
         btn_ok = tk.Button(self.insert_datos, text = "Aceptar",
             command = self.__modificar, bg = 'green', fg = 'white')
         btn_ok.place(x = 100, y = 200, width = 80, height = 20)
 
-        # Crea botón para cancelar modificación y se destruye ventana
+        # Crea botón para cancelar modificación y se destruye ventana tambien se añaden parametros para mejorar el formato
         btn_cancel = tk.Button(self.insert_datos, text = "Cancelar",
             command = self.insert_datos.destroy, bg='red', fg='white')
         btn_cancel.place(x = 210, y = 200, width = 80, height = 20)
 
+    # Se define la clase de modificar para confirmar el registro 
     def __modificar(self):
-        # Modificar registro
+        # Modificar registro con los comandos de mysql
         opEdicion = """update ciudad set id_ciudad = %(id)s, nom_ciudad = %(nombre)s
         where id_ciudad = %(id)s"""
-
+        
+        # Empieza a correr la informacion para poder editar la informacion desde la db
         self.db.run_sql(opEdicion, {"id": self.id.get(),"nombre": self.nombre.get()})
 
         self.insert_datos.destroy()
