@@ -201,6 +201,7 @@ class modificar_repartidor:
         self.telefono.place(x = 110, y = 100, width = 150, height = 20)
 
         # Se insertan datos actuales del registro
+        self.rut_viejo = self.mod_select[0]
         self.rut.insert(0, self.mod_select[0])
         self.nombre.insert(0, self.mod_select[1])
         self.apellido.insert(0, self.mod_select[2])
@@ -220,10 +221,10 @@ class modificar_repartidor:
     def __modificar(self):
         # Modificar registro
         opEdicion = """UPDATE repartidor SET rut_rep = %(rut)s, nom_rep = %(nombre)s,
-        ape_rep = %(apellido)s, tel_rep = %(telefono)s WHERE rut_rep = %(rut)s"""
+        ape_rep = %(apellido)s, tel_rep = %(telefono)s WHERE rut_rep = %(rut_viejo)s"""
 
         self.db.run_sql(opEdicion, {"rut": self.rut.get(),"nombre": self.nombre.get(),
-        "apellido": self.apellido.get(), "telefono": self.telefono.get()})
+        "apellido": self.apellido.get(), "telefono": self.telefono.get(), "rut_viejo": self.rut_viejo})
 
         self.insert_datos.destroy()
         # Se actualizan registros en la ventana principal (padre)
