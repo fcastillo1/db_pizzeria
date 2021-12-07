@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Importan librerias principales a usar en Tkinter
+# Importan librerías principales a usar en Tkinter
 import tkinter as tk
 from tkinter import Menu
 from tkinter import LabelFrame, Label, Frame
@@ -21,7 +21,7 @@ from pedido import pedido
 from informacion import informacion
 from ayuda import ayuda
 
-# Se define la clase que es de la aplicacion y permite su uso
+# Se define la clase que es de la aplicación y permite su uso
 class aplicacion:
     def __init__(self, db):
         # Se actualiza atributo con la database
@@ -44,7 +44,7 @@ class aplicacion:
         # Empieza a correr la interfaz
         self.root.mainloop()
 
-    # Esta funcion permite la creacion de los botones principales de la aplicacion
+    # Esta función permite la creación de los botones principales de la aplicación
     def __crearBotones(self):
         # Se sube una Imagen al botón ciudad
         image_ciudad = Image.open("ciudad.jpg")
@@ -82,36 +82,36 @@ class aplicacion:
         self.reset_img6 = ImageTk.PhotoImage(image_vehiculo)
 
         # Creación de los botones principales
-        # Creacion boton ciudad con su texto e informacion para su funcionamiento
+        # Creación botón ciudad con su texto e información para su funcionamiento
         boton_ciudad = Button(self.root, text = "Ciudades", image = self.reset_img1, compound = 'top',
         command = self.__mostrar_ciudad, width=135, bg='snow', fg='black').place(x=10, y=10)
 
-        # Creacion boton cliente con su texto e informacion para su funcionamiento
+        # Creación botón cliente con su texto e información para su funcionamiento
         boton_cliente = Button(self.root, text = "Cliente",  image = self.reset_img2, compound = 'top',
         command = self.__mostrar_cliente, width=135 , bg='snow', fg='black').place(x=10, y=95)
 
-        # Creacion boton pedido con su texto e informacion para su funcionamiento
+        # Creación botón pedido con su texto e información para su funcionamiento
         boton_pedido = Button(self.root, text = "Pedido",  image = self.reset_img3, compound = 'top',
         command = self.__mostrar_pedido,  width=135, bg='snow', fg='black').place(x=10, y=180)
 
-        # Creacion boton pizza con su texto e informacion para su funcionamiento
+        # Creación botón pizza con su texto e información para su funcionamiento
         boton_pizza = Button(self.root, text = "Pizza", image = self.reset_img4, compound = 'top',
         command = self.__mostrar_pizza, width=135 , bg='snow', fg='black').place(x=10, y=265)
 
-        # Creacion boton repartidor con su texto e informacion para su funcionamiento
+        # Creación botón repartidor con su texto e información para su funcionamiento
         boton_repartidor = Button(self.root, text = "Repartidor",  image = self.reset_img5, compound = 'top',
         command = self.__mostrar_repartidor, width=135 , bg='snow', fg='black').place(x=10, y=350)
 
-        # Creacion boton vehiculo con su texto e informacion para su funcionamiento
+        # Creacion botón vehículo con su texto e información para su funcionamiento
         boton_vehiculo = Button(self.root, text = "Vehiculo",  image = self.reset_img6, compound = 'top',
         command = self.__mostrar_vehiculo, width=135 , bg='snow', fg='black').place(x=10, y=435)
 
-        # Creacion boton salir que permitira que se cierre la app
+        # Creación botón salir que permite que se cierre la app
         boton_salir = Button(self.root, text = "Salir", command = self.root.destroy,
         width=20, bg='red', fg='white').place(x=375, y=475)
 
 
-    # Esta funcion permite crear el menu de opciones
+    # Esta función permite crear el menú de opciones
     def __crearMenu(self):
         menu_opciones = Menu(self.root)
         self.root.config(menu = menu_opciones)
@@ -120,13 +120,13 @@ class aplicacion:
         info_menu = Menu(menu_opciones, tearoff = 0, bg = "white")
         menu_opciones.add_cascade(label = "Información", menu = info_menu)
 
-        # Dentro del botón de informacion, hay un botón que detalla acerca de la app y desarrolladores
+        # Dentro del botón de información, hay un botón que detalla acerca de la app y desarrolladores
         info_menu.add_command(label = "Acerca de App", command = self.__mostrar_informacion)
 
         # Se genera un espacio
         info_menu.add_separator()
 
-        # Se genera un boton para destruir la ventana
+        # Se genera un botón para destruir la ventana
         info_menu.add_command(label = "Salir", command = self.root.destroy)
 
         # Se construye el menú de ayuda con su color
@@ -136,7 +136,7 @@ class aplicacion:
         # Dentro del botón de AYUDA, existirá uno para guiar al usuario
         help_menu.add_command(label = "Ayuda", command = self.__mostrar_ayuda)
 
-    # Esta funcion permite anadir una imagen a la aplicacion
+    # Esta función permite anadir una imagen a la aplicación
     def __agregarImagenInicial(self):
         frame = LabelFrame(self.root, text = "", relief = tk.FLAT)
         # Se define la ubicación del frame
@@ -152,35 +152,35 @@ class aplicacion:
         label.image = photo
         label.pack()
 
-    # Esta funcion mostrara la informacion de la base de datos y llama a la clase con su nombre a partir de su archivo
+    # Esta función muestra la información de la base de datos y llama a la clase con su nombre a partir de su archivo
     def __mostrar_informacion(self):
         informacion(self.root, self.db)
 
-    # Esta funcion mostrara la informaicon de ayuda y llama a la clase con su nombre a partir de su archivo
+    # Esta función muestra la información de ayuda y llama a la clase con su nombre a partir de su archivo
     def __mostrar_ayuda(self):
         ayuda(self.root, self.db)
 
-    # Esta funcion mostrara la informacion de la clase cliente a partir de su archivo
+    # Esta función muestra la información de la clase cliente a partir de su archivo
     def __mostrar_cliente(self):
         cliente(self.root, self.db)
 
-    # Esta funcion mostrara la informacion de la clase ciudad a partir de su archivo
+    # Esta función muestra la información de la clase ciudad a partir de su archivo
     def __mostrar_ciudad(self):
         ciudad(self.root, self.db)
 
-    # Esta funcion mostrara la informacion de pedido a partir de su archivo
+    # Esta función muestra la información de pedido a partir de su archivo
     def __mostrar_pedido(self):
         pedido(self.root, self.db)
 
-    # Esta funcion mostrara la informacion de pizza a partir de su archivo
+    # Esta función muestra la información de pizza a partir de su archivo
     def __mostrar_pizza(self):
         pizza(self.root, self.db)
 
-    # Esta funcion mostrara la informacion de vehiculo a partir de su archivo
+    # Esta funció muestra la información de vehiculo a partir de su archivo
     def __mostrar_vehiculo(self):
         vehiculo(self.root, self.db)
 
-    # Esta funcion mostrara la informacion de repartidor a partir de su archivo
+    # Esta función muestra la información de repartidor a partir de su archivo
     def __mostrar_repartidor(self):
         repartidor(self.root, self.db)
 
@@ -188,7 +188,7 @@ def main():
     # Se conecta a la base de datos
     database = DB_pizzeria()
 
-    # la aplicacion sera parte del parametro de la database
+    # Se crea el objeto de la clase aplicación con la db como parámetro
     aplicacion(database)
 
 if __name__ == "__main__":
