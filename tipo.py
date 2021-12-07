@@ -115,21 +115,17 @@ class insertar_tipo:
 
     def __config_label(self):
         # Definición de entradas de texto para la clase tipo
-        id_lab = tk.Label(self.insert_datos, text = "ID: ")
-        id_lab.place(x = 10, y = 10, width = 120, height = 20)
         nom_lab = tk.Label(self.insert_datos, text = "Nombre: ")
-        nom_lab.place(x = 10, y = 40, width = 120, height = 20)
+        nom_lab.place(x = 10, y = 10, width = 120, height = 20)
         cap_lab = tk.Label(self.insert_datos, text = "Capacidad: ")
-        cap_lab.place(x = 10, y = 70, width = 120, height = 20)
+        cap_lab.place(x = 10, y = 40, width = 120, height = 20)
 
     def __config_entry(self):
         # Se obtiene texto para ingresar tipo
-        self.id = tk.Entry(self.insert_datos)
-        self.id.place(x = 110, y = 10, width = 150, height = 20)
         self.nombre = tk.Entry(self.insert_datos)
-        self.nombre.place(x = 110, y = 40, width = 150, height = 20)
+        self.nombre.place(x = 110, y = 10, width = 150, height = 20)
         self.capacidad = tk.Entry(self.insert_datos)
-        self.capacidad.place(x = 110, y = 70, width = 150, height = 20)
+        self.capacidad.place(x = 110, y = 40, width = 150, height = 20)
 
     def __config_button(self):
         # Crea botón aceptar ingreso y se enlaza a evento
@@ -144,11 +140,11 @@ class insertar_tipo:
 
     def __insertar(self): #Insercion en la base de datos.
         # Inserción de tipo
-        sql = """INSERT tipo (id_tipo, nom_tipo, capacidad_tipo) VALUES (%(id)s,
-        %(nombre)s, %(capacidad)s)"""
+        sql = """INSERT tipo (nom_tipo, capacidad_tipo) VALUES (%(nombre)s,
+        %(capacidad)s)"""
 
         # Se ejecuta consulta
-        self.db.run_sql(sql, {"id": self.id.get(),"nombre": self.nombre.get(),
+        self.db.run_sql(sql, {"nombre": self.nombre.get(),
         "capacidad": self.capacidad.get()})
 
         self.insert_datos.destroy()
@@ -191,7 +187,9 @@ class modificar_tipo:
         self.capacidad.place(x = 110, y = 70, width = 150, height = 20)
 
         # Se insertan datos actuales del registro
+        self.id.config(state = 'normal')
         self.id.insert(0, self.mod_select[0])
+        self.id.config(state = 'disabled')
         self.nombre.insert(0, self.mod_select[1])
         self.capacidad.insert(0, self.mod_select[2])
 
@@ -208,8 +206,8 @@ class modificar_tipo:
 
     def __modificar(self):
         # Modificar registro
-        opEdicion = """UPDATE tipo SET id_tipo = %(id)s, nom_tipo = %(nombre)s,
-        capacidad_tipo = %(capacidad)s WHERE id_tipo = %(id)s"""
+        opEdicion = """UPDATE tipo SET nom_tipo = %(nombre)s, capacidad_tipo = %(capacidad)s
+        WHERE id_tipo = %(id)s"""
 
         self.db.run_sql(opEdicion, {"id": self.id.get(),"nombre": self.nombre.get(),
         "capacidad": self.capacidad.get()})
