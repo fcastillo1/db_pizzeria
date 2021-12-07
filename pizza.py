@@ -234,6 +234,7 @@ class modificar_pizza:
         self.combo["values"], self.ids = self.__llenar_combo()
 
         # Se insertan valores actuales
+        self.id_viejo = self.mod_select[0]
         self.id.insert(0, self.mod_select[0])
         self.nombre.insert(0, self.mod_select[1])
         self.precio.insert(0, self.mod_select[2])
@@ -258,12 +259,10 @@ class modificar_pizza:
 
     def __modificar(self):
         opEdicion = """UPDATE pizza set id_piz = %(id)s, nom_piz = %(nombre)s,
-            precio_piz = %(precio)s, id_tam = %(tamano)s WHERE id_piz = %(id)s"""
+            precio_piz = %(precio)s, id_tam = %(tamano)s WHERE id_piz = %(id_viejo)s"""
 
         self.db.run_sql(opEdicion, {"id": self.id.get(),"nombre": self.nombre.get(),
-        "precio": self.precio.get(), "tamano": self.ids[self.combo.current()]})
+        "precio": self.precio.get(), "tamano": self.ids[self.combo.current()], "id_viejo": self.id_viejo})
 
         self.insert_datos.destroy()
         self.padre.llenar_treeview_pizza()
-
-
