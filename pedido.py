@@ -7,7 +7,9 @@ from tkinter import Menu
 from tkinter import messagebox
 from tkcalendar import Calendar, DateEntry
 
-from tipo import tipo
+from cliente import cliente
+from repartidor import repartidor
+from vehiculo import vehiculo
 
 class pedido:
     def __init__(self, root, db):
@@ -129,8 +131,6 @@ class pedido:
                 modificar_pedido(self.db, self, mod_select)
 
 
-#    def __mostrar_tipo(self):
-    #    tipo(self.root, self.db)
 
 class insertar_pedido:
     def __init__(self, db, padre):
@@ -141,24 +141,24 @@ class insertar_pedido:
         self.insert_datos = tk.Toplevel()
 
         # Funcionalidades
-        self.__calendar()
-        self.__grad_date()
+        #self.__calendar()
+    #    self.__grad_date()
         self.__config_window()
         self.__config_label()
         self.__config_entry()
         self.__config_button()
 
-    def __calendar(self):
-        self.insert_datos.geometry("400x400")
-        cal = Calendar(self.insert_datos, selectmode = 'day', year = 2020, month = 5)
-        cal.pack(pady = 20)
+    #def __calendar(self):
+    #    self.insert_datos.geometry("400x400")
+    #    cal = Calendar(self.insert_datos, selectmode = 'day', year = 2020, month = 5)
+        #cal.pack(pady = 20)
 
-    def __grad_date(self):
-        date.config(text = "Selected Date is: " + cal.get_date())
+    #def __grad_date(self):
+    #    date.config(text = "Selected Date is: " + cal.get_date())
         # Add Button and Label
-        boton_calendar = tk.Button(self.insert_datos, text = "Get Date", command = self.__grad_date).pack(pady = 20)
-        date = Label(self.insert_datos, text = "")
-        date.pack(pady = 20)
+    #    boton_calendar = tk.Button(self.insert_datos, text = "Get Date", command = self.__grad_date).pack(pady = 20)
+        #date = Label(self.insert_datos, text = "")
+        #date.pack(pady = 20)
 
         # Execute Tkinter
         #self.root.mainloop()
@@ -369,14 +369,16 @@ class modificar_pedido:
         btn_cancel.place(x = 210, y = 230, width = 80, height = 20)
 
     def __modificar(self):
-        opEdicion = """UPDATE pedido (id_pedido, total_pedido, fecha_pedido, fecha_reparto, rut_clie, rut_rep, id_veh) values
-            (%(id)s, %(total)s, %(fecha_pedido)s, %(fecha_reparto)s, %(cliente)s, %(repartidor)s,
-             %(vehiculo)s) WHERE id_pedido = %(id)s"""
+        opEdicion = """UPDATE pedido set id_pedido = %(id)s, total_pedido = %(total)s,
+            fecha_pedido = %(fecha_pedido)s, fecha_reparto = %(fecha_reparto)s,
+            rut_clie = %(cliente)s, rut_rep = %(cliente_id)s, id_veh = %(vehiculo)s
+            WHERE id_pedido = %(id)s"""
 
         self.db.run_sql(opEdicion, {"id": self.id.get(),"total": self.total.get(),
         "fecha_pedido": self.fecha_pedido.get(), "fecha_reparto": self.fecha_reparto.get(),
         "cliente": self.ids_clie[self.combo_cliente.current()], "repartidor": self.ids_rep[self.combo_repartidor.current()],
-        "vehículo": self.ids_veh[self.combo_vehiculo.current()]})
+        "vehiculo": self.ids_veh[self.combo_vehiculo.current()]})
 
         self.insert_datos.destroy()
         self.padre.llenar_treeview_pedido()
+
