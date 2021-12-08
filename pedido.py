@@ -247,8 +247,8 @@ class insertar_pedido:
 
     def __insertar(self):
         # Inserción en tabla vehichulo de la base de datos
-        opInsert = """INSERT pedido (id_pedido, fecha_pedido, fecha_reparto, rut_clie, rut_rep, id_veh) values
-            (%(id)s, %(fecha_pedido)s, %(fecha_reparto)s, %(cliente)s, %(repartidor)s, %(vehiculo)s)"""
+        opInsert = """INSERT pedido (id_pedido, total_pedido, fecha_pedido, fecha_reparto, rut_clie, rut_rep, id_veh) values
+            (%(id)s, 0, %(fecha_pedido)s, %(fecha_reparto)s, %(cliente)s, %(repartidor)s, %(vehiculo)s)"""
 
         # Se ejecuta consulta
         self.db.run_sql(opInsert, {"id": self.id.get(), "fecha_pedido": self.fecha_pedido.get(), "fecha_reparto": self.fecha_reparto.get(),
