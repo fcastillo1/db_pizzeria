@@ -73,10 +73,10 @@ El desarrollo de este proyecto ha contemplado los siguientes pasos:
 ### Librerías
 1. Instalar mysql-connector: 
 * pip install mysql-connector-python
-* 
 2. Instalar matplotlib: 
 * pip install matplotlib
-
+3. Instalar tk calendar:
+* pip install tkcalendar
 sudo apt-get install python3-pil.imagetk
 
 ## Ejecutando pruebas
