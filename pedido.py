@@ -41,7 +41,7 @@ class pedido:
         self.treeview.heading("fecha_reparto", text = "Fecha Reparto")
         self.treeview.heading("rut_clie", text = "Rut Cliente")
         self.treeview.heading("rut_rep", text = "Rut Repartidor")
-        self.treeview.heading("id_veh", text = "Vehiculo")
+        self.treeview.heading("id_veh", text = "Vehículo")
 
         self.treeview.column("id_pedido", minwidth = 150, width = 100, stretch = False)
         self.treeview.column("total_pedido", minwidth = 150, width = 100, stretch = False)
@@ -64,8 +64,7 @@ class pedido:
         # Se construye el menú de la información con su color
         info_menu = Menu(menubar, tearoff = 0, bg = "white")
         menubar.add_cascade(label = "Opciones", menu = info_menu)
-
-    #    info_menu.add_command(label = "Ver tipos", command = self.__mostrar_tipo)
+        info_menu.add_command(label = "Ver detalles")
 
     def __crear_botones_pedido(self):
         # Botón para insertar
@@ -147,7 +146,7 @@ class insertar_pedido:
 
     def __config_window(self):
         # Ajustes de ventana
-        self.insert_datos.geometry('300x250')
+        self.insert_datos.geometry('300x270')
         self.insert_datos.title("Insertar pedido")
         self.insert_datos.resizable(width = 0, height = 0)
 
@@ -156,78 +155,78 @@ class insertar_pedido:
         id_lab = tk.Label(self.insert_datos, text = "ID pedido: ")
         id_lab.place(x = 10, y = 10, width = 120, height = 20)
         total_lab = tk.Label(self.insert_datos, text = "Total: ")
-        total_lab.place(x = 10, y = 30, width = 120, height = 20)
+        total_lab.place(x = 10, y = 40, width = 120, height = 20)
         fechap_lab = tk.Label(self.insert_datos, text = "Fecha Pedido: ")
-        fechap_lab.place(x = 10, y = 50, width = 120, height = 20)
+        fechap_lab.place(x = 5, y = 70, width = 120, height = 20)
         fechar_lab = tk.Label(self.insert_datos, text = "Fecha Reparto: ")
-        fechar_lab.place(x = 10, y = 70, width = 120, height = 20)
-        cliente_lab = tk.Label(self.insert_datos, text = "RUT cliente: ")
-        cliente_lab.place(x = 10, y = 90, width = 120, height = 20)
-        repartidor_lab = tk.Label(self.insert_datos, text = "RUT repartidor:" )
-        repartidor_lab.place(x = 10, y = 110, width = 120, height = 20)
-        vehiculo_lab = tk.Label(self.insert_datos, text = "ID VEHICULO: ")
-        vehiculo_lab.place(x = 10, y = 130, width = 120, height = 20)
+        fechar_lab.place(x = 3, y = 100, width = 120, height = 20)
+        cliente_lab = tk.Label(self.insert_datos, text = "Rut Cliente: ")
+        cliente_lab.place(x = 10, y = 130, width = 120, height = 20)
+        repartidor_lab = tk.Label(self.insert_datos, text = "Rut Repartidor:" )
+        repartidor_lab.place(x = 1, y = 160, width = 120, height = 20)
+        vehiculo_lab = tk.Label(self.insert_datos, text = "ID vehículo: ")
+        vehiculo_lab.place(x = 10, y = 190, width = 120, height = 20)
 
     def __config_entry(self):
         # Se obtiene texto para ingresar vehículos
         self.id = tk.Entry(self.insert_datos)
         self.id.place(x = 110, y = 10, width = 150, height = 20)
         self.total = tk.Entry(self.insert_datos)
-        self.total.place(x = 110, y = 30, width = 150, height = 20)
+        self.total.place(x = 110, y = 40, width = 150, height = 20)
         self.fechap = tk.Entry(self.insert_datos)
-        self.fechap.place(x = 110, y = 50, width = 150, height = 20)
+        self.fechap.place(x = 110, y = 70, width = 150, height = 20)
         self.fechar = tk.Entry(self.insert_datos)
-        self.fechar.place(x = 110, y = 70, width = 150, height = 20)
+        self.fechar.place(x = 110, y = 100, width = 150, height = 20)
         self.cliente = tk.Entry(self.insert_datos)
-        self.cliente.place(x = 110, y = 90, width = 150, height = 20)
+        self.cliente.place(x = 110, y = 130, width = 150, height = 20)
         self.repartidor = tk.Entry(self.insert_datos)
-        self.repartidor.place(x = 110, y = 110, width = 150, height = 20)
+        self.repartidor.place(x = 110, y = 160, width = 150, height = 20)
         self.vehiculo = tk.Entry(self.insert_datos)
-        self.vehiculo.place(x = 110, y = 130, width = 150, height = 20)
+        self.vehiculo.place(x = 110, y = 190, width = 150, height = 20)
 
         # Combobox para elegir id cliente
         self.combo_cliente = ttk.Combobox(self.insert_datos)
-        self.combo_cliente.place(x = 110, y = 90, width = 150, height= 20)
+        self.combo_cliente.place(x = 110, y = 130, width = 150, height= 20)
         self.combo_cliente["values"], self.ids = self.__llenar_combo1()
 
         # Combo repartidor
         self.combo_repartidor = ttk.Combobox(self.insert_datos)
-        self.combo_repartidor.place(x = 110, y = 110, width = 150, height= 20)
+        self.combo_repartidor.place(x = 110, y = 160, width = 150, height= 20)
         self.combo_repartidor["values"], self.ids = self.__llenar_combo2()
 
         # Combo vehiculo
         self.combo_vehiculo = ttk.Combobox(self.insert_datos)
-        self.combo_vehiculo.place(x = 110, y = 130, width = 150, height= 20)
+        self.combo_vehiculo.place(x = 110, y = 190, width = 150, height= 20)
         self.combo_vehiculo["values"], self.ids = self.__llenar_combo3()
 
     def __llenar_combo1(self):
-        opLCombo1 = "SELECT rut_clie, nom_clie FROM cliente"
+        opLCombo1 = "SELECT rut_clie FROM cliente"
         self.data = self.db.run_select(opLCombo1)
         # Se muestra nom_tipo
-        return [i[1] for i in self.data], [i[0] for i in self.data]
+        return [i[0] for i in self.data], [i[0] for i in self.data]
 
     def __llenar_combo2(self):
-        opLCombo2 = "SELECT rut_rep, nom_rep FROM repartidor"
+        opLCombo2 = "SELECT rut_rep FROM repartidor"
         self.data = self.db.run_select(opLCombo2)
         # Se muestra nom_tipo
-        return [i[1] for i in self.data], [i[0] for i in self.data]
+        return [i[0] for i in self.data], [i[0] for i in self.data]
 
     def __llenar_combo3(self):
-        opLCombo3 = "SELECT id_veh, patente FROM vehiculo"
+        opLCombo3 = "SELECT id_veh FROM vehiculo"
         self.data = self.db.run_select(opLCombo3)
         # Se muestra nom_tipo
-        return [i[1] for i in self.data], [i[0] for i in self.data]
+        return [i[0] for i in self.data], [i[0] for i in self.data]
 
 
     def __config_button(self):
         btn_ok = tk.Button(self.insert_datos, text = "Aceptar",
             command = self.__insertar, bg = 'green', fg = 'white')
-        btn_ok.place(x = 100, y = 200, width = 80, height = 20)
+        btn_ok.place(x = 110, y = 230, width = 80, height = 20)
 
         # Crea botón para cancelar modificación y se destruye ventana
         btn_cancel = tk.Button(self.insert_datos, text = "Cancelar",
             command = self.insert_datos.destroy, bg = 'red', fg = 'white')
-        btn_cancel.place(x = 210, y = 220, width = 80, height = 20)
+        btn_cancel.place(x = 210, y = 230, width = 80, height = 20)
 
     def __insertar(self):
         # Inserción en tabla vehichulo de la base de datos
@@ -256,7 +255,7 @@ class modificar_pedido:
 
     def __config_window(self):
         # Ajustes de ventana
-        self.insert_datos.geometry('300x250')
+        self.insert_datos.geometry('300x270')
         self.insert_datos.title("Modificar pedido")
         self.insert_datos.resizable(width = 0, height = 0)
 
@@ -265,49 +264,48 @@ class modificar_pedido:
         id_lab = tk.Label(self.insert_datos, text = "ID pedido: ")
         id_lab.place(x = 10, y = 10, width = 120, height = 20)
         total_lab = tk.Label(self.insert_datos, text = "Total: ")
-        total_lab.place(x = 10, y = 30, width = 120, height = 20)
+        total_lab.place(x = 10, y = 40, width = 120, height = 20)
         fechap_lab = tk.Label(self.insert_datos, text = "Fecha Pedido: ")
-        fechap_lab.place(x = 10, y = 50, width = 120, height = 20)
+        fechap_lab.place(x = 5, y = 70, width = 120, height = 20)
         fechar_lab = tk.Label(self.insert_datos, text = "Fecha Reparto: ")
-        fechar_lab.place(x = 10, y = 70, width = 120, height = 20)
-        cliente_lab = tk.Label(self.insert_datos, text = "RUT cliente: ")
-        cliente_lab.place(x = 10, y = 90, width = 120, height = 20)
-        repartidor_lab = tk.Label(self.insert_datos, text = "RUT repartidor:" )
-        repartidor_lab.place(x = 10, y = 110, width = 120, height = 20)
-        vehiculo_lab = tk.Label(self.insert_datos, text = "ID VEHICULO: ")
-        vehiculo_lab.place(x = 10, y = 130, width = 120, height = 20)
-
+        fechar_lab.place(x = 3, y = 100, width = 120, height = 20)
+        cliente_lab = tk.Label(self.insert_datos, text = "Rut Cliente: ")
+        cliente_lab.place(x = 10, y = 130, width = 120, height = 20)
+        repartidor_lab = tk.Label(self.insert_datos, text = "Rut Repartidor:" )
+        repartidor_lab.place(x = 1, y = 160, width = 120, height = 20)
+        vehiculo_lab = tk.Label(self.insert_datos, text = "ID vehículo: ")
+        vehiculo_lab.place(x = 10, y = 190, width = 120, height = 20)
 
     def __config_entry(self):
         # Se obtiene texto para ingresar pizzas
         self.id = tk.Entry(self.insert_datos)
         self.id.place(x = 110, y = 10, width = 150, height = 20)
         self.total = tk.Entry(self.insert_datos)
-        self.total.place(x = 110, y = 30, width = 150, height = 20)
+        self.total.place(x = 110, y = 40, width = 150, height = 20)
         self.fechap = tk.Entry(self.insert_datos)
-        self.fechap.place(x = 110, y = 50, width = 150, height = 20)
+        self.fechap.place(x = 110, y = 70, width = 150, height = 20)
         self.fechar = tk.Entry(self.insert_datos)
-        self.fechar.place(x = 110, y = 70, width = 150, height = 20)
+        self.fechar.place(x = 110, y = 100, width = 150, height = 20)
         self.cliente = tk.Entry(self.insert_datos)
-        self.cliente.place(x = 110, y = 90, width = 150, height = 20)
+        self.cliente.place(x = 110, y = 130, width = 150, height = 20)
         self.repartidor = tk.Entry(self.insert_datos)
-        self.repartidor.place(x = 110, y = 110, width = 150, height = 20)
+        self.repartidor.place(x = 110, y = 160, width = 150, height = 20)
         self.vehiculo = tk.Entry(self.insert_datos)
-        self.vehiculo.place(x = 110, y = 130, width = 150, height = 20)
+        self.vehiculo.place(x = 110, y = 190, width = 150, height = 20)
 
         # Combobox para elegir id cliente
         self.combo_cliente = ttk.Combobox(self.insert_datos)
-        self.combo_cliente.place(x = 110, y = 90, width = 150, height= 20)
+        self.combo_cliente.place(x = 110, y = 130, width = 150, height= 20)
         self.combo_cliente["values"], self.ids = self.__llenar_combo1()
 
         # Combo repartidor
         self.combo_repartidor = ttk.Combobox(self.insert_datos)
-        self.combo_repartidor.place(x = 110, y = 110, width = 150, height= 20)
+        self.combo_repartidor.place(x = 110, y = 160, width = 150, height= 20)
         self.combo_repartidor["values"], self.ids = self.__llenar_combo2()
 
         # Combo vehiculo
         self.combo_vehiculo = ttk.Combobox(self.insert_datos)
-        self.combo_vehiculo.place(x = 110, y = 130, width = 150, height= 20)
+        self.combo_vehiculo.place(x = 110, y = 190, width = 150, height= 20)
         self.combo_vehiculo["values"], self.ids = self.__llenar_combo3()
 
 
@@ -321,34 +319,34 @@ class modificar_pedido:
         self.vehiculo.insert(0, self.mod_select[6])
 
     def __llenar_combo1(self):
-        opLCombo1 = "SELECT rut_clie, nom_clie FROM cliente"
+        opLCombo1 = "SELECT rut_clie FROM cliente"
         self.data = self.db.run_select(opLCombo1)
         # Se muestra nom_tipo
-        return [i[1] for i in self.data], [i[0] for i in self.data]
+        return [i[0] for i in self.data], [i[0] for i in self.data]
 
     def __llenar_combo2(self):
-        opLCombo2 = "SELECT rut_rep, nom_rep FROM repartidor"
+        opLCombo2 = "SELECT rut_rep FROM repartidor"
         self.data = self.db.run_select(opLCombo2)
         # Se muestra nom_tipo
-        return [i[1] for i in self.data], [i[0] for i in self.data]
+        return [i[0] for i in self.data], [i[0] for i in self.data]
 
     def __llenar_combo3(self):
-        opLCombo3 = "SELECT id_veh, patente FROM vehiculo"
+        opLCombo3 = "SELECT id_veh FROM vehiculo"
         self.data = self.db.run_select(opLCombo3)
         # Se muestra nom_tipo
-        return [i[1] for i in self.data], [i[0] for i in self.data]
+        return [i[0] for i in self.data], [i[0] for i in self.data]
 
 
     def __config_button(self):
         # Crea botón aceptar y se enlaza a evento para modificar pizza
         btn_ok = tk.Button(self.insert_datos, text = "Aceptar",
             command = self.__modificar, bg = 'green', fg = 'white')
-        btn_ok.place(x = 100, y = 220, width = 80, height = 20)
+        btn_ok.place(x = 100, y = 230, width = 80, height = 20)
 
         # Crea botón para cancelar modificación y se destruye ventana
         btn_cancel = tk.Button(self.insert_datos, text = "Cancelar",
             command = self.insert_datos.destroy, bg = 'red', fg = 'white')
-        btn_cancel.place(x = 210, y = 220, width = 80, height = 20)
+        btn_cancel.place(x = 210, y = 230, width = 80, height = 20)
 
     def __modificar(self):
         opEdicion = """UPDATE pedido (id_pedido, total_pedido, fecha_pedido, fecha_reparto, rut_clie, rut_rep, id_veh) values
@@ -358,7 +356,7 @@ class modificar_pedido:
         self.db.run_sql(opEdicion, {"id": self.id.get(),"total": self.total.get(),
         "fechap": self.fechap.get(), "fechar": self.fechar.get(),
         "cliente": self.ids[self.combo_cliente.current()], "repartidor": self.ids[self.combo_repartidor.current()],
-        "vehiculo": self.ids[self.combo_vehiculo.current()]})
+        "vehículo": self.ids[self.combo_vehiculo.current()]})
 
         self.insert_datos.destroy()
         self.padre.llenar_treeview_pedido()
