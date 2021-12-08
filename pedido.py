@@ -5,6 +5,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import Menu
 from tkinter import messagebox
+from tkcalendar import Calendar, DateEntry
 
 from tipo import tipo
 
@@ -15,7 +16,7 @@ class pedido:
 
         # Toplevel es una ventana que está un nivel arriba que la principal
         self.root = tk.Toplevel()
-        self.root.geometry('700x400')
+        self.root.geometry('850x400')
         self.root.title("Pedido")
         self.root.config(bg = "light cyan")
         self.root.resizable(width = 0, height = 0)
@@ -45,14 +46,14 @@ class pedido:
 
         self.treeview.column("id_pedido", minwidth = 150, width = 100, stretch = False)
         self.treeview.column("total_pedido", minwidth = 150, width = 100, stretch = False)
-        self.treeview.column("fecha_pedido", minwidth = 150, width = 100, stretch = False)
-        self.treeview.column("fecha_reparto", minwidth = 150, width = 100, stretch = False)
-        self.treeview.column("rut_clie", minwidth = 150, width = 100, stretch = False)
-        self.treeview.column("rut_rep", minwidth = 150, width = 100, stretch = False)
-        self.treeview.column("id_veh", minwidth = 150, width = 100, stretch = False)
+        self.treeview.column("fecha_pedido", minwidth = 150, width = 150, stretch = False)
+        self.treeview.column("fecha_reparto", minwidth = 150, width = 150, stretch = False)
+        self.treeview.column("rut_clie", minwidth = 150, width = 120, stretch = False)
+        self.treeview.column("rut_rep", minwidth = 150, width = 120, stretch = False)
+        self.treeview.column("id_veh", minwidth = 150, width = 105, stretch = False)
 
         # Ubica treeview
-        self.treeview.place(x = 0, y = 0, height = 350, width = 700)
+        self.treeview.place(x = 0, y = 0, height = 350, width = 850)
         # Llenado del treeview
         self.llenar_treeview_pedido()
         self.root.after(0, self.llenar_treeview_pedido)
@@ -70,22 +71,22 @@ class pedido:
         # Botón para insertar
         b1 = tk.Button(self.root, text = "Insertar pedido", bg = 'snow',
             fg = 'green', command = self.__insertar_pedido)
-        b1.place(x = 0, y = 350, width = 150, height = 50)
+        b1.place(x = 0, y = 350, width = 225, height = 50)
 
         # Botón para modificar
         b2 = tk.Button(self.root, text = "Modificar pedido", bg = 'snow',
             fg = 'orange', command = self.__modificar_pedido)
-        b2.place(x = 150, y = 350, width = 150, height = 50)
+        b2.place(x = 200, y = 350, width = 225, height = 50)
 
         # Botón para eliminar
         b3 = tk.Button(self.root, text = "Eliminar pedido", bg = 'snow',
             fg='red', command = self.__eliminar_pedido)
-        b3.place(x = 300, y = 350, width = 150, height = 50)
+        b3.place(x = 400, y = 350, width = 225, height = 50)
 
         # Botón para salir
         b4 = tk.Button(self.root, text = "Salir", command=self.root.destroy,
             bg = 'red', fg = 'white')
-        b4.place(x = 450, y = 350, width = 150, height = 50)
+        b4.place(x = 625, y = 350, width = 225, height = 50)
 
     def llenar_treeview_pedido(self):
         # Se obtienen vehículos ingresadas
@@ -127,6 +128,7 @@ class pedido:
                 mod_select = self.db.run_select_filter(opModificar, {"id": self.treeview.focus()})[0]
                 modificar_pedido(self.db, self, mod_select)
 
+
 #    def __mostrar_tipo(self):
     #    tipo(self.root, self.db)
 
@@ -139,10 +141,27 @@ class insertar_pedido:
         self.insert_datos = tk.Toplevel()
 
         # Funcionalidades
+        self.__calendar()
+        self.__grad_date()
         self.__config_window()
         self.__config_label()
         self.__config_entry()
         self.__config_button()
+
+    def __calendar(self):
+        self.insert_datos.geometry("400x400")
+        cal = Calendar(self.insert_datos, selectmode = 'day', year = 2020, month = 5)
+        cal.pack(pady = 20)
+
+    def __grad_date(self):
+        date.config(text = "Selected Date is: " + cal.get_date())
+        # Add Button and Label
+        boton_calendar = tk.Button(self.insert_datos, text = "Get Date", command = self.__grad_date).pack(pady = 20)
+        date = Label(self.insert_datos, text = "")
+        date.pack(pady = 20)
+
+        # Execute Tkinter
+        #self.root.mainloop()
 
     def __config_window(self):
         # Ajustes de ventana
@@ -173,6 +192,7 @@ class insertar_pedido:
         self.id.place(x = 110, y = 10, width = 150, height = 20)
         self.total = tk.Entry(self.insert_datos)
         self.total.place(x = 110, y = 40, width = 150, height = 20)
+
         self.fecha_pedido = tk.Entry(self.insert_datos)
         self.fecha_pedido.place(x = 110, y = 70, width = 150, height = 20)
         self.fecha_reparto = tk.Entry(self.insert_datos)
