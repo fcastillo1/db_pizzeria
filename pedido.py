@@ -103,7 +103,7 @@ class pedido:
             # Recorre cada registro (tupla) guardado en var data
             for i in data:
                 # Inserta valores en treeview
-                self.treeview.insert("", "end", iid = i[0], values = i[0:3])
+                self.treeview.insert("", "end", iid = i[0], values = i[0:7])
 
             self.data = data
 
@@ -156,10 +156,10 @@ class insertar_pedido:
         id_lab.place(x = 10, y = 10, width = 120, height = 20)
         total_lab = tk.Label(self.insert_datos, text = "Total: ")
         total_lab.place(x = 10, y = 40, width = 120, height = 20)
-        fechap_lab = tk.Label(self.insert_datos, text = "Fecha Pedido: ")
-        fechap_lab.place(x = 5, y = 70, width = 120, height = 20)
-        fechar_lab = tk.Label(self.insert_datos, text = "Fecha Reparto: ")
-        fechar_lab.place(x = 3, y = 100, width = 120, height = 20)
+        fecha_pedido_lab = tk.Label(self.insert_datos, text = "Fecha Pedido: ")
+        fecha_pedido_lab.place(x = 5, y = 70, width = 120, height = 20)
+        fecha_reparto_lab = tk.Label(self.insert_datos, text = "Fecha Reparto: ")
+        fecha_reparto_lab.place(x = 3, y = 100, width = 120, height = 20)
         cliente_lab = tk.Label(self.insert_datos, text = "Rut Cliente: ")
         cliente_lab.place(x = 10, y = 130, width = 120, height = 20)
         repartidor_lab = tk.Label(self.insert_datos, text = "Rut Repartidor:" )
@@ -173,10 +173,10 @@ class insertar_pedido:
         self.id.place(x = 110, y = 10, width = 150, height = 20)
         self.total = tk.Entry(self.insert_datos)
         self.total.place(x = 110, y = 40, width = 150, height = 20)
-        self.fechap = tk.Entry(self.insert_datos)
-        self.fechap.place(x = 110, y = 70, width = 150, height = 20)
-        self.fechar = tk.Entry(self.insert_datos)
-        self.fechar.place(x = 110, y = 100, width = 150, height = 20)
+        self.fecha_pedido = tk.Entry(self.insert_datos)
+        self.fecha_pedido.place(x = 110, y = 70, width = 150, height = 20)
+        self.fecha_reparto = tk.Entry(self.insert_datos)
+        self.fecha_reparto.place(x = 110, y = 100, width = 150, height = 20)
         self.cliente = tk.Entry(self.insert_datos)
         self.cliente.place(x = 110, y = 130, width = 150, height = 20)
         self.repartidor = tk.Entry(self.insert_datos)
@@ -187,17 +187,17 @@ class insertar_pedido:
         # Combobox para elegir id cliente
         self.combo_cliente = ttk.Combobox(self.insert_datos)
         self.combo_cliente.place(x = 110, y = 130, width = 150, height= 20)
-        self.combo_cliente["values"], self.ids = self.__llenar_combo1()
+        self.combo_cliente["values"], self.ids_clie = self.__llenar_combo1()
 
         # Combo repartidor
         self.combo_repartidor = ttk.Combobox(self.insert_datos)
         self.combo_repartidor.place(x = 110, y = 160, width = 150, height= 20)
-        self.combo_repartidor["values"], self.ids = self.__llenar_combo2()
+        self.combo_repartidor["values"], self.ids_rep = self.__llenar_combo2()
 
         # Combo vehiculo
         self.combo_vehiculo = ttk.Combobox(self.insert_datos)
         self.combo_vehiculo.place(x = 110, y = 190, width = 150, height= 20)
-        self.combo_vehiculo["values"], self.ids = self.__llenar_combo3()
+        self.combo_vehiculo["values"], self.ids_veh = self.__llenar_combo3()
 
     def __llenar_combo1(self):
         opLCombo1 = "SELECT rut_clie FROM cliente"
@@ -231,13 +231,13 @@ class insertar_pedido:
     def __insertar(self):
         # Inserción en tabla vehichulo de la base de datos
         opInsert = """INSERT pedido (id_pedido, total_pedido, fecha_pedido, fecha_reparto, rut_clie, rut_rep, id_veh) values
-            (%(id)s, %(total)s, %(fechap)s, %(fechar)s, %(cliente)s, %(repartidor)s, %(vehiculo)s)"""
+            (%(id)s, %(total)s, %(fecha_pedido)s, %(fecha_reparto)s, %(cliente)s, %(repartidor)s, %(vehiculo)s)"""
 
         # Se ejecuta consulta
         self.db.run_sql(opInsert, {"id": self.id.get(),"total": self.total.get(),
-        "fechap": self.fechap.get(), "fechar": self.fechar.get(),
-        "cliente": self.ids[self.combo_cliente.current()], "repartidor": self.ids[self.combo_repartidor.current()],
-        "vehiculo": self.ids[self.combo_vehiculo.current()]})
+        "fecha_pedido": self.fecha_pedido.get(), "fecha_reparto": self.fecha_reparto.get(),
+        "cliente": self.ids_clie[self.combo_cliente.current()], "repartidor": self.ids_rep[self.combo_repartidor.current()],
+        "vehiculo": self.ids_veh[self.combo_vehiculo.current()]})
 
         self.insert_datos.destroy()
         self.padre.llenar_treeview_pedido()
@@ -265,10 +265,10 @@ class modificar_pedido:
         id_lab.place(x = 10, y = 10, width = 120, height = 20)
         total_lab = tk.Label(self.insert_datos, text = "Total: ")
         total_lab.place(x = 10, y = 40, width = 120, height = 20)
-        fechap_lab = tk.Label(self.insert_datos, text = "Fecha Pedido: ")
-        fechap_lab.place(x = 5, y = 70, width = 120, height = 20)
-        fechar_lab = tk.Label(self.insert_datos, text = "Fecha Reparto: ")
-        fechar_lab.place(x = 3, y = 100, width = 120, height = 20)
+        fecha_pedido_lab = tk.Label(self.insert_datos, text = "Fecha Pedido: ")
+        fecha_pedido_lab.place(x = 5, y = 70, width = 120, height = 20)
+        fecha_reparto_lab = tk.Label(self.insert_datos, text = "Fecha Reparto: ")
+        fecha_reparto_lab.place(x = 3, y = 100, width = 120, height = 20)
         cliente_lab = tk.Label(self.insert_datos, text = "Rut Cliente: ")
         cliente_lab.place(x = 10, y = 130, width = 120, height = 20)
         repartidor_lab = tk.Label(self.insert_datos, text = "Rut Repartidor:" )
@@ -282,10 +282,10 @@ class modificar_pedido:
         self.id.place(x = 110, y = 10, width = 150, height = 20)
         self.total = tk.Entry(self.insert_datos)
         self.total.place(x = 110, y = 40, width = 150, height = 20)
-        self.fechap = tk.Entry(self.insert_datos)
-        self.fechap.place(x = 110, y = 70, width = 150, height = 20)
-        self.fechar = tk.Entry(self.insert_datos)
-        self.fechar.place(x = 110, y = 100, width = 150, height = 20)
+        self.fecha_pedido = tk.Entry(self.insert_datos)
+        self.fecha_pedido.place(x = 110, y = 70, width = 150, height = 20)
+        self.fecha_reparto = tk.Entry(self.insert_datos)
+        self.fecha_reparto.place(x = 110, y = 100, width = 150, height = 20)
         self.cliente = tk.Entry(self.insert_datos)
         self.cliente.place(x = 110, y = 130, width = 150, height = 20)
         self.repartidor = tk.Entry(self.insert_datos)
@@ -296,24 +296,24 @@ class modificar_pedido:
         # Combobox para elegir id cliente
         self.combo_cliente = ttk.Combobox(self.insert_datos)
         self.combo_cliente.place(x = 110, y = 130, width = 150, height= 20)
-        self.combo_cliente["values"], self.ids = self.__llenar_combo1()
+        self.combo_cliente["values"], self.ids_clie = self.__llenar_combo1()
 
         # Combo repartidor
         self.combo_repartidor = ttk.Combobox(self.insert_datos)
         self.combo_repartidor.place(x = 110, y = 160, width = 150, height= 20)
-        self.combo_repartidor["values"], self.ids = self.__llenar_combo2()
+        self.combo_repartidor["values"], self.ids_rep = self.__llenar_combo2()
 
         # Combo vehiculo
         self.combo_vehiculo = ttk.Combobox(self.insert_datos)
         self.combo_vehiculo.place(x = 110, y = 190, width = 150, height= 20)
-        self.combo_vehiculo["values"], self.ids = self.__llenar_combo3()
+        self.combo_vehiculo["values"], self.ids_veh = self.__llenar_combo3()
 
 
         # Se insertan valores actuales
         self.id.insert(0, self.mod_select[0])
         self.total.insert(0, self.mod_select[1])
-        self.fechap.insert(0, self.mod_select[2])
-        self.fechar.insert(0, self.mod_select[3])
+        self.fecha_pedido.insert(0, self.mod_select[2])
+        self.fecha_reparto.insert(0, self.mod_select[3])
         self.cliente.insert(0, self.mod_select[4])
         self.repartidor.insert(0, self.mod_select[5])
         self.vehiculo.insert(0, self.mod_select[6])
@@ -350,13 +350,13 @@ class modificar_pedido:
 
     def __modificar(self):
         opEdicion = """UPDATE pedido (id_pedido, total_pedido, fecha_pedido, fecha_reparto, rut_clie, rut_rep, id_veh) values
-            (%(id)s, %(total)s, %(fechap)s, %(fechar)s, %(cliente)s, %(repartidor)s,
+            (%(id)s, %(total)s, %(fecha_pedido)s, %(fecha_reparto)s, %(cliente)s, %(repartidor)s,
              %(vehiculo)s) WHERE id_pedido = %(id)s"""
 
         self.db.run_sql(opEdicion, {"id": self.id.get(),"total": self.total.get(),
-        "fechap": self.fechap.get(), "fechar": self.fechar.get(),
-        "cliente": self.ids[self.combo_cliente.current()], "repartidor": self.ids[self.combo_repartidor.current()],
-        "vehículo": self.ids[self.combo_vehiculo.current()]})
+        "fecha_pedido": self.fecha_pedido.get(), "fecha_reparto": self.fecha_reparto.get(),
+        "cliente": self.ids_clie[self.combo_cliente.current()], "repartidor": self.ids_rep[self.combo_repartidor.current()],
+        "vehículo": self.ids_veh[self.combo_vehiculo.current()]})
 
         self.insert_datos.destroy()
         self.padre.llenar_treeview_pedido()
