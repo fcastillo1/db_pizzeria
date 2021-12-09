@@ -40,12 +40,12 @@ class pizza:
         self.treeview.heading("nom_piz", text = "Nombre")
         self.treeview.heading("precio_piz", text = "Precio")
         self.treeview.heading("id_tam", text = "Tamaño")
-        self.treeview.column("id_piz", minwidth = 150, width = 100, stretch = False)
-        self.treeview.column("nom_piz", minwidth = 150, width = 100, stretch = False)
-        self.treeview.column("precio_piz", minwidth = 150, width = 100, stretch = False)
-        self.treeview.column("id_tam", minwidth = 150, width = 100, stretch = False)
+        self.treeview.column("id_piz", minwidth = 150, width = 150, stretch = False)
+        self.treeview.column("nom_piz", minwidth = 150, width = 150, stretch = False)
+        self.treeview.column("precio_piz", minwidth = 150, width = 150, stretch = False)
+        self.treeview.column("id_tam", minwidth = 150, width = 150, stretch = False)
         # Ubica treeview
-        self.treeview.place(x = 0, y = 0, height = 350, width = 700)
+        self.treeview.place(x = 0, y = 0, height = 350, width = 600)
         # Llenado del treeview
         self.llenar_treeview_pizza()
         self.root.after(0, self.llenar_treeview_pizza)
@@ -140,26 +140,26 @@ class insertar_pizza:
     def __config_label(self):
         # Definición de entradas de texto para la clase pizza
         id_lab = tk.Label(self.insert_datos, text = "ID: ")
-        id_lab.place(x = 10, y = 10, width = 120, height = 20)
+        id_lab.place(x = 10, y = 20, width = 120, height = 20)
         nom_lab = tk.Label(self.insert_datos, text = "Nombre: ")
-        nom_lab.place(x = 10, y = 40, width = 120, height = 20)
+        nom_lab.place(x = 10, y = 60, width = 120, height = 20)
         precio_lab = tk.Label(self.insert_datos, text = "Precio: ")
-        precio_lab.place(x = 10, y = 70, width = 120, height = 20)
+        precio_lab.place(x = 10, y = 100, width = 120, height = 20)
         tam_lab = tk.Label(self.insert_datos, text = "Tamaño: ")
-        tam_lab.place(x = 10, y = 100, width = 120, height = 20)
+        tam_lab.place(x = 10, y = 140, width = 120, height = 20)
 
     def __config_entry(self):
         # Se obtiene texto para ingresar pizzas
         self.id = tk.Entry(self.insert_datos)
-        self.id.place(x = 110, y = 10, width = 150, height = 20)
+        self.id.place(x = 110, y = 20, width = 150, height = 20)
         self.nombre = tk.Entry(self.insert_datos)
-        self.nombre.place(x = 110, y = 40, width = 150, height = 20)
+        self.nombre.place(x = 110, y = 60, width = 150, height = 20)
         self.precio = tk.Entry(self.insert_datos)
-        self.precio.place(x = 110, y = 70, width = 150, height = 20)
+        self.precio.place(x = 110, y = 100, width = 150, height = 20)
 
         # Combobox para elegir el tamaño de pizza
         self.combo = ttk.Combobox(self.insert_datos)
-        self.combo.place(x = 110, y = 100, width = 150, height= 20)
+        self.combo.place(x = 110, y = 140, width = 150, height= 20)
         self.combo["values"], self.ids = self.__llenar_combo()
 
     def __llenar_combo(self):
@@ -211,26 +211,26 @@ class modificar_pizza:
     def __config_label(self):
         # Definición de entradas de texto para la clase pizza
         id_lab = tk.Label(self.insert_datos, text = "ID: ")
-        id_lab.place(x = 10, y = 10, width = 120, height = 20)
+        id_lab.place(x = 10, y = 20, width = 120, height = 20)
         nom_lab = tk.Label(self.insert_datos, text = "Nombre: ")
-        nom_lab.place(x = 10, y = 40, width = 120, height = 20)
+        nom_lab.place(x = 10, y = 60, width = 120, height = 20)
         precio_lab = tk.Label(self.insert_datos, text = "Precio: ")
-        precio_lab.place(x = 10, y = 70, width = 120, height = 20)
+        precio_lab.place(x = 10, y = 100, width = 120, height = 20)
         tam_lab = tk.Label(self.insert_datos, text = "Tamaño: ")
-        tam_lab.place(x = 10, y = 100, width = 120, height = 20)
+        tam_lab.place(x = 10, y = 140, width = 120, height = 20)
 
     def __config_entry(self):
         # Se obtiene texto para ingresar pizzas
         self.id = tk.Entry(self.insert_datos)
-        self.id.place(x = 110, y = 10, width = 150, height = 20)
+        self.id.place(x = 110, y = 20, width = 150, height = 20)
         self.nombre = tk.Entry(self.insert_datos)
-        self.nombre.place(x = 110, y = 40, width = 150, height = 20)
+        self.nombre.place(x = 110, y = 60, width = 150, height = 20)
         self.precio = tk.Entry(self.insert_datos)
-        self.precio.place(x = 110, y = 70, width = 150, height = 20)
+        self.precio.place(x = 110, y = 100, width = 150, height = 20)
 
         # Combobox
         self.combo = ttk.Combobox(self.insert_datos)
-        self.combo.place(x = 110, y = 100, width = 150, height= 20)
+        self.combo.place(x = 110, y = 140, width = 150, height= 20)
         self.combo["values"], self.ids = self.__llenar_combo()
 
         # Se insertan valores actuales
