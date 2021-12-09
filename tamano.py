@@ -31,9 +31,9 @@ class tamano:
         self.treeview.configure(show = "headings", columns = ("id_tam", "nom_tam"))
         self.treeview.heading("id_tam", text = "ID")
         self.treeview.heading("nom_tam", text = "Nombre")
-        self.treeview.column("id_tam", minwidth = 150, width = 100, stretch = False)
-        self.treeview.column("nom_tam", minwidth = 150, width = 100, stretch = False)
-        self.treeview.place(x = 0, y = 0, height = 350, width = 700)
+        self.treeview.column("id_tam", minwidth = 150, width = 300, stretch = False)
+        self.treeview.column("nom_tam", minwidth = 150, width = 300, stretch = False)
+        self.treeview.place(x = 0, y = 0, height = 350, width = 600)
         # Llenado del treeview
         self.llenar_treeview_tamano()
 
@@ -113,12 +113,12 @@ class insertar_tamano:
     def __config_label(self):
         # Definición de entradas de texto para la clase tamano
         nom_lab = tk.Label(self.insert_datos, text = "Nombre: ")
-        nom_lab.place(x = 10, y = 10, width = 120, height = 20)
+        nom_lab.place(x = 10, y = 50, width = 120, height = 20)
 
     def __config_entry(self):
         # Se obtiene texto para ingresar tamano
         self.nombre = tk.Entry(self.insert_datos)
-        self.nombre.place(x = 110, y = 10, width = 150, height = 20)
+        self.nombre.place(x = 110, y = 50, width = 150, height = 20)
 
     def __config_button(self):
         # Crea botón aceptar ingreso y se enlaza a evento
@@ -155,23 +155,23 @@ class modificar_tamano:
 
     def __config_window(self):
         # Ajustes de ventana
-        self.insert_datos.geometry('300x250')
+        self.insert_datos.geometry('300x150')
         self.insert_datos.title("Modificar tamano")
         self.insert_datos.resizable(width = 0, height = 0)
 
     def __config_label(self):
         # Definición de entradas de texto para la clase tamano
         id_lab = tk.Label(self.insert_datos, text = "ID: ")
-        id_lab.place(x = 10, y = 10, width = 120, height = 20)
+        id_lab.place(x = 10, y = 20, width = 120, height = 20)
         nom_lab = tk.Label(self.insert_datos, text = "Nombre: ")
-        nom_lab.place(x = 10, y = 40, width = 120, height = 20)
+        nom_lab.place(x = 10, y = 60, width = 120, height = 20)
 
     def __config_entry(self):
         # Se obtiene texto para ingresar tamaños
         self.id = tk.Entry(self.insert_datos)
-        self.id.place(x = 110, y = 10, width = 150, height = 20)
+        self.id.place(x = 110, y = 20, width = 150, height = 20)
         self.nombre = tk.Entry(self.insert_datos)
-        self.nombre.place(x = 110, y = 40, width = 150, height = 20)
+        self.nombre.place(x = 110, y = 60, width = 150, height = 20)
 
         # Se insertan datos actuales del registro
         self.id.config(state = 'normal')
@@ -183,12 +183,12 @@ class modificar_tamano:
         # Crea botón aceptar y se enlaza a evento para modificar el tamaño
         btn_ok = tk.Button(self.insert_datos, text = "Aceptar",
             command = self.__modificar, bg = 'green', fg = 'white')
-        btn_ok.place(x = 100, y = 200, width = 80, height = 20)
+        btn_ok.place(x = 100, y = 110, width = 80, height = 20)
 
         # Crea botón para cancelar modificación y se destruye ventana
         btn_cancel = tk.Button(self.insert_datos, text = "Cancelar",
             command = self.insert_datos.destroy, bg = 'red', fg = 'white')
-        btn_cancel.place(x = 210, y = 200, width = 80, height = 20)
+        btn_cancel.place(x = 210, y = 110, width = 80, height = 20)
 
     def __modificar(self):
         # Modificar registro
