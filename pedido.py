@@ -150,17 +150,17 @@ class insertar_pedido:
         self.__config_entry()
         self.__config_button()
 
-    #def __calendar(self):
-    #    self.insert_datos.geometry("400x400")
-    #    cal = Calendar(self.insert_datos, selectmode = 'day', year = 2020, month = 5)
-        #cal.pack(pady = 20)
+    def __calendar(self):
+        self.insert_datos.geometry("400x400")
+        cal = Calendar(self.insert_datos, selectmode = 'day', year = 2020, month = 5)
+        cal.pack(pady = 20)
 
-    #def __grad_date(self):
-    #    date.config(text = "Selected Date is: " + cal.get_date())
+    def __grad_date(self):
+        date.config(text = "Selected Date is: " + cal.get_date())
         # Add Button and Label
-    #    boton_calendar = tk.Button(self.insert_datos, text = "Get Date", command = self.__grad_date).pack(pady = 20)
-        #date = Label(self.insert_datos, text = "")
-        #date.pack(pady = 20)
+        boton_calendar = tk.Button(self.insert_datos, text = "Get Date", command = self.__grad_date).pack(pady = 20)
+        date = Label(self.insert_datos, text = "")
+        date.pack(pady = 20)
 
         # Execute Tkinter
         #self.root.mainloop()
@@ -174,46 +174,46 @@ class insertar_pedido:
     def __config_label(self):
         # Definición de entradas de texto para la clase pedido
         id_lab = tk.Label(self.insert_datos, text = "ID pedido: ")
-        id_lab.place(x = 10, y = 10, width = 120, height = 20)
+        id_lab.place(x = 10, y = 30, width = 120, height = 20)
         fecha_pedido_lab = tk.Label(self.insert_datos, text = "Fecha pedido: ")
-        fecha_pedido_lab.place(x = 5, y = 40, width = 120, height = 20)
+        fecha_pedido_lab.place(x = 5, y = 60, width = 120, height = 20)
         fecha_reparto_lab = tk.Label(self.insert_datos, text = "Fecha reparto: ")
-        fecha_reparto_lab.place(x = 3, y = 70, width = 120, height = 20)
+        fecha_reparto_lab.place(x = 3, y = 90, width = 120, height = 20)
         cliente_lab = tk.Label(self.insert_datos, text = "Rut cliente: ")
-        cliente_lab.place(x = 10, y = 100, width = 120, height = 20)
+        cliente_lab.place(x = 10, y = 120, width = 120, height = 20)
         repartidor_lab = tk.Label(self.insert_datos, text = "Rut repartidor:" )
-        repartidor_lab.place(x = 10, y = 130, width = 120, height = 20)
+        repartidor_lab.place(x = 1, y = 150, width = 120, height = 20)
         vehiculo_lab = tk.Label(self.insert_datos, text = "ID vehículo: ")
-        vehiculo_lab.place(x = 10, y = 160, width = 120, height = 20)
+        vehiculo_lab.place(x = 10, y = 180, width = 120, height = 20)
 
     def __config_entry(self):
         # Se obtiene texto para ingresar vehículos
         self.id = tk.Entry(self.insert_datos)
-        self.id.place(x = 110, y = 10, width = 150, height = 20)
+        self.id.place(x = 110, y = 30, width = 150, height = 20)
         self.fecha_pedido = tk.Entry(self.insert_datos)
-        self.fecha_pedido.place(x = 110, y = 40, width = 150, height = 20)
+        self.fecha_pedido.place(x = 110, y = 60, width = 150, height = 20)
         self.fecha_reparto = tk.Entry(self.insert_datos)
-        self.fecha_reparto.place(x = 110, y = 70, width = 150, height = 20)
+        self.fecha_reparto.place(x = 110, y = 90, width = 150, height = 20)
         self.cliente = tk.Entry(self.insert_datos)
-        self.cliente.place(x = 110, y = 100, width = 150, height = 20)
+        self.cliente.place(x = 110, y = 120, width = 150, height = 20)
         self.repartidor = tk.Entry(self.insert_datos)
-        self.repartidor.place(x = 110, y = 130, width = 150, height = 20)
+        self.repartidor.place(x = 110, y = 150, width = 150, height = 20)
         self.vehiculo = tk.Entry(self.insert_datos)
-        self.vehiculo.place(x = 110, y = 160, width = 150, height = 20)
+        self.vehiculo.place(x = 110, y = 180, width = 150, height = 20)
 
         # Combobox para elegir id cliente
         self.combo_cliente = ttk.Combobox(self.insert_datos)
-        self.combo_cliente.place(x = 110, y = 100, width = 150, height= 20)
+        self.combo_cliente.place(x = 110, y = 120, width = 150, height= 20)
         self.combo_cliente["values"], self.ids_clie = self.__llenar_combo1()
 
         # Combo repartidor
         self.combo_repartidor = ttk.Combobox(self.insert_datos)
-        self.combo_repartidor.place(x = 110, y = 130, width = 150, height= 20)
+        self.combo_repartidor.place(x = 110, y = 150, width = 150, height= 20)
         self.combo_repartidor["values"], self.ids_rep = self.__llenar_combo2()
 
         # Combo vehiculo
         self.combo_vehiculo = ttk.Combobox(self.insert_datos)
-        self.combo_vehiculo.place(x = 110, y = 160, width = 150, height= 20)
+        self.combo_vehiculo.place(x = 110, y = 180, width = 150, height= 20)
         self.combo_vehiculo["values"], self.ids_veh = self.__llenar_combo3()
 
     def __llenar_combo1(self):
@@ -238,7 +238,7 @@ class insertar_pedido:
     def __config_button(self):
         btn_ok = tk.Button(self.insert_datos, text = "Aceptar",
             command = self.__insertar, bg = 'green', fg = 'white')
-        btn_ok.place(x = 110, y = 230, width = 80, height = 20)
+        btn_ok.place(x = 100, y = 230, width = 80, height = 20)
 
         # Crea botón para cancelar modificación y se destruye ventana
         btn_cancel = tk.Button(self.insert_datos, text = "Cancelar",
