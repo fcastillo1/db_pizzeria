@@ -38,12 +38,12 @@ class vehiculo:
         self.treeview.heading("id_veh", text = "ID")
         self.treeview.heading("patente", text = "Patente")
         self.treeview.heading("nom_tipo", text = "Tipo")
-        self.treeview.column("id_veh", minwidth = 150, width = 100, stretch = False)
-        self.treeview.column("patente", minwidth = 150, width = 100, stretch = False)
-        self.treeview.column("nom_tipo", minwidth = 150, width = 100, stretch = False)
+        self.treeview.column("id_veh", minwidth = 150, width = 200, stretch = False)
+        self.treeview.column("patente", minwidth = 150, width = 200, stretch = False)
+        self.treeview.column("nom_tipo", minwidth = 150, width = 200, stretch = False)
 
         # Ubica treeview
-        self.treeview.place(x = 0, y = 0, height = 350, width = 700)
+        self.treeview.place(x = 0, y = 0, height = 350, width = 600)
         # Llenado del treeview
         self.llenar_treeview_vehiculo()
         self.root.after(0, self.llenar_treeview_vehiculo)
@@ -138,29 +138,29 @@ class insertar_vehiculo:
 
     def __config_window(self):
         # Ajustes de ventana
-        self.insert_datos.geometry('300x250')
+        self.insert_datos.geometry('300x200')
         self.insert_datos.title("Insertar pizza")
         self.insert_datos.resizable(width = 0, height = 0)
 
     def __config_label(self):
         # Definición de entradas de texto para la clase vehiculo
         id_lab = tk.Label(self.insert_datos, text = "ID: ")
-        id_lab.place(x = 10, y = 10, width = 120, height = 20)
+        id_lab.place(x = 10, y = 20, width = 120, height = 20)
         patente_lab = tk.Label(self.insert_datos, text = "Patente: ")
-        patente_lab.place(x = 10, y = 40, width = 120, height = 20)
+        patente_lab.place(x = 10, y = 60, width = 120, height = 20)
         tipo_lab = tk.Label(self.insert_datos, text = "Tipo: ")
-        tipo_lab.place(x = 10, y = 70, width = 120, height = 20)
+        tipo_lab.place(x = 10, y = 100, width = 120, height = 20)
 
     def __config_entry(self):
         # Se obtiene texto para ingresar vehículos
         self.id = tk.Entry(self.insert_datos)
-        self.id.place(x = 110, y = 10, width = 150, height = 20)
+        self.id.place(x = 110, y = 20, width = 150, height = 20)
         self.patente = tk.Entry(self.insert_datos)
-        self.patente.place(x = 110, y = 40, width = 150, height = 20)
+        self.patente.place(x = 110, y = 60, width = 150, height = 20)
 
         # Combobox para elegir tipo de vehículo
         self.combo = ttk.Combobox(self.insert_datos)
-        self.combo.place(x = 110, y = 70, width = 150, height= 20)
+        self.combo.place(x = 110, y = 100, width = 150, height= 20)
         self.combo["values"], self.ids = self.__llenar_combo()
 
     def __llenar_combo(self):
@@ -173,12 +173,12 @@ class insertar_vehiculo:
         # Crea botón aceptar ingreso y se enlaza a evento
         btn_ok = tk.Button(self.insert_datos, text = "Aceptar",
             command = self.__insertar, bg = 'green', fg = 'white')
-        btn_ok.place(x = 100, y = 200, width = 80, height = 20)
+        btn_ok.place(x = 100, y = 160, width = 80, height = 20)
 
         # Crea botón para cancelar ingreso y se destruye ventana
         btn_cancel = tk.Button(self.insert_datos, text = "Cancelar",
             command = self.insert_datos.destroy, bg = 'red', fg = 'white')
-        btn_cancel.place(x = 210, y = 200, width = 80, height = 20)
+        btn_cancel.place(x = 210, y =160, width = 80, height = 20)
 
     def __insertar(self):
         # Inserción en tabla vehichulo de la base de datos
@@ -205,29 +205,29 @@ class modificar_vehiculo:
 
     def __config_window(self):
         # Ajustes de ventana
-        self.insert_datos.geometry('300x250')
+        self.insert_datos.geometry('300x200')
         self.insert_datos.title("Modificar vehiculo")
         self.insert_datos.resizable(width = 0, height = 0)
 
     def __config_label(self):
         # Definición de entradas de texto para la clase vehiculo
         id_lab = tk.Label(self.insert_datos, text = "ID: ")
-        id_lab.place(x = 10, y = 10, width = 120, height = 20)
+        id_lab.place(x = 10, y = 20, width = 120, height = 20)
         patente_lab = tk.Label(self.insert_datos, text = "Patente: ")
-        patente_lab.place(x = 10, y = 40, width = 120, height = 20)
+        patente_lab.place(x = 10, y = 60, width = 120, height = 20)
         tipo_lab = tk.Label(self.insert_datos, text = "Tipo: ")
-        tipo_lab.place(x = 10, y = 70, width = 120, height = 20)
+        tipo_lab.place(x = 10, y = 100, width = 120, height = 20)
 
     def __config_entry(self):
         # Se obtiene texto para ingresar pizzas
         self.id = tk.Entry(self.insert_datos)
-        self.id.place(x = 110, y = 10, width = 150, height = 20)
+        self.id.place(x = 110, y = 20, width = 150, height = 20)
         self.patente = tk.Entry(self.insert_datos)
-        self.patente.place(x = 110, y = 40, width = 150, height = 20)
+        self.patente.place(x = 110, y = 60, width = 150, height = 20)
 
         # Combobox
         self.combo = ttk.Combobox(self.insert_datos)
-        self.combo.place(x = 110, y = 70, width = 150, height= 20)
+        self.combo.place(x = 110, y = 100, width = 150, height= 20)
         self.combo["values"], self.ids = self.__llenar_combo()
 
         # Se insertan valores actuales
@@ -246,12 +246,12 @@ class modificar_vehiculo:
         # Crea botón aceptar y se enlaza a evento para modificar pizza
         btn_ok = tk.Button(self.insert_datos, text = "Aceptar",
             command = self.__modificar, bg = 'green', fg = 'white')
-        btn_ok.place(x = 100, y = 200, width = 80, height = 20)
+        btn_ok.place(x = 100, y = 160, width = 80, height = 20)
 
         # Crea botón para cancelar modificación y se destruye ventana
         btn_cancel = tk.Button(self.insert_datos, text = "Cancelar",
             command = self.insert_datos.destroy, bg = 'red', fg = 'white')
-        btn_cancel.place(x = 210, y = 200, width = 80, height = 20)
+        btn_cancel.place(x = 210, y = 160, width = 80, height = 20)
 
     def __modificar(self):
         opEdicion = """UPDATE vehiculo set id_veh = %(id)s, patente = %(patente)s,
