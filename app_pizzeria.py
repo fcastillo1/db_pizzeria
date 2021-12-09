@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Importan librerías principales a usar en Tkinter
+# Importan librerias principales a usar en Tkinter
 import tkinter as tk
 from tkinter import Menu
 from tkinter import LabelFrame, Label, Frame
@@ -15,13 +15,16 @@ from db_pizzeria import DB_pizzeria
 from cliente import cliente
 from ciudad import ciudad
 from pizza import pizza
+from tamano import tamano
 from vehiculo import vehiculo
+from tipo import tipo
 from repartidor import repartidor
+from detalle import detalle
 from pedido import pedido
 from informacion import informacion
 from ayuda import ayuda
 
-# Se define la clase que es de la aplicación y permite su uso
+# Se define la clase que es de la aplicacion y permite su uso
 class aplicacion:
     def __init__(self, db):
         # Se actualiza atributo con la database
@@ -30,7 +33,7 @@ class aplicacion:
         # Creación de ventana principal
         self.root = tk.Tk()
         # Se define el tamano de la ventana
-        self.root.geometry("750x550")
+        self.root.geometry("850x550")
         # Se define el título de la ventana
         self.root.title("APP Pizzería l'italiano")
         # Se añade color al fondo de la ventana
@@ -44,7 +47,7 @@ class aplicacion:
         # Empieza a correr la interfaz
         self.root.mainloop()
 
-    # Esta función permite la creación de los botones principales de la aplicación
+    # Esta funcion permite la creacion de los botones principales de la aplicacion
     def __crearBotones(self):
         # Se sube una Imagen al botón ciudad
         image_ciudad = Image.open("ciudad.jpg")
@@ -81,37 +84,64 @@ class aplicacion:
         image_vehiculo = image_vehiculo.resize((63, 45), Image.ANTIALIAS)
         self.reset_img6 = ImageTk.PhotoImage(image_vehiculo)
 
+        # Se sube una Imagen al botón detalle
+        image_detalle = Image.open("vehiculo.jpg")
+        image_detalle = image_detalle.resize((63, 45), Image.ANTIALIAS)
+        self.reset_img7 = ImageTk.PhotoImage(image_detalle)
+
+        # Se sube una Imagen al botón tamaño
+        image_tamano = Image.open("vehiculo.jpg")
+        image_tamano = image_tamano.resize((63, 45), Image.ANTIALIAS)
+        self.reset_img8 = ImageTk.PhotoImage(image_tamano)
+
+        # Se sube una Imagen al botón tamaño
+        image_tipo = Image.open("vehiculo.jpg")
+        image_tipo = image_tipo.resize((63, 45), Image.ANTIALIAS)
+        self.reset_img9 = ImageTk.PhotoImage(image_tipo)
+
         # Creación de los botones principales
-        # Creación botón ciudad con su texto e información para su funcionamiento
+        # Creacion boton ciudad con su texto e informacion para su funcionamiento
         boton_ciudad = Button(self.root, text = "Ciudades", image = self.reset_img1, compound = 'top',
         command = self.__mostrar_ciudad, width=135, bg='snow', fg='black').place(x=10, y=10)
 
-        # Creación botón cliente con su texto e información para su funcionamiento
+        # Creacion boton cliente con su texto e informacion para su funcionamiento
         boton_cliente = Button(self.root, text = "Cliente",  image = self.reset_img2, compound = 'top',
-        command = self.__mostrar_cliente, width=135 , bg='snow', fg='black').place(x=10, y=95)
+        command = self.__mostrar_cliente, width=135 , bg='snow', fg='black').place(x=180, y = 10)
 
-        # Creación botón pedido con su texto e información para su funcionamiento
+        # Creacion boton pedido con su texto e informacion para su funcionamiento
         boton_pedido = Button(self.root, text = "Pedido",  image = self.reset_img3, compound = 'top',
-        command = self.__mostrar_pedido,  width=135, bg='snow', fg='black').place(x=10, y=180)
+        command = self.__mostrar_pedido,  width=135, bg='snow', fg='black').place(x=10, y = 95)
 
-        # Creación botón pizza con su texto e información para su funcionamiento
+        # Creacion botón detalle con su texto e informacion para su funcionamiento
+        boton_pedido = Button(self.root, text = "Detalle", image = self.reset_img7, compound = 'top',
+        command = self.__mostrar_detalle,  width=135, bg='snow', fg='black').place(x=180, y = 95)
+
+        # Creacion boton pizza con su texto e informacion para su funcionamiento
         boton_pizza = Button(self.root, text = "Pizza", image = self.reset_img4, compound = 'top',
-        command = self.__mostrar_pizza, width=135 , bg='snow', fg='black').place(x=10, y=265)
+        command = self.__mostrar_pizza, width=135 , bg='snow', fg='black').place(x=10, y=180)
 
-        # Creación botón repartidor con su texto e información para su funcionamiento
+        # Creacion boton tamaño con su texto e informacion para su funcionamiento
+        boton_pizza = Button(self.root, text = "Tamaño", image = self.reset_img8, compound = 'top',
+        command = self.__mostrar_tamano, width=135 , bg='snow', fg='black').place(x=180, y=180)
+
+        # Creacion boton vehiculo con su texto e informacion para su funcionamiento
+        boton_vehiculo = Button(self.root, text = "Vehiculo",  image = self.reset_img6, compound = 'top',
+        command = self.__mostrar_vehiculo, width=135 , bg='snow', fg='black').place(x=10, y=265)
+
+        # Creacion boton tipo con su texto e informacion para su funcionamiento
+        boton_vehiculo = Button(self.root, text = "Tipo", image = self.reset_img9, compound = 'top',
+        command = self.__mostrar_tipo, width=135 , bg='snow', fg='black').place(x=180, y=265)
+
+        # Creacion boton repartidor con su texto e informacion para su funcionamiento
         boton_repartidor = Button(self.root, text = "Repartidor",  image = self.reset_img5, compound = 'top',
         command = self.__mostrar_repartidor, width=135 , bg='snow', fg='black').place(x=10, y=350)
 
-        # Creacion botón vehículo con su texto e información para su funcionamiento
-        boton_vehiculo = Button(self.root, text = "Vehiculo",  image = self.reset_img6, compound = 'top',
-        command = self.__mostrar_vehiculo, width=135 , bg='snow', fg='black').place(x=10, y=435)
-
-        # Creación botón salir que permite que se cierre la app
+        # Creacion boton salir que permitira que se cierre la app
         boton_salir = Button(self.root, text = "Salir", command = self.root.destroy,
         width=20, bg='red', fg='white').place(x=375, y=475)
 
 
-    # Esta función permite crear el menú de opciones
+    # Esta funcion permite crear el menu de opciones
     def __crearMenu(self):
         menu_opciones = Menu(self.root)
         self.root.config(menu = menu_opciones)
@@ -120,13 +150,13 @@ class aplicacion:
         info_menu = Menu(menu_opciones, tearoff = 0, bg = "white")
         menu_opciones.add_cascade(label = "Información", menu = info_menu)
 
-        # Dentro del botón de información, hay un botón que detalla acerca de la app y desarrolladores
+        # Dentro del botón de informacion, hay un botón que detalla acerca de la app y desarrolladores
         info_menu.add_command(label = "Acerca de App", command = self.__mostrar_informacion)
 
         # Se genera un espacio
         info_menu.add_separator()
 
-        # Se genera un botón para destruir la ventana
+        # Se genera un boton para destruir la ventana
         info_menu.add_command(label = "Salir", command = self.root.destroy)
 
         # Se construye el menú de ayuda con su color
@@ -136,11 +166,11 @@ class aplicacion:
         # Dentro del botón de AYUDA, existirá uno para guiar al usuario
         help_menu.add_command(label = "Ayuda", command = self.__mostrar_ayuda)
 
-    # Esta función permite anadir una imagen a la aplicación
+    # Esta funcion permite anadir una imagen a la aplicacion
     def __agregarImagenInicial(self):
         frame = LabelFrame(self.root, text = "", relief = tk.FLAT)
         # Se define la ubicación del frame
-        frame.place(x = 240, y = 60)
+        frame.place(x = 380, y = 60)
 
         # Imagen principal de la ventana abierta a partir de un archivo
         image = Image.open("imagenpizza.jpg")
@@ -152,35 +182,44 @@ class aplicacion:
         label.image = photo
         label.pack()
 
-    # Esta función muestra la información de la base de datos y llama a la clase con su nombre a partir de su archivo
+    # Esta funcion mostrara la informacion de la base de datos y llama a la clase con su nombre a partir de su archivo
     def __mostrar_informacion(self):
         informacion(self.root, self.db)
 
-    # Esta función muestra la información de ayuda y llama a la clase con su nombre a partir de su archivo
+    # Esta funcion mostrara la informaicon de ayuda y llama a la clase con su nombre a partir de su archivo
     def __mostrar_ayuda(self):
         ayuda(self.root, self.db)
 
-    # Esta función muestra la información de la clase cliente a partir de su archivo
+    # Esta funcion mostrara la informacion de la clase cliente a partir de su archivo
     def __mostrar_cliente(self):
         cliente(self.root, self.db)
 
-    # Esta función muestra la información de la clase ciudad a partir de su archivo
+    # Esta funcion mostrara la informacion de la clase ciudad a partir de su archivo
     def __mostrar_ciudad(self):
         ciudad(self.root, self.db)
 
-    # Esta función muestra la información de pedido a partir de su archivo
+    # Esta funcion mostrara la informacion de pedido a partir de su archivo
     def __mostrar_pedido(self):
         pedido(self.root, self.db)
 
-    # Esta función muestra la información de pizza a partir de su archivo
+    def __mostrar_detalle(self):
+        detalle(self.root, self.db)
+
+    # Esta funcion mostrara la informacion de pizza a partir de su archivo
     def __mostrar_pizza(self):
         pizza(self.root, self.db)
 
-    # Esta funció muestra la información de vehiculo a partir de su archivo
+    def __mostrar_tamano(self):
+        tamano(self.root, self.db)
+
+    # Esta funcion mostrara la informacion de vehiculo a partir de su archivo
     def __mostrar_vehiculo(self):
         vehiculo(self.root, self.db)
 
-    # Esta función muestra la información de repartidor a partir de su archivo
+    def __mostrar_tipo(self):
+        tipo(self.root, self.db)
+
+    # Esta funcion mostrara la informacion de repartidor a partir de su archivo
     def __mostrar_repartidor(self):
         repartidor(self.root, self.db)
 
@@ -188,7 +227,7 @@ def main():
     # Se conecta a la base de datos
     database = DB_pizzeria()
 
-    # Se crea el objeto de la clase aplicación con la db como parámetro
+    # la aplicacion sera parte del parametro de la database
     aplicacion(database)
 
 if __name__ == "__main__":
