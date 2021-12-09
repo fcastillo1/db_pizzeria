@@ -6,8 +6,6 @@ from tkinter import ttk
 from tkinter import Menu
 from tkinter import messagebox
 
-from tipo import tipo
-
 class vehiculo:
     def __init__(self, root, db):
         self.db = db
@@ -22,9 +20,6 @@ class vehiculo:
 
         # Ventana nueva
         self.root.transient(root)
-
-        # Menubar
-        self.__crear_menu()
 
         # Visualización de pizzas registradas en la base de datos
         self.__config_treeview_vehiculo()
@@ -47,16 +42,6 @@ class vehiculo:
         # Llenado del treeview
         self.llenar_treeview_vehiculo()
         self.root.after(0, self.llenar_treeview_vehiculo)
-
-    def __crear_menu(self):
-        menubar = Menu(self.root)
-        self.root.config(menu = menubar)
-
-        # Se construye el menú de la información con su color
-        info_menu = Menu(menubar, tearoff = 0, bg = "white")
-        menubar.add_cascade(label = "Opciones", menu = info_menu)
-
-        info_menu.add_command(label = "Ver tipos", command = self.__mostrar_tipo)
 
     def __crear_botones_vehiculo(self):
         # Botón para insertar

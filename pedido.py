@@ -7,7 +7,6 @@ from tkinter import Menu
 from tkinter import messagebox
 from tkcalendar import Calendar, DateEntry
 
-from detalle import detalle
 from cliente import cliente
 from repartidor import repartidor
 from vehiculo import vehiculo
@@ -26,9 +25,6 @@ class pedido:
 
         # Ventana nueva
         self.root.transient(root)
-
-        # Menubar
-        self.__crear_menu()
 
         # Visualización de pizzas registradas en la base de datos
         self.__config_treeview_pedido()
@@ -60,15 +56,6 @@ class pedido:
         # Llenado del treeview
         self.llenar_treeview_pedido()
         self.root.after(0, self.llenar_treeview_pedido)
-
-    def __crear_menu(self):
-        menubar = Menu(self.root)
-        self.root.config(menu = menubar)
-
-        # Se construye el menú de la información con su color
-        info_menu = Menu(menubar, tearoff = 0, bg = "white")
-        menubar.add_cascade(label = "Opciones", menu = info_menu)
-        info_menu.add_command(label = "Ver detalles", command = self.__mostrar_detalle)
 
     def __crear_botones_pedido(self):
         # Botón para insertar
