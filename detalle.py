@@ -12,7 +12,7 @@ class detalle:
 
         # Toplevel es una ventana que está un nivel arriba que la principal
         self.root = tk.Toplevel()
-        self.root.geometry('600x400')
+        self.root.geometry('620x400')
         self.root.title("Detalle")
         self.root.config(bg = "light cyan")
         self.root.resizable(width = 0, height = 0)
@@ -32,15 +32,15 @@ class detalle:
         self.treeview.heading("id_pedido", text = "Pedido")
         self.treeview.heading("id_piz", text = "Pizza")
         self.treeview.heading("cantidad", text = "Cantidad")
-        self.treeview.heading("precio_piz", text = "Precio unitario")
+        self.treeview.heading("precio_piz", text = "Precio Unitario")
 
         self.treeview.bind('<ButtonRelease-1>', self.selec_registro)
 
-        self.treeview.column("id_pedido", minwidth = 150, width = 100, stretch = False)
-        self.treeview.column("id_piz", minwidth = 150, width = 100, stretch = False)
-        self.treeview.column("cantidad", minwidth = 150, width = 100, stretch = False)
-        self.treeview.column("precio_piz", minwidth = 150, width = 100, stretch = False)
-        self.treeview.place(x = 0, y = 0, height = 350, width = 700)
+        self.treeview.column("id_pedido", minwidth = 150, width = 140, stretch = False)
+        self.treeview.column("id_piz", minwidth = 150, width = 150, stretch = False)
+        self.treeview.column("cantidad", minwidth = 150, width = 140, stretch = False)
+        self.treeview.column("precio_piz", minwidth = 150, width = 190, stretch = False)
+        self.treeview.place(x = 0, y = 0, height = 350, width = 620)
         # Llenado del treeview
         self.llenar_treeview_detalle()
 
@@ -58,14 +58,14 @@ class detalle:
         b3.place(x = 300, y = 350, width = 150, height = 50)
         b4 = tk.Button(self.root, text = "Salir", command = self.root.destroy,
             bg = 'red', fg = 'white')
-        b4.place(x = 450, y = 350, width = 150, height = 50)
+        b4.place(x = 450, y = 350, width = 170, height = 50)
 
     def llenar_treeview_detalle(self):
-        # Se obtienen clientes ingresados
-        opTreeview = """select id_pedido, id_piz, cantidad, precio_piz from detalle;"""
+        # Se obtienen detalles ingresadas
+        sql = """select id_pedido, id_piz, cantidad, precio_piz from detalle;"""
 
         # Guarda info obtenida tras la consulta
-        data = self.db.run_select(opTreeview)
+        data = self.db.run_select(sql)
 
         # Evalúa si el contenido de la tabla en la app es distinto al de la db
         if(data != self.data):
@@ -108,6 +108,7 @@ class detalle:
                 # print(mod_select)
                 modificar_detalle(self.db, self, mod_select)
 
+
 #
 class insertar_detalle:
     def __init__(self, db, padre):
@@ -132,28 +133,28 @@ class insertar_detalle:
     def __config_label(self):
         # Definición de entradas de texto para la clase detalle
         pedido_lab = tk.Label(self.insert_datos, text = "Pedido: ")
-        pedido_lab.place(x = 10, y = 10, width = 120, height = 20)
+        pedido_lab.place(x = 10, y = 35, width = 140, height = 20)
         pizza_lab = tk.Label(self.insert_datos, text = "Pizza: ")
-        pizza_lab.place(x = 10, y = 40, width = 120, height = 20)
+        pizza_lab.place(x = 10, y = 70, width = 150, height = 20)
         cant_lab = tk.Label(self.insert_datos, text = "Cantidad: ")
-        cant_lab.place(x = 10, y = 70, width = 120, height = 20)
+        cant_lab.place(x = 10, y = 105, width = 140, height = 20)
 
     def __config_entry(self):
         # Se obtiene texto para ingresar detalle
 
         # Combobox para elegir pedido
         self.combo_ped = ttk.Combobox(self.insert_datos)
-        self.combo_ped.place(x = 110, y = 10, width = 150, height= 20)
+        self.combo_ped.place(x = 110, y = 35, width = 150, height= 20)
         self.combo_ped["values"], self.ids_ped = self.__llenar_combo_ped()
 
         # Combobox para elegir pizza
         self.combo_piz = ttk.Combobox(self.insert_datos)
-        self.combo_piz.place(x = 110, y = 40, width = 150, height= 20)
+        self.combo_piz.place(x = 110, y = 70, width = 150, height= 20)
         self.combo_piz["values"], self.ids_piz = self.__llenar_combo_piz()
 
         # Entrada de cantidad
         self.cant = tk.Entry(self.insert_datos)
-        self.cant.place(x = 110, y = 70, width = 150, height = 20)
+        self.cant.place(x = 110, y = 105, width = 150, height = 20)
 
     def __llenar_combo_ped(self):
         opLCombo = "SELECT id_pedido FROM pedido"
@@ -203,38 +204,36 @@ class modificar_detalle:
 
     def __config_window(self):
         # Ajustes de ventana
-        self.insert_datos.geometry('300x250')
+        self.insert_datos.geometry('300x200')
         self.insert_datos.title("Modificar detalle")
         self.insert_datos.resizable(width = 0, height = 0)
 
     def __config_label(self):
         # Definición de entradas de texto para la clase detalle
         pedido_lab = tk.Label(self.insert_datos, text = "Pedido: ")
-        pedido_lab.place(x = 10, y = 10, width = 120, height = 20)
+        pedido_lab.place(x = 10, y = 35, width = 120, height = 20)
         pizza_lab = tk.Label(self.insert_datos, text = "Pizza: ")
-        pizza_lab.place(x = 10, y = 40, width = 120, height = 20)
+        pizza_lab.place(x = 10, y = 70, width = 120, height = 20)
         cant_lab = tk.Label(self.insert_datos, text = "Cantidad: ")
-        cant_lab.place(x = 10, y = 70, width = 120, height = 20)
+        cant_lab.place(x = 10, y = 105, width = 120, height = 20)
 
     def __config_entry(self):
         # Se obtiene texto para ingresar detalles
 
         self.combo_ped = ttk.Combobox(self.insert_datos)
-        self.combo_ped.place(x = 110, y = 10, width = 150, height= 20)
+        self.combo_ped.place(x = 110, y = 35, width = 150, height= 20)
         self.combo_ped["values"], self.ids_ped = self.__llenar_combo_ped()
 
         # Combobox para elegir pizza
         self.combo_piz = ttk.Combobox(self.insert_datos)
-        self.combo_piz.place(x = 110, y = 40, width = 150, height= 20)
+        self.combo_piz.place(x = 110, y = 70, width = 150, height= 20)
         self.combo_piz["values"], self.ids_piz = self.__llenar_combo_piz()
 
         # Entrada de cantidad
         self.cant = tk.Entry(self.insert_datos)
-        self.cant.place(x = 110, y = 70, width = 150, height = 20)
+        self.cant.place(x = 110, y = 105, width = 150, height = 20)
 
         # Se insertan datos actuales del registro
-        self.ped_viejo = self.mod_select[0]
-        self.piz_viejo = self.mod_select[1]
         self.combo_ped.insert(0, self.mod_select[0])
         self.combo_piz.insert(0, self.mod_select[1])
         self.cant.insert(0, self.mod_select[2])
@@ -255,20 +254,19 @@ class modificar_detalle:
         # Crea botón aceptar y se enlaza a evento para modificar el detalle
         btn_ok = tk.Button(self.insert_datos, text = "Aceptar",
             command = self.__modificar, bg = 'green', fg = 'white')
-        btn_ok.place(x = 100, y = 200, width = 80, height = 20)
+        btn_ok.place(x = 100, y = 160, width = 80, height = 20)
 
         # Crea botón para cancelar modificación y se destruye ventana
         btn_cancel = tk.Button(self.insert_datos, text = "Cancelar",
             command = self.insert_datos.destroy, bg = 'red', fg = 'white')
-        btn_cancel.place(x = 210, y = 200, width = 80, height = 20)
+        btn_cancel.place(x = 210, y = 160, width = 80, height = 20)
 
     def __modificar(self):
         # Modificar registro
-        opEdicion = """UPDATE detalle SET id_pedido = %(ped)s, id_piz = %(piz)s, cantidad = %(cant)s WHERE id_pedido = %(ped_viejo)s and id_piz = %(piz_viejo)s"""
+        opEdicion = """UPDATE detalle SET id_pedido = %(ped)s, id_piz = %(piz)s, cantidad = %(cant)s WHERE id_pedido = %(ped)s and id_piz = %(piz)s"""
 
         self.db.run_sql(opEdicion, {"ped": self.ids_ped[self.combo_ped.current()],
-        "piz": self.ids_piz[self.combo_piz.current()], "cant": self.cant.get(),
-        "ped_viejo": self.ped_viejo, "piz_viejo": self.piz_viejo})
+        "piz": self.ids_piz[self.combo_piz.current()], "cant": self.cant.get()})
 
         self.insert_datos.destroy()
         # Se actualizan registros en la ventana principal (padre)
