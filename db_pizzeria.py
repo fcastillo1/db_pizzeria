@@ -68,18 +68,33 @@ class DB_pizzeria:
 
     # Corre una consulta de inserción, actualización o eliminación
     def run_sql(self, sql, params):
-        try:
-            # Ejecuta consulta
-            self.cursor.execute(sql, params)
-            # se imprime un mensaje donde la operacion se realiza con exito
-            texto = "Operación realizada con éxito"
-            messagebox.showinfo(message = texto, title = "Aviso")
-            # Cambios en la base de datos
-            self.db.commit()
+        print("run_sql", params)
+        if validar_run_sql(params) is True:
+            try:
+                # Ejecuta consulta
+                self.cursor.execute(sql, params)
+                # se imprime un mensaje donde la operacion se realiza con exito
+                texto = "Operación realizada con éxito"
+                messagebox.showinfo(message = texto, title = "Aviso")
+                # Cambios en la base de datos
+                self.db.commit()
 
-        except mysql.connector.Error as err:
-            # Da cuenta del error imprimiendo el mensaje y mostrandolo en una ventana con ese mensaje
-            texto_error = "No se puede realizar la operación"
+            except mysql.connector.Error as err:
+                # Da cuenta del error imprimiendo el mensaje y mostrandolo en una ventana con ese mensaje
+                texto_error = "No se puede realizar la operación"
+                messagebox.showerror(message = texto_error, title = "Error")
+                print(err)
+
+        else:
+            texto_error = "Debe llenar todos los campos"
             messagebox.showerror(message = texto_error, title = "Error")
-            print(err)
 
+def validar_run_sql(params):
+    bandera = 0;
+
+    for key in params:
+        if params[key] == '':
+            bandera += 1;
+
+    if bandera == 0:
+        return True
