@@ -32,10 +32,10 @@ class tipo:
         self.treeview.heading("id_tipo", text = "ID")
         self.treeview.heading("nom_tipo", text = "Nombre")
         self.treeview.heading("capacidad_tipo", text = "Capacidad")
-        self.treeview.column("id_tipo", minwidth = 150, width = 100, stretch = False)
-        self.treeview.column("nom_tipo", minwidth = 150, width = 100, stretch = False)
-        self.treeview.column("capacidad_tipo", minwidth = 150, width = 100, stretch = False)
-        self.treeview.place(x = 0, y = 0, height = 350, width = 700)
+        self.treeview.column("id_tipo", minwidth = 150, width = 200, stretch = False)
+        self.treeview.column("nom_tipo", minwidth = 150, width = 200, stretch = False)
+        self.treeview.column("capacidad_tipo", minwidth = 150, width = 200, stretch = False)
+        self.treeview.place(x = 0, y = 0, height = 350, width = 600)
         # Llenado del treeview
         self.llenar_treeview_tipo()
 
@@ -116,16 +116,16 @@ class insertar_tipo:
     def __config_label(self):
         # Definición de entradas de texto para la clase tipo
         nom_lab = tk.Label(self.insert_datos, text = "Nombre: ")
-        nom_lab.place(x = 10, y = 10, width = 120, height = 20)
+        nom_lab.place(x = 10, y = 40, width = 120, height = 20)
         cap_lab = tk.Label(self.insert_datos, text = "Capacidad: ")
-        cap_lab.place(x = 10, y = 40, width = 120, height = 20)
+        cap_lab.place(x = 10, y = 80, width = 120, height = 20)
 
     def __config_entry(self):
         # Se obtiene texto para ingresar tipo
         self.nombre = tk.Entry(self.insert_datos)
-        self.nombre.place(x = 110, y = 10, width = 150, height = 20)
+        self.nombre.place(x = 110, y = 40, width = 150, height = 20)
         self.capacidad = tk.Entry(self.insert_datos)
-        self.capacidad.place(x = 110, y = 40, width = 150, height = 20)
+        self.capacidad.place(x = 110, y = 80, width = 150, height = 20)
 
     def __config_button(self):
         # Crea botón aceptar ingreso y se enlaza a evento
@@ -164,27 +164,27 @@ class modificar_tipo:
 
     def __config_window(self):
         # Ajustes de ventana
-        self.insert_datos.geometry('300x250')
+        self.insert_datos.geometry('300x200')
         self.insert_datos.title("Modificar tipo")
         self.insert_datos.resizable(width = 0, height = 0)
 
     def __config_label(self):
         # Definición de entradas de texto para la clase tipo
         id_lab = tk.Label(self.insert_datos, text = "ID: ")
-        id_lab.place(x = 10, y = 10, width = 120, height = 20)
+        id_lab.place(x = 10, y = 20, width = 120, height = 20)
         nom_lab = tk.Label(self.insert_datos, text = "Nombre: ")
-        nom_lab.place(x = 10, y = 40, width = 120, height = 20)
+        nom_lab.place(x = 10, y = 60, width = 120, height = 20)
         cap_lab = tk.Label(self.insert_datos, text = "Capacidad: ")
-        cap_lab.place(x = 10, y = 70, width = 120, height = 20)
+        cap_lab.place(x = 10, y = 100, width = 120, height = 20)
 
     def __config_entry(self):
         # Se obtiene texto para ingresar tipos
         self.id = tk.Entry(self.insert_datos)
-        self.id.place(x = 110, y = 10, width = 150, height = 20)
+        self.id.place(x = 110, y = 20, width = 150, height = 20)
         self.nombre = tk.Entry(self.insert_datos)
-        self.nombre.place(x = 110, y = 40, width = 150, height = 20)
+        self.nombre.place(x = 110, y = 60, width = 150, height = 20)
         self.capacidad = tk.Entry(self.insert_datos)
-        self.capacidad.place(x = 110, y = 70, width = 150, height = 20)
+        self.capacidad.place(x = 110, y = 100, width = 150, height = 20)
 
         # Se insertan datos actuales del registro
         self.id.config(state = 'normal')
@@ -197,12 +197,12 @@ class modificar_tipo:
         # Crea botón aceptar y se enlaza a evento para modificar el tipo
         btn_ok = tk.Button(self.insert_datos, text = "Aceptar",
             command = self.__modificar, bg = 'green', fg = 'white')
-        btn_ok.place(x = 100, y = 200, width = 80, height = 20)
+        btn_ok.place(x = 100, y = 160, width = 80, height = 20)
 
         # Crea botón para cancelar modificación y se destruye ventana
         btn_cancel = tk.Button(self.insert_datos, text = "Cancelar",
             command = self.insert_datos.destroy, bg = 'red', fg = 'white')
-        btn_cancel.place(x = 210, y = 200, width = 80, height = 20)
+        btn_cancel.place(x = 210, y = 160, width = 80, height = 20)
 
     def __modificar(self):
         # Modificar registro
