@@ -33,11 +33,11 @@ class repartidor:
         self.treeview.heading("nom_rep", text = "Nombre")
         self.treeview.heading("ape_rep", text = "Apellido")
         self.treeview.heading("tel_rep", text = "Teléfono")
-        self.treeview.column("rut_rep", minwidth = 150, width = 100, stretch = False)
-        self.treeview.column("nom_rep", minwidth = 150, width = 100, stretch = False)
-        self.treeview.column("ape_rep", minwidth = 150, width = 100, stretch = False)
-        self.treeview.column("tel_rep", minwidth = 150, width = 100, stretch = False)
-        self.treeview.place(x = 0, y = 0, height = 350, width = 700)
+        self.treeview.column("rut_rep", minwidth = 150, width = 150, stretch = False)
+        self.treeview.column("nom_rep", minwidth = 150, width = 150, stretch = False)
+        self.treeview.column("ape_rep", minwidth = 150, width = 150, stretch = False)
+        self.treeview.column("tel_rep", minwidth = 150, width = 150, stretch = False)
+        self.treeview.place(x = 0, y = 0, height = 350, width = 600)
         # Llenado del treeview
         self.llenar_treeview_repartidor()
         self.root.after(0, self.llenar_treeview_repartidor)
@@ -140,12 +140,12 @@ class insertar_repartidor:
         # Crea botón aceptar ingreso y se enlaza a evento
         btn_ok = tk.Button(self.insert_datos, text = "Aceptar",
             command = self.__insertar, bg = 'green', fg = 'white')
-        btn_ok.place(x=100, y =160, width = 80, height = 20)
+        btn_ok.place(x= 90, y = 160, width = 80, height = 20)
 
         # Crea botón para cancelar ingreso y se destruye ventana
         btn_cancel = tk.Button(self.insert_datos, text = "Cancelar",
             command = self.insert_datos.destroy, bg = 'red', fg = 'white')
-        btn_cancel.place(x=210, y =160, width = 80, height = 20)
+        btn_cancel.place(x= 200, y = 160, width = 80, height = 20)
 
     def __insertar(self):
         # Inserción de repartidor
@@ -174,7 +174,7 @@ class modificar_repartidor:
 
     def __config_window(self):
         # Ajustes de ventana
-        self.insert_datos.geometry('300x250')
+        self.insert_datos.geometry('300x200')
         self.insert_datos.title("Modificar repartidor")
         self.insert_datos.resizable(width = 0, height = 0)
 
@@ -211,12 +211,12 @@ class modificar_repartidor:
         # Crea botón aceptar y se enlaza a evento para modificar el repartidor
         btn_ok = tk.Button(self.insert_datos, text = "Aceptar",
             command = self.__modificar, bg = 'green', fg = 'white')
-        btn_ok.place(x = 100, y = 200, width = 80, height = 20)
+        btn_ok.place(x = 90, y = 160, width = 80, height = 20)
 
         # Crea botón para cancelar modificación y se destruye ventana
         btn_cancel = tk.Button(self.insert_datos, text = "Cancelar",
             command = self.insert_datos.destroy, bg = 'red', fg = 'white')
-        btn_cancel.place(x = 210, y = 200, width = 80, height = 20)
+        btn_cancel.place(x = 200, y = 160, width = 80, height = 20)
 
     def __modificar(self):
         # Modificar registro
