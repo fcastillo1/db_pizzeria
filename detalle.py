@@ -32,7 +32,7 @@ class detalle:
         self.treeview.heading("id_pedido", text = "Pedido")
         self.treeview.heading("id_piz", text = "Pizza")
         self.treeview.heading("cantidad", text = "Cantidad")
-        self.treeview.heading("precio_piz", text = "Precio")
+        self.treeview.heading("precio_piz", text = "Precio unitario")
 
         self.treeview.bind('<ButtonRelease-1>', self.selec_registro)
 
@@ -61,11 +61,11 @@ class detalle:
         b4.place(x = 450, y = 350, width = 150, height = 50)
 
     def llenar_treeview_detalle(self):
-        # Se obtienen detalles ingresadas
-        sql = """select id_pedido, id_piz, cantidad, precio_piz from detalle;"""
+        # Se obtienen clientes ingresados
+        opTreeview = """select id_pedido, id_piz, cantidad, precio_piz from detalle;"""
 
         # Guarda info obtenida tras la consulta
-        data = self.db.run_select(sql)
+        data = self.db.run_select(opTreeview)
 
         # Evalúa si el contenido de la tabla en la app es distinto al de la db
         if(data != self.data):
@@ -75,7 +75,7 @@ class detalle:
             # Recorre cada registro (tupla) guardado en var data
             for i in data:
                 # Inserta valores en treeview
-                self.treeview.insert("", "end", iid = i[0], values = i[0:4])
+                self.treeview.insert("", "end", iid = i[0:2], values = i[0:4])
 
             self.data = data
 
@@ -107,7 +107,6 @@ class detalle:
                 mod_select = self.db.run_select_filter(opModificar, {"ped": self.actual[0], "piz": self.actual[1]})[0]
                 # print(mod_select)
                 modificar_detalle(self.db, self, mod_select)
-
 
 #
 class insertar_detalle:
@@ -234,6 +233,8 @@ class modificar_detalle:
         self.cant.place(x = 110, y = 70, width = 150, height = 20)
 
         # Se insertan datos actuales del registro
+        self.ped_viejo = self.mod_select[0]
+        self.piz_viejo = self.mod_select[1]
         self.combo_ped.insert(0, self.mod_select[0])
         self.combo_piz.insert(0, self.mod_select[1])
         self.cant.insert(0, self.mod_select[2])
@@ -263,10 +264,11 @@ class modificar_detalle:
 
     def __modificar(self):
         # Modificar registro
-        opEdicion = """UPDATE detalle SET id_pedido = %(ped)s, id_piz = %(piz)s, cantidad = %(cant)s WHERE id_pedido = %(ped)s and id_piz = %(piz)s"""
+        opEdicion = """UPDATE detalle SET id_pedido = %(ped)s, id_piz = %(piz)s, cantidad = %(cant)s WHERE id_pedido = %(ped_viejo)s and id_piz = %(piz_viejo)s"""
 
         self.db.run_sql(opEdicion, {"ped": self.ids_ped[self.combo_ped.current()],
-        "piz": self.ids_piz[self.combo_piz.current()], "cant": self.cant.get()})
+        "piz": self.ids_piz[self.combo_piz.current()], "cant": self.cant.get(),
+        "ped_viejo": self.ped_viejo, "piz_viejo": self.piz_viejo})
 
         self.insert_datos.destroy()
         # Se actualizan registros en la ventana principal (padre)
