@@ -12,7 +12,7 @@ class cliente:
 
         # Toplevel es una ventana que está un nivel arriba que la principal
         self.root = tk.Toplevel()
-        self.root.geometry('600x400')
+        self.root.geometry('800x400')
         self.root.title("Clientes")
         self.root.config(bg="light cyan")
         self.root.resizable(width = 0, height = 0)
@@ -36,13 +36,13 @@ class cliente:
         self.treeview.heading("tel_clie", text = "Teléfono")
         self.treeview.heading("dir_clie", text = "Dirección")
         self.treeview.heading("id_ciudad", text = "Ciudad")
-        self.treeview.column("rut_cli", minwidth = 150, width = 100, stretch = False)
-        self.treeview.column("nom_clie", minwidth = 150, width = 100, stretch = False)
-        self.treeview.column("ape_clie", minwidth = 150, width = 100, stretch = False)
-        self.treeview.column("tel_clie", minwidth = 150, width = 100, stretch = False)
-        self.treeview.column("dir_clie", minwidth = 150, width = 100, stretch = False)
-        self.treeview.column("id_ciudad", minwidth = 150, width = 100, stretch = False)
-        self.treeview.place(x = 0, y = 0, height = 350, width = 700)
+        self.treeview.column("rut_cli", minwidth = 150, width = 110, stretch = False)
+        self.treeview.column("nom_clie", minwidth = 150, width = 120, stretch = False)
+        self.treeview.column("ape_clie", minwidth = 150, width = 120, stretch = False)
+        self.treeview.column("tel_clie", minwidth = 150, width = 120, stretch = False)
+        self.treeview.column("dir_clie", minwidth = 150, width = 220, stretch = False)
+        self.treeview.column("id_ciudad", minwidth = 150, width = 110, stretch = False)
+        self.treeview.place(x = 0, y = 0, height = 350, width = 800)
         # Llenado del treeview
         self.llenar_treeview_cliente()
 
@@ -51,15 +51,15 @@ class cliente:
     def __crear_botones_cliente(self):
         b1 = tk.Button(self.root, text = "Insertar cliente", bg='snow',
             fg='green', command = self.__insertar_cliente)
-        b1.place(x = 0, y = 350, width = 150, height = 50)
+        b1.place(x = 0, y = 350, width = 200, height = 50)
         b2 = tk.Button(self.root, text = "Modificar cliente", bg='snow',
             fg='orange', command = self.__modificar_cliente)
-        b2.place(x = 150, y = 350, width = 150, height = 50)
+        b2.place(x = 200, y = 350, width = 200, height = 50)
         b3 = tk.Button(self.root, text = "Eliminar cliente", bg='snow', fg='red',
         command = self.__eliminar_cliente)
-        b3.place(x = 300, y = 350, width = 150, height = 50)
+        b3.place(x = 400, y = 350, width = 200, height = 50)
         b4 = tk.Button(self.root, text = "Salir", command=self.root.destroy, bg='red', fg='white')
-        b4.place(x = 450, y = 350, width = 150, height = 50)
+        b4.place(x = 600, y = 350, width = 200, height = 50)
 
     def llenar_treeview_cliente(self):
         # Se obtienen clientes ingresados
@@ -264,3 +264,4 @@ class modificar_cliente:
 
         self.insert_datos.destroy()
         self.padre.llenar_treeview_cliente()
+
