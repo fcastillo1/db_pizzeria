@@ -86,7 +86,7 @@ class pizza:
         if(self.treeview.focus() != ""):
             if messagebox.askyesno(message="¿Realmente quieres borrar el registro?", title = "Alerta")== True:
                 opEliminar = "DELETE FROM pizza where id_piz = %(id_piz)s"
-                self.db.run_sql(opEliminar, {"id_piz": self.treeview.focus()})
+                self.db.run_sql(opEliminar, {"id_piz": self.treeview.focus()}, "D")
                 self.llenar_treeview_pizza()
 
     def __modificar_pizza(self):
@@ -171,7 +171,7 @@ class insertar_pizza:
 
         # Se ejecuta consulta
         self.db.run_sql(opInsert, {"id": self.id.get(),"nombre": self.nombre.get(),
-        "precio": self.precio.get(), "tamano": self.ids[self.combo.current()]})
+        "precio": self.precio.get(), "tamano": self.ids[self.combo.current()]}, "I")
 
         self.insert_datos.destroy()
         self.padre.llenar_treeview_pizza()
@@ -247,7 +247,7 @@ class modificar_pizza:
             precio_piz = %(precio)s, id_tam = %(tamano)s WHERE id_piz = %(id_viejo)s"""
 
         self.db.run_sql(opEdicion, {"id": self.id.get(),"nombre": self.nombre.get(),
-        "precio": self.precio.get(), "tamano": self.ids[self.combo.current()], "id_viejo": self.id_viejo})
+        "precio": self.precio.get(), "tamano": self.ids[self.combo.current()], "id_viejo": self.id_viejo}, "U")
 
         self.insert_datos.destroy()
         self.padre.llenar_treeview_pizza()

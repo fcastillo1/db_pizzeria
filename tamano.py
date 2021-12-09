@@ -78,7 +78,7 @@ class tamano:
         if(self.treeview.focus() != ""):
             if messagebox.askyesno(message="¿Realmente quieres borrar el tamaño?", title = "Alerta")==True:
                 operation = "DELETE FROM tamano where id_tam = %(id_tam)s"
-                self.db.run_sql(operation, {"id_tam": self.treeview.focus()})
+                self.db.run_sql(operation, {"id_tam": self.treeview.focus()}, "D")
                 self.llenar_treeview_tamano()
 
     def __modificar_tamano(self):
@@ -136,7 +136,7 @@ class insertar_tamano:
         sql = """insert tamano (nom_tam) values (%(nombre)s)"""
 
         # Se ejecuta consulta
-        self.db.run_sql(sql, {"nombre": self.nombre.get()})
+        self.db.run_sql(sql, {"nombre": self.nombre.get()}, "I")
 
         self.insert_datos.destroy()
         self.padre.llenar_treeview_tamano()
@@ -194,7 +194,7 @@ class modificar_tamano:
         # Modificar registro
         opEdicion = """update tamano set nom_tam = %(nombre)s where id_tam = %(id)s"""
 
-        self.db.run_sql(opEdicion, {"id": self.id.get(),"nombre": self.nombre.get()})
+        self.db.run_sql(opEdicion, {"id": self.id.get(),"nombre": self.nombre.get()}, "U")
 
         self.insert_datos.destroy()
         # Se actualizan registros en la ventana principal (padre)

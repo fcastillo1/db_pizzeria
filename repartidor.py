@@ -82,7 +82,7 @@ class repartidor:
         if(self.treeview.focus() != ""):
             if messagebox.askyesno(message = "¿Realmente quieres borrar el repartidor?", title = "Alerta")==True:
                 operation = "DELETE FROM repartidor WHERE rut_rep = %(rut_rep)s"
-                self.db.run_sql(operation, {"rut_rep": self.treeview.focus()})
+                self.db.run_sql(operation, {"rut_rep": self.treeview.focus()}, "D")
                 self.llenar_treeview_repartidor()
 
     def __modificar_repartidor(self):
@@ -154,7 +154,7 @@ class insertar_repartidor:
 
         # Se ejecuta consulta
         self.db.run_sql(sql, {"rut": self.rut.get(),"nombre": self.nombre.get(),
-        "apellido": self.apellido.get(), "telefono": self.telefono.get()})
+        "apellido": self.apellido.get(), "telefono": self.telefono.get()}, "I")
 
         self.insert_datos.destroy()
         self.padre.llenar_treeview_repartidor()
@@ -224,7 +224,7 @@ class modificar_repartidor:
         ape_rep = %(apellido)s, tel_rep = %(telefono)s WHERE rut_rep = %(rut_viejo)s"""
 
         self.db.run_sql(opEdicion, {"rut": self.rut.get(),"nombre": self.nombre.get(),
-        "apellido": self.apellido.get(), "telefono": self.telefono.get(), "rut_viejo": self.rut_viejo})
+        "apellido": self.apellido.get(), "telefono": self.telefono.get(), "rut_viejo": self.rut_viejo}, "U")
 
         self.insert_datos.destroy()
         # Se actualizan registros en la ventana principal (padre)

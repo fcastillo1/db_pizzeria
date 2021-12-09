@@ -3,6 +3,7 @@
 
 # se importa el conector para poder que pueda funcionar la app con la base de datos
 import mysql.connector
+from mysql.connector import errorcode
 # se importa tkinder y una libreria necesaria
 from tkinter import messagebox
 
@@ -67,8 +68,8 @@ class DB_pizzeria:
         return result
 
     # Corre una consulta de inserción, actualización o eliminación
-    def run_sql(self, sql, params):
-        print("run_sql", params)
+    def run_sql(self, sql, params, operacion):
+
         if validar_run_sql(params) is True:
             try:
                 # Ejecuta consulta
@@ -81,10 +82,22 @@ class DB_pizzeria:
 
             except mysql.connector.Error as err:
                 # Da cuenta del error imprimiendo el mensaje y mostrandolo en una ventana con ese mensaje
-                texto_error = "No se puede realizar la operación"
+                if operacion == "I":
+                    texto_error = "No se puede realizar la inserción. "
+                elif operacion == "U":
+                    texto_error = "No se puede realizar la actualización. "
+                elif operacion == "D":
+                    texto_error = "No se puede realizar la eliminación. "
+
+                if err.errno == 1451:
+                    texto_error = texto_error + "El registro se referencia en otra tabla."
+                elif err.errno == 1366:
+                    texto_error = texto_error + "Error en valor(es) numéricos enteros."
+                elif err.errno == 1062:
+                    texto_error = texto_error + "Ya hay un registro con el mismo id/rut."
+
                 messagebox.showerror(message = texto_error, title = "Error")
                 print(err)
-
         else:
             texto_error = "Debe llenar todos los campos"
             messagebox.showerror(message = texto_error, title = "Error")
@@ -94,7 +107,8 @@ def validar_run_sql(params):
 
     for key in params:
         if params[key] == '':
-            bandera += 1;
+            if (key != "patente"):
+                bandera += 1;
 
     if bandera == 0:
         return True

@@ -105,7 +105,7 @@ class pedido:
         if(self.treeview.focus() != ""):
             if messagebox.askyesno(message = "¿Realmente quieres borrar el registro?", title = "Alerta")== True:
                 opEliminar = "DELETE FROM pedido where id_pedido = %(id_pedido)s"
-                self.db.run_sql(opEliminar, {"id_pedido": self.treeview.focus()})
+                self.db.run_sql(opEliminar, {"id_pedido": self.treeview.focus()}, "D")
                 self.llenar_treeview_pedido()
 
     def __modificar_pedido(self):
@@ -240,7 +240,7 @@ class insertar_pedido:
         # Se ejecuta consulta
         self.db.run_sql(opInsert, {"id": self.id.get(), "fecha_pedido": self.fecha_pedido.get(), "fecha_reparto": self.fecha_reparto.get(),
         "cliente": self.ids_clie[self.combo_cliente.current()], "repartidor": self.ids_rep[self.combo_repartidor.current()],
-        "vehiculo": self.ids_veh[self.combo_vehiculo.current()]})
+        "vehiculo": self.ids_veh[self.combo_vehiculo.current()]}, "I")
 
         self.insert_datos.destroy()
         self.padre.llenar_treeview_pedido()
@@ -362,7 +362,7 @@ class modificar_pedido:
         self.db.run_sql(opEdicion, {"id": self.id.get(),"total": self.total.get(),
         "fecha_pedido": self.fecha_pedido.get(), "fecha_reparto": self.fecha_reparto.get(),
         "cliente": self.ids_clie[self.combo_cliente.current()], "repartidor": self.ids_rep[self.combo_repartidor.current()],
-        "vehiculo": self.ids_veh[self.combo_vehiculo.current()], "id_viejo" : self.id_viejo})
+        "vehiculo": self.ids_veh[self.combo_vehiculo.current()], "id_viejo" : self.id_viejo}, "U")
 
         self.insert_datos.destroy()
         self.padre.llenar_treeview_pedido()

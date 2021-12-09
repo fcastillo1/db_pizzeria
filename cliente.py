@@ -87,7 +87,7 @@ class cliente:
     def __eliminar_cliente(self):
         if messagebox.askyesno(message="¿Realmente quieres borrar el registro?", title = "Alerta")== True:
             opEliminar = "DELETE FROM cliente where rut_clie = %(rut_clie)s"
-            self.db.run_sql(opEliminar, {"rut_clie": self.treeview.focus()})
+            self.db.run_sql(opEliminar, {"rut_clie": self.treeview.focus()}, "D")
             self.llenar_treeview_cliente()
 
     def __modificar_cliente(self):
@@ -168,7 +168,18 @@ class insertar_cliente:
             command = self.insert_datos.destroy, bg='red', fg='white')
         btn_cancel.place(x=210, y =200, width = 80, height = 20)
 
-    def __insertar(self): #Insercion en la base de datos.
+    # def validar_combobox(valor):
+    #     bandera = 0;
+    #
+    #     print(valor)
+    #
+    #     if bandera == 0:
+    #         return True
+
+    def __insertar(self):
+
+        # if validar_combobox(self.ids[self.combo.get()]) is True:
+
         # Inserción de cliente
         opInsert = """INSERT cliente (rut_clie, nom_clie, ape_clie, tel_clie, dir_clie, id_ciudad)
                 values (%(rut)s, %(nombre)s, %(apellido)s, %(telefono)s, %(direccion)s, %(ciudad)s)"""
@@ -176,7 +187,7 @@ class insertar_cliente:
         # Se ejecuta consulta
         self.db.run_sql(opInsert, {"rut": self.rut.get(),"nombre": self.nombre.get(),
         "apellido": self.apellido.get(), "telefono": self.telefono.get(), "direccion": self.direccion.get(),
-            "ciudad": self.ids[self.combo.current()]})
+            "ciudad": self.ids[self.combo.current()]}, "I")
 
         self.insert_datos.destroy()
         self.padre.llenar_treeview_cliente()
@@ -260,8 +271,7 @@ class modificar_cliente:
 
         self.db.run_sql(opEdicion, {"rut": self.rut.get(),"nombre": self.nombre.get(),
         "apellido": self.apellido.get(), "telefono": self.telefono.get(), "direccion": self.direccion.get(),
-            "ciudad": self.ids[self.combo.current()], "rut_viejo": self.rut_viejo})
+            "ciudad": self.ids[self.combo.current()], "rut_viejo": self.rut_viejo}, "U")
 
         self.insert_datos.destroy()
         self.padre.llenar_treeview_cliente()
-

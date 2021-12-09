@@ -81,7 +81,7 @@ class tipo:
         if(self.treeview.focus() != ""):
             if messagebox.askyesno(message="¿Realmente quieres borrar el tipo?", title = "Alerta")==True:
                 operation = "DELETE FROM tipo where id_tipo = %(id_tipo)s"
-                self.db.run_sql(operation, {"id_tipo": self.treeview.focus()})
+                self.db.run_sql(operation, {"id_tipo": self.treeview.focus()}, "D")
                 self.llenar_treeview_tipo()
 
     def __modificar_tipo(self):
@@ -145,7 +145,7 @@ class insertar_tipo:
 
         # Se ejecuta consulta
         self.db.run_sql(sql, {"nombre": self.nombre.get(),
-        "capacidad": self.capacidad.get()})
+        "capacidad": self.capacidad.get()}, "I")
 
         self.insert_datos.destroy()
         self.padre.llenar_treeview_tipo()
@@ -210,7 +210,7 @@ class modificar_tipo:
         WHERE id_tipo = %(id)s"""
 
         self.db.run_sql(opEdicion, {"id": self.id.get(),"nombre": self.nombre.get(),
-        "capacidad": self.capacidad.get()})
+        "capacidad": self.capacidad.get()}, "U")
 
         self.insert_datos.destroy()
         # Se actualizan registros en la ventana principal (padre)

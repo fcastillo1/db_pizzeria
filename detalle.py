@@ -95,7 +95,7 @@ class detalle:
         if(self.actual != ""):
             if messagebox.askyesno(message="¿Realmente quieres borrar el detalle?", title = "Alerta")==True:
                 operation = "DELETE FROM detalle where id_pedido = %(ped)s and id_piz = %(piz)s"
-                self.db.run_sql(operation, {"ped": self.actual[0], "piz": self.actual[1]})
+                self.db.run_sql(operation, {"ped": self.actual[0], "piz": self.actual[1]}, "D")
                 self.llenar_treeview_detalle()
 
     def __modificar_detalle(self):
@@ -186,7 +186,7 @@ class insertar_detalle:
 
         # Se ejecuta consulta
         self.db.run_sql(sql, {"pedido": self.ids_ped[self.combo_ped.current()],
-        "pizza": self.ids_piz[self.combo_piz.current()], "cantidad": self.cant.get()})
+        "pizza": self.ids_piz[self.combo_piz.current()], "cantidad": self.cant.get()}, "I")
 
         self.insert_datos.destroy()
         self.padre.llenar_treeview_detalle()
@@ -269,7 +269,7 @@ class modificar_detalle:
 
         self.db.run_sql(opEdicion, {"ped": self.ids_ped[self.combo_ped.current()],
         "piz": self.ids_piz[self.combo_piz.current()], "cant": self.cant.get(),
-        "ped_viejo": self.ped_viejo, "piz_viejo": self.piz_viejo})
+        "ped_viejo": self.ped_viejo, "piz_viejo": self.piz_viejo}, "U")
 
         self.insert_datos.destroy()
         # Se actualizan registros en la ventana principal (padre)

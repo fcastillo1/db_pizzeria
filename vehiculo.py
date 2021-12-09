@@ -91,7 +91,7 @@ class vehiculo:
         if(self.treeview.focus() != ""):
             if messagebox.askyesno(message = "¿Realmente quieres borrar el registro?", title = "Alerta")== True:
                 opEliminar = "DELETE FROM vehiculo where id_veh = %(id_veh)s"
-                self.db.run_sql(opEliminar, {"id_veh": self.treeview.focus()})
+                self.db.run_sql(opEliminar, {"id_veh": self.treeview.focus()}, "D")
                 self.llenar_treeview_vehiculo()
 
     def __modificar_vehiculo(self):
@@ -172,7 +172,7 @@ class insertar_vehiculo:
 
         # Se ejecuta consulta
         self.db.run_sql(opInsert, {"id": self.id.get(),"": self.patente.get(),
-        "patente": self.patente.get(), "tipo": self.ids[self.combo.current()]})
+        "patente": self.patente.get(), "tipo": self.ids[self.combo.current()]}, "I")
 
         self.insert_datos.destroy()
         self.padre.llenar_treeview_vehiculo()
@@ -243,7 +243,7 @@ class modificar_vehiculo:
             id_tipo = %(tipo)s WHERE id_veh = %(id_viejo)s"""
 
         self.db.run_sql(opEdicion, {"id": self.id.get(),"patente": self.patente.get(),
-        "tipo": self.ids[self.combo.current()], "id_viejo": self.id_viejo})
+        "tipo": self.ids[self.combo.current()], "id_viejo": self.id_viejo}, "U")
 
         self.insert_datos.destroy()
         self.padre.llenar_treeview_vehiculo()

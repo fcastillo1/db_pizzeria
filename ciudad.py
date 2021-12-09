@@ -79,7 +79,7 @@ class ciudad:
         if(self.treeview.focus() != ""):
             if messagebox.askyesno(message="¿Realmente quieres borrar la ciudad?", title = "Alerta")==True:
                 operation = "DELETE FROM ciudad where id_ciudad = %(id)s"
-                self.db.run_sql(operation, {"id": self.treeview.focus()})
+                self.db.run_sql(operation, {"id": self.treeview.focus()}, "D")
                 self.llenar_treeview_ciudad()
 
     def __modificar_ciudad(self):
@@ -132,16 +132,15 @@ class insertar_ciudad:
             command = self.insert_datos.destroy, bg='red', fg='white')
         btn_cancel.place(x=160, y =150, width = 80, height = 20)
 
-    def __insertar(self): #Insercion en la base de datos.
+    def __insertar(self):
         # Inserción de ciudad
         sql = """insert ciudad (nom_ciudad) values (%(nombre)s)"""
 
         # Se ejecuta consulta
-        self.db.run_sql(sql, {"nombre": self.nombre.get()})
+        self.db.run_sql(sql, {"nombre": self.nombre.get()}, "I")
 
         self.insert_datos.destroy()
         self.padre.llenar_treeview_ciudad()
-
 
 class modificar_ciudad:
     def __init__(self, db, padre, mod_select):
@@ -197,7 +196,7 @@ class modificar_ciudad:
         opEdicion = """update ciudad set nom_ciudad = %(nombre)s
         where id_ciudad = %(id)s"""
 
-        self.db.run_sql(opEdicion, {"id": self.id.get(),"nombre": self.nombre.get()})
+        self.db.run_sql(opEdicion, {"id": self.id.get(),"nombre": self.nombre.get()}, "U")
 
         self.insert_datos.destroy()
         # Se actualizan registros en la ventana principal (padre)
