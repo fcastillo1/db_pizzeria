@@ -234,6 +234,8 @@ class modificar_detalle:
         self.cant.place(x = 110, y = 105, width = 150, height = 20)
 
         # Se insertan datos actuales del registro
+        self.ped_viejo = self.mod_select[0]
+        self.piz_viejo = self.mod_select[1]
         self.combo_ped.insert(0, self.mod_select[0])
         self.combo_piz.insert(0, self.mod_select[1])
         self.cant.insert(0, self.mod_select[2])
@@ -263,10 +265,11 @@ class modificar_detalle:
 
     def __modificar(self):
         # Modificar registro
-        opEdicion = """UPDATE detalle SET id_pedido = %(ped)s, id_piz = %(piz)s, cantidad = %(cant)s WHERE id_pedido = %(ped)s and id_piz = %(piz)s"""
+        opEdicion = """UPDATE detalle SET id_pedido = %(ped)s, id_piz = %(piz)s, cantidad = %(cant)s WHERE id_pedido = %(ped_viejo)s and id_piz = %(piz_viejo)s"""
 
         self.db.run_sql(opEdicion, {"ped": self.ids_ped[self.combo_ped.current()],
-        "piz": self.ids_piz[self.combo_piz.current()], "cant": self.cant.get()})
+        "piz": self.ids_piz[self.combo_piz.current()], "cant": self.cant.get(),
+        "ped_viejo": self.ped_viejo, "piz_viejo": self.piz_viejo})
 
         self.insert_datos.destroy()
         # Se actualizan registros en la ventana principal (padre)
