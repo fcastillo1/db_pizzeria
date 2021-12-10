@@ -69,7 +69,7 @@ class DB_pizzeria:
 
     # Corre una consulta de inserción, actualización o eliminación
     def run_sql(self, sql, params, operacion):
-
+        # permite poder validar que se este ejecutando bien el sql
         if validar_run_sql(params) is True:
             try:
                 # Ejecuta consulta
@@ -80,35 +80,45 @@ class DB_pizzeria:
                 # Cambios en la base de datos
                 self.db.commit()
 
+            # si existen excepciones y errores de conexion con mysql se imprimen mensajes
             except mysql.connector.Error as err:
                 # Da cuenta del error imprimiendo el mensaje y mostrandolo en una ventana con ese mensaje
                 if operacion == "I":
                     texto_error = "No se puede realizar la inserción. "
+                # Da cuenta de un error de actulizacion en la operacion y se muestra en una ventana
                 elif operacion == "U":
                     texto_error = "No se puede realizar la actualización. "
+                # Da cuenta de un error de eliminacion y se muestra en una ventana
                 elif operacion == "D":
                     texto_error = "No se puede realizar la eliminación. "
-
+                # si exite el error 1451 quiere decir que el registro no se elimina porque esta en otra tabla
                 if err.errno == 1451:
                     texto_error = texto_error + "El registro se referencia en otra tabla."
+                # si existe un error 1366 quiere decir que hay un error en el tipo de dato
                 elif err.errno == 1366:
                     texto_error = texto_error + "Error en valor(es) numéricos enteros."
+                # si existe un error 1062 indicara que ya existe un registro con ese ID o rut segun sea el caso
                 elif err.errno == 1062:
                     texto_error = texto_error + "Ya hay un registro con el mismo id/rut."
-
+                # esta es la ventana que mostrara el error
                 messagebox.showerror(message = texto_error, title = "Error")
                 print(err)
+        # si el error es porque falta un campo por llenar se imprime ese mensaje
         else:
             texto_error = "Debe llenar todos los campos"
             messagebox.showerror(message = texto_error, title = "Error")
 
+# se crea una funcion que permita validar el funcionamiento del mysql
 def validar_run_sql(params):
+    # se genera una bandera
     bandera = 0;
 
     for key in params:
+        # si la patente es null la bandera sumara 1
         if params[key] == '':
             if (key != "patente"):
+                # esto se hace por el caso de las bicicleta que no cuentan con patente
                 bandera += 1;
-
+    # si la bandera es igual a 0 se retorna un true
     if bandera == 0:
         return True
