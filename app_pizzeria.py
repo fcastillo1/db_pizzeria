@@ -25,6 +25,7 @@ from informacion import informacion
 from ayuda import ayuda
 from resumen_pedido import resumen_pedido
 from detalle_vehiculo import detalle_vehiculo
+from histograma import histograma
 
 # Se define la clase que es de la aplicacion y permite su uso
 class aplicacion:
@@ -161,11 +162,20 @@ class aplicacion:
         # Se genera un boton para destruir la ventana
         info_menu.add_command(label = "Salir", command = self.root.destroy)
 
+        # se genera un menu con las vistas
         vistas_menu = Menu(menu_opciones, tearoff = 0, bg = "white")
         menu_opciones.add_cascade(label = "Vistas", menu = vistas_menu)
-
+        # se muestran las vistas del resumen de pedido y vehiculo
         vistas_menu.add_command(label = "Resumen pedido", command = self.__mostrar_vista_pedido)
         vistas_menu.add_command(label = "Resumen vehículo", command = self.__mostrar_vista_vehiculo)
+
+        # se genera un menu con las ocpiones de las graficas
+        graficas_menu = Menu(menu_opciones, tearoff = 0, bg = "white")
+        menu_opciones.add_cascade(label = "Graficas", menu = graficas_menu)
+        # se muestran las ocpiones del menu con las distintas graficas (histograma Y BLAH BLAH)
+        graficas_menu.add_command(label = "Histograma", command = self.__mostrar_histograma)
+        graficas_menu.add_command(label = "Otra grafica")
+        graficas_menu.add_command(label = "Otra grafica2")
 
         # Se construye el menú de ayuda con su color
         help_menu = Menu(menu_opciones, tearoff = 0, bg = "white")
@@ -194,9 +204,13 @@ class aplicacion:
     def __mostrar_informacion(self):
         informacion(self.root, self.db)
 
-    # Esta funcion mostrara la informaicon de ayuda y llama a la clase con su nombre a partir de su archivo
+    # Esta funcion mostrara la informacion de ayuda y llama a la clase con su nombre a partir de su archivo
     def __mostrar_ayuda(self):
         ayuda(self.root, self.db)
+
+    # Esta funcion mostrara la informacion de la grafica en este caso histograma
+    def __mostrar_histograma(self):
+        histograma(self.root, self.db)
 
     # Esta funcion mostrara la informacion de la clase cliente a partir de su archivo
     def __mostrar_cliente(self):
