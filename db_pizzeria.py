@@ -34,6 +34,17 @@ class DB_pizzeria:
             # Termina la aplicación
             exit()
 
+    def run_sql_vista(self, sql, params):
+        try:
+            # Ejecuta el select
+            self.cursor.execute(sql, params)
+            
+        except mysql.connector.Error as err:
+            texto_error = "No se ha podido visualizar el pedido"
+            messagebox.showerror(message = texto_error, title = "Error")
+            print("No se pueden obtener los datos")
+            print(err)
+
     # Función que corre una consulta select
     def run_select(self, sql):
         # realiza la excepcion para obtener los datos (tablas) de la base de datos
@@ -46,7 +57,7 @@ class DB_pizzeria:
         # si la excepcion no se cumple arrojara error
         except mysql.connector.Error as err:
             # Avisa del error al hacer select y los datos no se pueden obtener
-            print("No se pueden obtener los datos")
+            print("No se pueden obtener los datos -> run_select")
             print(err)
         # Retorna resultado del select
         return resultado
@@ -62,7 +73,7 @@ class DB_pizzeria:
         # si la excepcion no se cumple arrojara error
         except mysql.connector.Error as err:
             # Avisa del error
-            print("No se pueden obtener los datos")
+            print("No se pueden obtener los datos -> run_select_filter")
             print(err)
         # Retorna resultado del select
         return result
