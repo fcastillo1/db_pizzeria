@@ -124,7 +124,7 @@ class insertar_vehiculo:
     def __config_window(self):
         # Ajustes de ventana
         self.insert_datos.geometry('300x200')
-        self.insert_datos.title("Insertar pizza")
+        self.insert_datos.title("Insertar vehiculo")
         self.insert_datos.resizable(width = 0, height = 0)
 
     def __config_label(self):
