@@ -33,7 +33,7 @@ class aplicacion:
         # Creación de ventana principal
         self.root = tk.Tk()
         # Se define el tamano de la ventana
-        self.root.geometry("850x550")
+        self.root.geometry("875x550")
         # Se define el título de la ventana
         self.root.title("APP Pizzería l'italiano")
         # Se añade color al fondo de la ventana
@@ -85,60 +85,60 @@ class aplicacion:
         self.reset_img6 = ImageTk.PhotoImage(image_vehiculo)
 
         # Se sube una Imagen al botón detalle
-        image_detalle = Image.open("vehiculo.jpg")
+        image_detalle = Image.open("detalle.jpg")
         image_detalle = image_detalle.resize((63, 45), Image.ANTIALIAS)
         self.reset_img7 = ImageTk.PhotoImage(image_detalle)
 
         # Se sube una Imagen al botón tamaño
-        image_tamano = Image.open("vehiculo.jpg")
+        image_tamano = Image.open("tamano.jpg")
         image_tamano = image_tamano.resize((63, 45), Image.ANTIALIAS)
         self.reset_img8 = ImageTk.PhotoImage(image_tamano)
 
-        # Se sube una Imagen al botón tamaño
-        image_tipo = Image.open("vehiculo.jpg")
+        # Se sube una Imagen al botón tipo
+        image_tipo = Image.open("tipo.jpg")
         image_tipo = image_tipo.resize((63, 45), Image.ANTIALIAS)
         self.reset_img9 = ImageTk.PhotoImage(image_tipo)
 
         # Creación de los botones principales
         # Creacion boton ciudad con su texto e informacion para su funcionamiento
-        boton_ciudad = Button(self.root, text = "Ciudades", image = self.reset_img1, compound = 'top',
-        command = self.__mostrar_ciudad, width=135, bg='snow', fg='black').place(x=10, y=10)
+        boton_ciudad = Button(self.root, text = "Ciudad", image = self.reset_img1, compound = 'top',
+        command = self.__mostrar_ciudad, width=140, bg='snow', fg='black').place(x=20, y=40)
 
         # Creacion boton cliente con su texto e informacion para su funcionamiento
         boton_cliente = Button(self.root, text = "Cliente",  image = self.reset_img2, compound = 'top',
-        command = self.__mostrar_cliente, width=135 , bg='snow', fg='black').place(x=180, y = 10)
+        command = self.__mostrar_cliente, width=140 , bg='snow', fg='black').place(x=200, y = 40)
 
         # Creacion boton pedido con su texto e informacion para su funcionamiento
         boton_pedido = Button(self.root, text = "Pedido",  image = self.reset_img3, compound = 'top',
-        command = self.__mostrar_pedido,  width=135, bg='snow', fg='black').place(x=10, y = 95)
+        command = self.__mostrar_pedido,  width=140, bg='snow', fg='black').place(x=20, y = 130)
 
         # Creacion botón detalle con su texto e informacion para su funcionamiento
         boton_pedido = Button(self.root, text = "Detalle", image = self.reset_img7, compound = 'top',
-        command = self.__mostrar_detalle,  width=135, bg='snow', fg='black').place(x=180, y = 95)
+        command = self.__mostrar_detalle,  width=140, bg='snow', fg='black').place(x=200, y = 130)
 
         # Creacion boton pizza con su texto e informacion para su funcionamiento
         boton_pizza = Button(self.root, text = "Pizza", image = self.reset_img4, compound = 'top',
-        command = self.__mostrar_pizza, width=135 , bg='snow', fg='black').place(x=10, y=180)
+        command = self.__mostrar_pizza, width=140 , bg='snow', fg='black').place(x=20, y=220)
 
         # Creacion boton tamaño con su texto e informacion para su funcionamiento
         boton_pizza = Button(self.root, text = "Tamaño", image = self.reset_img8, compound = 'top',
-        command = self.__mostrar_tamano, width=135 , bg='snow', fg='black').place(x=180, y=180)
+        command = self.__mostrar_tamano, width=140 , bg='snow', fg='black').place(x=200, y=220)
 
         # Creacion boton vehiculo con su texto e informacion para su funcionamiento
-        boton_vehiculo = Button(self.root, text = "Vehiculo",  image = self.reset_img6, compound = 'top',
-        command = self.__mostrar_vehiculo, width=135 , bg='snow', fg='black').place(x=10, y=265)
+        boton_vehiculo = Button(self.root, text = "vehículo",  image = self.reset_img6, compound = 'top',
+        command = self.__mostrar_vehiculo, width=140 , bg='snow', fg='black').place(x=20, y=310)
 
         # Creacion boton tipo con su texto e informacion para su funcionamiento
         boton_vehiculo = Button(self.root, text = "Tipo", image = self.reset_img9, compound = 'top',
-        command = self.__mostrar_tipo, width=135 , bg='snow', fg='black').place(x=180, y=265)
+        command = self.__mostrar_tipo, width=140 , bg='snow', fg='black').place(x=200, y=310)
 
         # Creacion boton repartidor con su texto e informacion para su funcionamiento
         boton_repartidor = Button(self.root, text = "Repartidor",  image = self.reset_img5, compound = 'top',
-        command = self.__mostrar_repartidor, width=135 , bg='snow', fg='black').place(x=10, y=350)
+        command = self.__mostrar_repartidor, width=140 , bg='snow', fg='black').place(x=115, y=400)
 
         # Creacion boton salir que permitira que se cierre la app
         boton_salir = Button(self.root, text = "Salir", command = self.root.destroy,
-        width=20, bg='red', fg='white').place(x=375, y=475)
+        width=25, bg='red', fg='white').place(x=515, y=475)
 
 
     # Esta funcion permite crear el menu de opciones
@@ -168,9 +168,9 @@ class aplicacion:
 
     # Esta funcion permite anadir una imagen a la aplicacion
     def __agregarImagenInicial(self):
-        frame = LabelFrame(self.root, text = "", relief = tk.FLAT)
+        frame = LabelFrame(self.root, text = "\t \t APLICACIÓN PIZZERIA IL ITALIANO \t", relief = tk.FLAT)
         # Se define la ubicación del frame
-        frame.place(x = 380, y = 60)
+        frame.place(x = 400, y = 60)
 
         # Imagen principal de la ventana abierta a partir de un archivo
         image = Image.open("imagenpizza.jpg")
@@ -232,3 +232,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
