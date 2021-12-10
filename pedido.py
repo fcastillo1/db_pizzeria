@@ -117,10 +117,6 @@ class pedido:
                 mod_select = self.db.run_select_filter(opModificar, {"id": self.treeview.focus()})[0]
                 modificar_pedido(self.db, self, mod_select)
 
-
-    def __mostrar_detalle(self):
-        detalle(self.root, self.db)
-
 class insertar_pedido:
     def __init__(self, db, padre):
         self.padre = padre

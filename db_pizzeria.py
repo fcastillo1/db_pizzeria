@@ -38,9 +38,9 @@ class DB_pizzeria:
         try:
             # Ejecuta el select
             self.cursor.execute(sql, params)
-            
+
         except mysql.connector.Error as err:
-            texto_error = "No se ha podido visualizar el pedido"
+            texto_error = "No se ha podido visualizar la tabla."
             messagebox.showerror(message = texto_error, title = "Error")
             print("No se pueden obtener los datos")
             print(err)

@@ -23,6 +23,8 @@ from detalle import detalle
 from pedido import pedido
 from informacion import informacion
 from ayuda import ayuda
+from resumen_pedido import resumen_pedido
+from detalle_vehiculo import detalle_vehiculo
 
 # Se define la clase que es de la aplicacion y permite su uso
 class aplicacion:
@@ -159,6 +161,12 @@ class aplicacion:
         # Se genera un boton para destruir la ventana
         info_menu.add_command(label = "Salir", command = self.root.destroy)
 
+        vistas_menu = Menu(menu_opciones, tearoff = 0, bg = "white")
+        menu_opciones.add_cascade(label = "Vistas", menu = vistas_menu)
+
+        vistas_menu.add_command(label = "Resumen pedido", command = self.__mostrar_vista_pedido)
+        vistas_menu.add_command(label = "Resumen vehículo", command = self.__mostrar_vista_vehiculo)
+
         # Se construye el menú de ayuda con su color
         help_menu = Menu(menu_opciones, tearoff = 0, bg = "white")
         menu_opciones.add_cascade(label = "Ayuda", menu = help_menu)
@@ -223,6 +231,12 @@ class aplicacion:
     def __mostrar_repartidor(self):
         repartidor(self.root, self.db)
 
+    def __mostrar_vista_pedido(self):
+        resumen_pedido(self.root, self.db)
+
+    def __mostrar_vista_vehiculo(self):
+        detalle_vehiculo(self.root, self.db)
+
 def main():
     # Se conecta a la base de datos
     database = DB_pizzeria()
@@ -232,4 +246,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
