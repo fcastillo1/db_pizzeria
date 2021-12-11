@@ -25,6 +25,7 @@ from ayuda import ayuda
 from resumen_pedido import resumen_pedido
 from detalle_tipo import detalle_tipo
 from filtro_precio_pizza import filtro_precio_pizza
+from filtro_nombre_cliente import filtro_nombre_cliente
 from histograma import histograma
 
 # Se define la clase que es de la aplicación y permite su uso
@@ -184,7 +185,8 @@ class aplicacion:
         menu_opciones.add_cascade(label = "Dinámicas", menu = dinamicas_menu)
 
         # Consulta para filtrar pizzas por precio
-        dinamicas_menu.add_command(label = "Precio pizza", command = self.__mostrar_precio_pizza)
+        dinamicas_menu.add_command(label = "Precio de pizza", command = self.__mostrar_precio_pizza)
+        dinamicas_menu.add_command(label = "Nombre de cliente", command = self.__mostrar_capacidad_tipo)
 
         # Se construye el menú de ayuda con su color
         help_menu = Menu(menu_opciones, tearoff = 0, bg = "white")
@@ -264,6 +266,10 @@ class aplicacion:
     # Muestra info de filtro_precio_pizza y llama a la clase filtro_precio_pizza a partir de archivo
     def __mostrar_precio_pizza(self):
         filtro_precio_pizza(self.root, self.db)
+
+    # Muestra info de filtro_nombre_cliente y llama a la clase filtro_nombre_cliente a partir de archivo
+    def __mostrar_capacidad_tipo(self):
+        filtro_nombre_cliente(self.root, self.db)
 
     # Muestra info de histograma y llama a la clase histograma a partir de archivo
     def __mostrar_histograma(self):
