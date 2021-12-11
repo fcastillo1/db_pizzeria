@@ -6,8 +6,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import Button
 from tkinter import messagebox
-from tkinter import StringVar
-from tkinter import OptionMenu
+from tkinter import IntVar
 
 # Clase para realizar consulta dinámica con respecto al precio de las pizzas
 class filtro_precio_pizza:
@@ -36,7 +35,7 @@ class filtro_precio_pizza:
     def __config_button(self):
         # Botón para realizar la consulta y generar tabla
         btn_ok = tk.Button(self.root, text = "Consultar",
-            command = self.__query_dinamica, bg = 'green', fg = 'white')
+            command = self.valida_filtro, bg = 'green', fg = 'white')
         btn_ok.place(x = 100, y = 230, width = 80, height = 20)
 
         # Botón para cancelar la consulta
@@ -46,29 +45,71 @@ class filtro_precio_pizza:
 
     def __config_label(self):
         # Definición de entradas de texto
-        precio_lab = tk.Label(self.root, text = "Precios: ", bg = "light cyan")
-        precio_lab.place(x = 20, y = 10, width = 140, height = 20)
+        precio_lab = tk.Label(self.root, text = "Seleccione una opción:", bg = "light cyan")
+        precio_lab.place(x = 40, y = 10, width = 160, height = 20)
+
 
     def __config_entry(self):
-        # Se establece el combobox para hacer el filtro por precios
-        self.combo = ttk.Combobox(self.root)
-        self.combo.place(x = 140, y = 10, width = 150, height= 20)
-        self.combo["values"] = ["Menor a $5000", "Entre $5000 y $10000", "Más de $10.000"]
-        # Se coloca por defecto primer ítem de combo
-        self.combo.insert(0, self.combo["values"][0])
-        self.combo.config(state = "readonly")
+        self.var =IntVar()
+        # Recibe filtro menor o igual a
+        self.num1 = tk.Entry(self.root)
+        self.num1.place(x = 180, y = 40, width = 60, height = 20)
+        # Ajustes radiobutton
+        self.r1 = tk.Radiobutton(self.root, highlightthickness=0, bd = 0, bg ="light cyan", variable=self.var, text = "Menor o igual a:", value = 1)
+        self.r1.place(x = 40, y = 40)
 
-    def __query_dinamica(self):
+        # Recibe filtro menor o igual a
+        self.num2 = tk.Entry(self.root)
+        self.num2.place(x = 180, y = 80, width = 60, height = 20)
+        # Ajustes radiobbutton
+        self.r2 = tk.Radiobutton(self.root, highlightthickness=0, bd = 0, bg ="light cyan", variable=self.var, text = "Mayor o igual a:", value = 2)
+        self.r2.place(x = 40, y = 80)
+
+    def transforma_int(self, valor):
+        # Intenta transformar a int
+        try:
+            valor = int(valor)
+            # Retorna true y nuevo valor
+            return valor
+
+        except ValueError as err:
+            return False
+
+    def valida_filtro(self):
         # Se obtiene el rango de precio elegido por el usuario en el combobox
-        self.filtro = self.combo.current()
+        self.filtro = self.var.get()
 
         # Se determina parte de la consulta a realizar en la tabla pizza
-        if self.filtro == 0:
-            op = "< '5000'"
-        elif self.filtro == 1:
-            op = ">= '5000' and precio_piz <= '10000'"
+        if self.filtro == 1:
+            # Recibe bandera e int
+            numero = self.transforma_int(self.num1.get())
+            if numero != False:
+                print("ahahah")
+                op = "<= '%d'" % (numero)
+                # Llama método con parámetro del where
+                self.__query_dinamica(op)
+            else:
+                # Error de transformación a int
+                texto_error = "Valor ingresado no es correcto."
+                messagebox.showerror(message = texto_error, title = "Error")
+
         elif self.filtro == 2:
-            op = "> '10000'"
+            # Recibe bandera e int
+            numero = self.transforma_int(self.num2.get())
+            if numero != False:
+                op = ">= '%d'" % (numero)
+                # Llama método con parámetro del where
+                self.__query_dinamica(op)
+            else:
+                # Error de transformación a int
+                texto_error = "Valor ingresado no es correcto."
+                messagebox.showerror(message = texto_error, title = "Error")
+        else:
+            # No selección
+            texto_error = "No se ha seleccionado opción."
+            messagebox.showerror(message = texto_error, title = "Error")
+
+    def __query_dinamica(self, op):
 
         sql = """SELECT id_piz, nom_piz, nom_tam, precio_piz FROM pizza JOIN tamano
         ON pizza.id_tam = tamano.id_tam WHERE precio_piz %s""" % op
