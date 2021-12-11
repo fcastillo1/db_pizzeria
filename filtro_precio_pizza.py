@@ -52,16 +52,6 @@ class filtro_precio_pizza:
         precio_lab.place(x = 20, y = 10, width = 140, height = 20)
 
     def __config_entry(self):
-        # Tipo de variables
-        # clicked = StringVar()
-        # # Opciones
-        # opciones = ["Menor a $5000", "Entre $5000 y $10000", "Más de $10.000"]
-        # # Se establece opción por defecto
-        # clicked.set(opciones[0])
-        # self.drop = OptionMenu(self.root, clicked, *opciones, command = self.__get_opc)
-        # self.drop.place(x = 120, y = 10, width = 170, height= 20)
-
-
         # Se establece el combobox para hacer el filtro por precios
         self.combo = ttk.Combobox(self.root)
         self.combo.place(x = 140, y = 10, width = 150, height= 20)
@@ -99,24 +89,6 @@ class filtro_precio_pizza:
             # Sale de la ventana
             if opcion == False:
                 self.root.destroy()
-
-        # else:
-            # texto = "Opción ingresada no válida"
-            # opcion = messagebox.askretrycancel("Error", texto)
-            #
-            # if opcion == False:
-            #     self.root.destroy()
-
-            #
-            # if self.filtro == 0:
-            #     sql = """SELECT id_piz, nom_piz, nom_tam, precio_piz FROM pizza JOIN tamano
-            #     ON pizza.id_tam = tamano.id_tam WHERE precio_piz < 5000"""
-            # elif self.filtro == 1:
-            #     sql = """SELECT id_piz, nom_piz, nom_tam, precio_piz FROM pizza JOIN tamano
-            #     ON pizza.id_tam = tamano.id_tam WHERE precio_piz >= 5000 and precio_piz <= 10000"""
-            # elif self.filtro == 2:
-            #     sql = """SELECT id_piz, nom_piz, nom_tam, precio_piz FROM pizza JOIN tamano
-            #     ON pizza.id_tam = tamano.id_tam WHERE precio_piz > 10000"""
 
 class select_pizza:
     def __init__(self, db, mod_select):
