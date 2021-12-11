@@ -62,7 +62,8 @@ class detalle:
 
     def llenar_treeview_detalle(self):
         # Se obtienen detalles ingresadas
-        sql = """select id_pedido, id_piz, cantidad, precio_piz from detalle;"""
+        sql = """SELECT id_pedido, nom_piz, cantidad, detalle.precio_piz FROM detalle
+        JOIN pizza ON detalle.id_piz = pizza.id_piz"""
 
         # Guarda info obtenida tras la consulta
         data = self.db.run_select(sql)
