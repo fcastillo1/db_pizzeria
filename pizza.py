@@ -29,16 +29,15 @@ class pizza:
 
     def __config_treeview_pizza(self):
         self.treeview = ttk.Treeview(self.root)
-        self.treeview.configure(show = "headings", columns = ("id_piz", "nom_piz", "precio_piz",
-            "id_tam"))
+        self.treeview.configure(show = "headings", columns = ("id_piz", "nom_piz", "id_tam", "precio_piz"))
         self.treeview.heading("id_piz", text = "ID")
         self.treeview.heading("nom_piz", text = "Nombre")
-        self.treeview.heading("precio_piz", text = "Precio")
         self.treeview.heading("id_tam", text = "Tamaño")
+        self.treeview.heading("precio_piz", text = "Precio")
         self.treeview.column("id_piz", minwidth = 150, width = 150, stretch = False)
         self.treeview.column("nom_piz", minwidth = 150, width = 150, stretch = False)
-        self.treeview.column("precio_piz", minwidth = 150, width = 150, stretch = False)
         self.treeview.column("id_tam", minwidth = 150, width = 150, stretch = False)
+        self.treeview.column("precio_piz", minwidth = 150, width = 150, stretch = False)
         # Ubica treeview
         self.treeview.place(x = 0, y = 0, height = 350, width = 600)
         # Llenado del treeview
@@ -61,7 +60,7 @@ class pizza:
 
     def llenar_treeview_pizza(self):
         # Se obtienen pizzas ingresadas
-        opTreeview = """SELECT id_piz, nom_piz, precio_piz, nom_tam from pizza
+        opTreeview = """SELECT id_piz, nom_piz, nom_tam, precio_piz from pizza
         join tamano on pizza.id_tam = tamano.id_tam;"""
 
         # Guarda info obtenida tras la consulta
@@ -92,7 +91,7 @@ class pizza:
     def __modificar_pizza(self):
         if(self.treeview.focus() != ""):
             if messagebox.askyesno(message="¿Realmente quieres modificar el registro?", title = "Alerta")== True:
-                opModificar = """SELECT id_piz, nom_piz, precio_piz, nom_tam from pizza
+                opModificar = """SELECT id_piz, nom_piz, nom_tam, precio_piz from pizza
                 join tamano on pizza.id_tam = tamano.id_tam WHERE id_piz = %(id)s"""
 
                 # Se consulta en la tabla pizza por el id del registro a modificar
@@ -166,8 +165,8 @@ class insertar_pizza:
 
     def __insertar(self): #Insercion en la base de datos.
         # Inserción de pizza
-        opInsert = """INSERT pizza (id_piz, nom_piz, precio_piz, id_tam) values
-            (%(id)s, %(nombre)s, %(precio)s, %(tamano)s)"""
+        opInsert = """INSERT pizza (id_piz, nom_piz, id_tam, precio_piz) values
+            (%(id)s, %(nombre)s, %(tamano)s, %(precio)s)"""
 
         # Se ejecuta consulta
         self.db.run_sql(opInsert, {"id": self.id.get(),"nombre": self.nombre.get(),
@@ -222,8 +221,8 @@ class modificar_pizza:
         self.id_viejo = self.mod_select[0]
         self.id.insert(0, self.mod_select[0])
         self.nombre.insert(0, self.mod_select[1])
-        self.precio.insert(0, self.mod_select[2])
-        self.combo.insert(0, self.mod_select[3])
+        self.combo.insert(0, self.mod_select[2])
+        self.precio.insert(0, self.mod_select[3])
 
     def __llenar_combo(self):
         opLCombo = "SELECT id_tam, nom_tam FROM tamano"
@@ -244,7 +243,7 @@ class modificar_pizza:
 
     def __modificar(self):
         opEdicion = """UPDATE pizza set id_piz = %(id)s, nom_piz = %(nombre)s,
-            precio_piz = %(precio)s, id_tam = %(tamano)s WHERE id_piz = %(id_viejo)s"""
+            id_tam = %(tamano)s, precio_piz = %(precio)s WHERE id_piz = %(id_viejo)s"""
 
         self.db.run_sql(opEdicion, {"id": self.id.get(),"nombre": self.nombre.get(),
         "precio": self.precio.get(), "tamano": self.ids[self.combo.current()], "id_viejo": self.id_viejo}, "U")
