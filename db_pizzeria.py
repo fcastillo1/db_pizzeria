@@ -59,6 +59,7 @@ class DB_pizzeria:
             # Avisa del error al hacer select y los datos no se pueden obtener
             print("No se pueden obtener los datos -> run_select")
             print(err)
+
         # Retorna resultado del select
         return resultado
 
@@ -119,17 +120,18 @@ class DB_pizzeria:
             texto_error = "Debe llenar todos los campos"
             messagebox.showerror(message = texto_error, title = "Error")
 
-# se crea una funcion que permita validar el funcionamiento del mysql
+# Se crea una función que permita validar el funcionamiento del mysql
 def validar_run_sql(params):
-    # se genera una bandera
+    # Se genera una bandera
     bandera = 0;
 
     for key in params:
-        # si la patente es null la bandera sumara 1
-        if params[key] == '':
-            if (key != "patente"):
-                # esto se hace por el caso de las bicicleta que no cuentan con patente
+        # Si un atributo es NULL, a excepción de patente, se incrementa bandera
+        if not params[key]:
+            if key != "patente":
+                # Esto se hace por el caso de las bicicleta que no cuentan con patente
                 bandera += 1;
-    # si la bandera es igual a 0 se retorna un true
+
+    # Si la bandera es igual a 0 se retorna un true (entradas validadas)
     if bandera == 0:
         return True

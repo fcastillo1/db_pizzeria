@@ -21,7 +21,7 @@ class vehiculo:
         # Ventana nueva
         self.root.transient(root)
 
-        # Visualización de pizzas registradas en la base de datos
+        # Visualización de vehículos registrados
         self.__config_treeview_vehiculo()
 
         # Se crean los botones para indicar operaciones CRUD
@@ -171,8 +171,8 @@ class insertar_vehiculo:
             (%(id)s, %(patente)s, %(tipo)s)"""
 
         # Se ejecuta consulta
-        self.db.run_sql(opInsert, {"id": self.id.get(),"": self.patente.get(),
-        "patente": self.patente.get(), "tipo": self.ids[self.combo.current()]}, "I")
+        self.db.run_sql(opInsert, {"id": self.id.get(), "patente": self.patente.get(),
+        "tipo": self.ids[self.combo.current()]}, "I")
 
         self.insert_datos.destroy()
         self.padre.llenar_treeview_vehiculo()
