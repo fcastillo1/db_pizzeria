@@ -28,17 +28,21 @@ class detalle:
 
     def __config_treeview_detalle(self):
         self.treeview = ttk.Treeview(self.root)
-        self.treeview.configure(show = "headings", columns = ("id_pedido", "id_piz", "cantidad", "precio_piz"))
+        self.treeview.configure(show = "headings", columns = ("id_pedido", "id_piz", "nom_piz", "nom_tam", "cantidad", "precio_piz"))
         self.treeview.heading("id_pedido", text = "Pedido")
-        self.treeview.heading("id_piz", text = "Pizza")
+        self.treeview.heading("id_piz", text = "ID Pizza")
+        self.treeview.heading("nom_piz", text = "Pizza")
+        self.treeview.heading("nom_tam", text = "Tamaño")
         self.treeview.heading("cantidad", text = "Cantidad")
         self.treeview.heading("precio_piz", text = "Precio Unitario")
 
         self.treeview.bind('<ButtonRelease-1>', self.selec_registro)
 
-        self.treeview.column("id_pedido", minwidth = 150, width = 140, stretch = False)
-        self.treeview.column("id_piz", minwidth = 150, width = 150, stretch = False)
-        self.treeview.column("cantidad", minwidth = 150, width = 140, stretch = False)
+        self.treeview.column("id_pedido", minwidth = 150, width = 80, stretch = False)
+        self.treeview.column("id_piz", minwidth = 150, width = 80, stretch = False)
+        self.treeview.column("nom_piz", minwidth = 150, width = 120, stretch = False)
+        self.treeview.column("nom_tam", minwidth = 150, width = 100, stretch = False)
+        self.treeview.column("cantidad", minwidth = 150, width = 80, stretch = False)
         self.treeview.column("precio_piz", minwidth = 150, width = 190, stretch = False)
         self.treeview.place(x = 0, y = 0, height = 350, width = 620)
         # Llenado del treeview
@@ -62,8 +66,8 @@ class detalle:
 
     def llenar_treeview_detalle(self):
         # Se obtienen detalles ingresadas
-        sql = """SELECT id_pedido, nom_piz, cantidad, detalle.precio_piz FROM detalle
-        JOIN pizza ON detalle.id_piz = pizza.id_piz"""
+        sql = """SELECT id_pedido, pizza.id_piz, nom_piz, nom_tam, cantidad, detalle.precio_piz FROM detalle
+        JOIN pizza ON detalle.id_piz = pizza.id_piz JOIN tamano ON pizza.id_tam = tamano.id_tam"""
 
         # Guarda info obtenida tras la consulta
         data = self.db.run_select(sql)
@@ -76,7 +80,7 @@ class detalle:
             # Recorre cada registro (tupla) guardado en var data
             for i in data:
                 # Inserta valores en treeview
-                self.treeview.insert("", "end", iid = i[0:2], values = i[0:4])
+                self.treeview.insert("", "end", iid = i[0:2], values = i[0:6])
 
             self.data = data
 
@@ -102,15 +106,17 @@ class detalle:
     def __modificar_detalle(self):
         if(self.actual != ""):
             if messagebox.askyesno(message="¿Realmente quieres modificar el registro?", title = "Alerta")== True:
-                opModificar = """SELECT id_pedido, id_piz, cantidad, precio_piz from detalle where id_pedido = %(ped)s and id_piz = %(piz)s"""
 
-                # Se consulta en la tabla detalle por el id del registro a modificar
+                # Consulta
+                opModificar = """SELECT id_pedido, detalle.id_piz, nom_piz, nom_tam,
+                cantidad, detalle.precio_piz FROM detalle JOIN pizza ON detalle.id_piz = pizza.id_piz
+                JOIN tamano ON pizza.id_tam = tamano.id_tam WHERE id_pedido = %(ped)s and
+                detalle.id_piz = %(piz)s"""
+
+                # Se consulta en la tabla detalle con base en claves primarias
                 mod_select = self.db.run_select_filter(opModificar, {"ped": self.actual[0], "piz": self.actual[1]})[0]
-                # print(mod_select)
                 modificar_detalle(self.db, self, mod_select)
 
-
-#
 class insertar_detalle:
     def __init__(self, db, padre):
         self.padre = padre
@@ -164,10 +170,11 @@ class insertar_detalle:
         return [i[0] for i in self.data], [i[0] for i in self.data]
 
     def __llenar_combo_piz(self):
-        opLCombo = "SELECT id_piz, nom_piz FROM pizza"
+        opLCombo = """SELECT id_piz, nom_piz, nom_tam FROM pizza JOIN tamano ON
+        pizza.id_tam = tamano.id_tam """
         self.data = self.db.run_select(opLCombo)
         # Se muestra nombre de la pizza
-        return [i[1] for i in self.data], [i[0] for i in self.data]
+        return [i[1:3] for i in self.data], [i[0] for i in self.data]
 
     def __config_button(self):
         # Crea botón aceptar ingreso y se enlaza a evento
@@ -180,7 +187,7 @@ class insertar_detalle:
             command = self.insert_datos.destroy, bg='red', fg='white')
         btn_cancel.place(x=210, y =160, width = 80, height = 20)
 
-    def __insertar(self): #Insercion en la base de datos.
+    def __insertar(self):
         # Inserción de detalle
         sql = """INSERT detalle (id_pedido, id_piz, cantidad) VALUES (%(pedido)s,
         %(pizza)s, %(cantidad)s)"""
@@ -210,6 +217,7 @@ class modificar_detalle:
         self.insert_datos.resizable(width = 0, height = 0)
 
     def __config_label(self):
+        print("config")
         # Definición de entradas de texto para la clase detalle
         pedido_lab = tk.Label(self.insert_datos, text = "Pedido: ")
         pedido_lab.place(x = 10, y = 35, width = 120, height = 20)
@@ -234,12 +242,14 @@ class modificar_detalle:
         self.cant = tk.Entry(self.insert_datos)
         self.cant.place(x = 110, y = 105, width = 150, height = 20)
 
-        # Se insertan datos actuales del registro
+        # Se guardan valores actuales de las claves primarias
         self.ped_viejo = self.mod_select[0]
         self.piz_viejo = self.mod_select[1]
+
+        # Se insertan datos actuales del registro de detalle
         self.combo_ped.insert(0, self.mod_select[0])
-        self.combo_piz.insert(0, self.mod_select[1])
-        self.cant.insert(0, self.mod_select[2])
+        self.combo_piz.insert(0, self.mod_select[2:4])
+        self.cant.insert(0, self.mod_select[4])
 
     def __llenar_combo_ped(self):
         opLCombo = "SELECT id_pedido FROM pedido"
@@ -248,10 +258,11 @@ class modificar_detalle:
         return [i[0] for i in self.data], [i[0] for i in self.data]
 
     def __llenar_combo_piz(self):
-        opLCombo = "SELECT id_piz, nom_piz FROM pizza"
+        opLCombo = """SELECT id_piz, nom_piz, nom_tam FROM pizza JOIN tamano ON
+        pizza.id_tam = tamano.id_tam """
         self.data = self.db.run_select(opLCombo)
         # Se muestra nombre de la pizza
-        return [i[1] for i in self.data], [i[0] for i in self.data]
+        return [i[1:3] for i in self.data], [i[0] for i in self.data]
 
     def __config_button(self):
         # Crea botón aceptar y se enlaza a evento para modificar el detalle
