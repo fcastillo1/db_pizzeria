@@ -33,8 +33,6 @@ class filtro_precio_pizza:
         self.__config_label()
         self.__config_entry()
 
-        self.root.mainloop()
-
     def __config_button(self):
         # Botón para realizar la consulta y generar tabla
         btn_ok = tk.Button(self.root, text = "Consultar",

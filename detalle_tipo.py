@@ -31,8 +31,6 @@ class detalle_tipo:
         self.__config_label()
         self.__config_entry()
 
-        self.root.mainloop()
-
     def __config_button(self):
         btn_ok = tk.Button(self.root, text = "Generar",
             command = self.__generar_vista, bg = 'green', fg = 'white')
