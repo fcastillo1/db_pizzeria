@@ -7,8 +7,8 @@ from tkinter import ttk
 from tkinter import Button
 from tkinter import messagebox
 
-# Se define la clase resumen_pedido
-class resumen_pedido:
+# Se define la clase de  detalle_tipo que permite
+class detalle_tipo:
     def __init__(self, root, db):
         # Se actualiza atributo con la database
         self.db = db
@@ -19,10 +19,10 @@ class resumen_pedido:
         # Se define el tamano de la ventana
         self.root.geometry('300x270')
         # Se define el título de la ventana
-        self.root.title("PIZZAS POR PEDIDO")
+        self.root.title("DETALLE DE TIPO")
         # Se añade color al fondo de la ventana
-        self.root.config(bg="light cyan")
-        # Esta opción permite cambiar el tamano de la venta según las necesidades del usuario
+        self.root.config(bg = "light cyan")
+        # Esta opción permite cambiar el tamano de la venta
         self.root.resizable(width = 0, height = 0)
         self.root.transient(root)
 
@@ -45,54 +45,56 @@ class resumen_pedido:
 
     def __config_label(self):
         # Definición de entradas de texto
-        pedido_lab = tk.Label(self.root, text = "Pedido: ", bg = "light cyan")
+        pedido_lab = tk.Label(self.root, text = "Tipo: ", bg = "light cyan")
         pedido_lab.place(x = 10, y = 35, width = 140, height = 20)
 
     def __config_entry(self):
-        # Combobox para seleccionar el pedido
+        # Combobox para seleccionar el tipo
         self.combo = ttk.Combobox(self.root)
         self.combo.place(x = 110, y = 35, width = 150, height= 20)
-        # Recepción de columna con ids de tabla pedido
-        self.combo["values"], self.ids = self.__llenar_combo_pedido()
+
+        # Recepción de columna nombre e ids de tabla tipo
+        self.combo["values"], self.ids = self.__llenar_combo_tipo()
 
         # Validación de combobox
-        if self.validar_combo_pedido() == True:
+        if self.validar_combo_tipo() == True:
             # Si está vacío, se coloca por defecto el primer ítem
             self.combo.insert(0, self.combo["values"][0])
             self.combo.config(state = "readonly")
         else:
-            # Advierte que no hay registros en la tabla pedido
-            texto = "Ingresar registros en PEDIDO"
+            # Advierte que no hay registros en la tabla tipo
+            texto = "Ingresar registros en TIPO"
             messagebox.showwarning("Listado vacío", texto)
             # Destruye ventana
             self.root.destroy()
 
-    def validar_combo_pedido(self):
-        # Si hay registros en tabla pedido, retorna true
+    def validar_combo_tipo(self):
+        # Si hay registros en tabla tipo, retorna true
         if self.ids != []:
             return True
 
-    def __llenar_combo_pedido(self):
+    def __llenar_combo_tipo(self):
         # Consulta para obtener detalles del combo
-        opLCombo = "SELECT id_pedido FROM pedido"
+        opLCombo = "SELECT id_tipo, nom_tipo FROM tipo"
         self.data = self.db.run_select(opLCombo)
-        # Retorna ids de pedidos
-        return [i[0] for i in self.data], [i[0] for i in self.data]
+
+        # Se retorna nombre del timpo y el id correspondiente
+        return [i[1] for i in self.data], [i[0] for i in self.data]
 
     def __generar_vista(self):
-        sql = """CREATE OR REPLACE VIEW resumen_pedido AS SELECT nom_piz, nom_tam,
-        cantidad, detalle.precio_piz FROM detalle JOIN pizza ON
-        detalle.id_piz = pizza.id_piz JOIN tamano ON pizza.id_tam = tamano.id_tam
-        WHERE id_pedido = %(id)s; """
+        # SQL para generar una vista
+        sql = """CREATE OR REPLACE VIEW detalle_tipo AS SELECT vehiculo.id_veh,
+        patente, capacidad_tipo FROM tipo JOIN vehiculo ON tipo.id_tipo = vehiculo.id_tipo
+        WHERE tipo.id_tipo = %(id)s;"""
 
         self.db.run_sql_vista(sql, {"id": self.ids[self.combo.current()]})
 
         if self.validar_vista() == True:
-            # Se pasa como parámetro el pedido seleccionado
-            imprimir_resumen_pedido(self.db, self.ids[self.combo.current()])
+            # Se pasa como parámetro el tipo seleccionado
+            imprimir_detalle_tipo(self.db, self.combo["values"][self.combo.current()])
 
         else:
-            # No hay registros en la tabla pizza
+            # No hay registros en la tabla vehículo
             texto = "¿Desea intentar con otra opción?"
             opcion = messagebox.askretrycancel("Sin resultados", texto)
 
@@ -101,41 +103,44 @@ class resumen_pedido:
                 self.root.destroy()
 
     def validar_vista(self):
-        sql = "SELECT nom_piz, nom_tam, cantidad, precio_piz FROM resumen_pedido"
+        sql = "SELECT id_veh, patente, capacidad_tipo FROM detalle_tipo"
         select_vista = self.db.run_select(sql)
 
         if select_vista != []:
             return True
 
-class imprimir_resumen_pedido:
-    def __init__(self, db, pedido):
+class imprimir_detalle_tipo:
+    def __init__(self, db, tipo):
         self.db = db
         self.data = []
-        self.pedido = pedido
+
+        # Tipo de vehículo escogido para mostrar
+        self.tipo = tipo
 
         # Ventana emergente
         self.tabla = tk.Toplevel()
-        self.tabla.geometry('500x300')
-        texto_titulo = "Listado de PIZZAS en PEDIDO " + str(self.pedido)
+
+        # Ajustes de ventana
+        self.tabla.geometry('500x250')
+        texto_titulo = "Listado de VEHÍCULOS según TIPO " + str(self.tipo)
         self.tabla.title(texto_titulo)
         self.tabla.resizable(width = 0, height = 0)
 
+        # Configuración del treeview
         self.__config_treeview_vista()
 
     def __config_treeview_vista(self):
         self.treeview = ttk.Treeview(self.tabla)
         # Configuración de nombres de cada columna
-        self.treeview.configure(show = "headings", columns = ("nom_piz", "nom_tam", "cantidad", "precio_piz"))
-        self.treeview.heading("nom_piz", text = "Pizza")
-        self.treeview.heading("nom_tam", text = "Tamaño")
-        self.treeview.heading("cantidad", text = "Cantidad")
-        self.treeview.heading("precio_piz", text = "Precio unitario")
+        self.treeview.configure(show = "headings", columns = ("id_veh", "patente", "capacidad_tipo"))
+        self.treeview.heading("id_veh", text = "ID")
+        self.treeview.heading("patente", text = "Patente")
+        self.treeview.heading("capacidad_tipo", text = "Capacidad")
 
         # Configuración de tamaños de cada columna
-        self.treeview.column("nom_piz", minwidth = 150, width = 100, stretch = False)
-        self.treeview.column("nom_tam", minwidth = 150, width = 100, stretch = False)
-        self.treeview.column("cantidad", minwidth = 150, width = 150, stretch = False)
-        self.treeview.column("precio_piz", minwidth = 150, width = 150, stretch = False)
+        self.treeview.column("id_veh", minwidth = 150, width = 100, stretch = False)
+        self.treeview.column("patente", minwidth = 150, width = 100, stretch = False)
+        self.treeview.column("capacidad_tipo", minwidth = 150, width = 100, stretch = False)
 
         # Ubica treeview
         self.treeview.place(x = 0, y = 0, height = 350, width = 850)
@@ -144,8 +149,8 @@ class imprimir_resumen_pedido:
         self.tabla.after(0, self.llenar_treeview_vista)
 
     def llenar_treeview_vista(self):
-        # Se obtienen vehículos ingresadas
-        opTreeview = "SELECT nom_piz, nom_tam, cantidad, precio_piz FROM resumen_pedido"
+        # Se obtienen registros de la vista detalle_tipo
+        opTreeview = "SELECT id_veh, patente, capacidad_tipo FROM detalle_tipo"
 
         # Guarda info obtenida tras la consulta
         data = self.db.run_select(opTreeview)
@@ -158,6 +163,6 @@ class imprimir_resumen_pedido:
             # Recorre cada registro (tupla) guardado en var data
             for i in data:
                 # Inserta valores en treeview
-                self.treeview.insert("", "end", iid = i[0], values = i[0:4])
+                self.treeview.insert("", "end", iid = i[0], values = i[0:5])
 
             self.data = data
