@@ -106,14 +106,14 @@ class select_resumen_tipo:
         self.tabla = tk.Toplevel()
 
         # Ajustes de ventana
-        self.tabla.geometry('500x250')
+        self.tabla.geometry('500x300')
         texto_titulo = "Listado de VEHÍCULOS según TIPO "
         self.tabla.title(texto_titulo)
         self.tabla.resizable(width = 0, height = 0)
 
         # Configuración del treeview
-        self.__config_button1()
         self.__config_treeview_vista()
+        self.__crear_botones_resumen_tipo()
 
     def __config_button1(self):
         btn_ok = tk.Button(self.tabla, text = "Aceptar",
@@ -154,3 +154,8 @@ class select_resumen_tipo:
                 self.treeview.insert("", "end", iid = i[0], values = i[0:5])
 
             self.data = data
+
+    def __crear_botones_resumen_tipo(self):
+        b4 = tk.Button(self.tabla, text = "Aceptar", bg='green', fg='blue',
+            command=self.tabla.destroy)
+        b4.place(x = 150, y = 245, width = 200, height = 50)
