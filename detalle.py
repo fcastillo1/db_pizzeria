@@ -12,7 +12,7 @@ class detalle:
 
         # Toplevel es una ventana que está un nivel arriba que la principal
         self.root = tk.Toplevel()
-        self.root.geometry('620x400')
+        self.root.geometry('710x400')
         self.root.title("Detalle")
         self.root.config(bg = "light cyan")
         self.root.resizable(width = 0, height = 0)
@@ -28,27 +28,32 @@ class detalle:
 
     def __config_treeview_detalle(self):
         self.treeview = ttk.Treeview(self.root)
-        self.treeview.configure(show = "headings", columns = ("id_pedido", "id_piz", "nom_piz", "nom_tam", "cantidad", "precio_piz"))
+        self.treeview.configure(show = "headings", columns = ("id_pedido", "id_piz",
+                                "nom_piz", "nom_tam", "cantidad", "precio_piz", "precio_total"))
+        # Nombres para cada columna
         self.treeview.heading("id_pedido", text = "Pedido")
         self.treeview.heading("id_piz", text = "ID Pizza")
         self.treeview.heading("nom_piz", text = "Pizza")
         self.treeview.heading("nom_tam", text = "Tamaño")
         self.treeview.heading("cantidad", text = "Cantidad")
-        self.treeview.heading("precio_piz", text = "Precio Unitario")
+        self.treeview.heading("precio_piz", text = "Precio unitario")
+        self.treeview.heading("precio_total", text = "Precio total")
 
-        self.treeview.bind('<ButtonRelease-1>', self.selec_registro)
-
+        # Dimensiones para cada columna
         self.treeview.column("id_pedido", minwidth = 150, width = 80, stretch = False)
         self.treeview.column("id_piz", minwidth = 150, width = 80, stretch = False)
         self.treeview.column("nom_piz", minwidth = 150, width = 120, stretch = False)
         self.treeview.column("nom_tam", minwidth = 150, width = 100, stretch = False)
-        self.treeview.column("cantidad", minwidth = 150, width = 80, stretch = False)
-        self.treeview.column("precio_piz", minwidth = 150, width = 190, stretch = False)
-        self.treeview.place(x = 0, y = 0, height = 350, width = 620)
+        self.treeview.column("cantidad", minwidth = 100, width = 100, stretch = False)
+        self.treeview.column("precio_piz", minwidth = 100, width = 120, stretch = False)
+        self.treeview.column("precio_total", minwidth = 100, width = 120, stretch = False)
+        self.treeview.place(x = 0, y = 0, height = 350, width = 810)
         # Llenado del treeview
         self.llenar_treeview_detalle()
-
         self.root.after(0, self.llenar_treeview_detalle)
+
+        # Ajuste treeview para seleccionar registros con dos claves primarias
+        self.treeview.bind('<ButtonRelease-1>', self.selec_registro)
 
     def __crear_botones_detalle(self):
         b1 = tk.Button(self.root, text = "Insertar detalle", bg ='snow',
@@ -66,8 +71,8 @@ class detalle:
 
     def llenar_treeview_detalle(self):
         # Se obtienen detalles ingresadas
-        sql = """SELECT id_pedido, pizza.id_piz, nom_piz, nom_tam, cantidad, detalle.precio_piz FROM detalle
-        JOIN pizza ON detalle.id_piz = pizza.id_piz JOIN tamano ON pizza.id_tam = tamano.id_tam"""
+        sql = """SELECT id_pedido, pizza.id_piz, nom_piz, nom_tam, cantidad, detalle.precio_piz,
+        precio_total FROM detalle JOIN pizza ON detalle.id_piz = pizza.id_piz JOIN tamano ON pizza.id_tam = tamano.id_tam"""
 
         # Guarda info obtenida tras la consulta
         data = self.db.run_select(sql)
@@ -80,7 +85,7 @@ class detalle:
             # Recorre cada registro (tupla) guardado en var data
             for i in data:
                 # Inserta valores en treeview
-                self.treeview.insert("", "end", iid = i[0:2], values = i[0:6])
+                self.treeview.insert("", "end", iid = i[0:2], values = i[0:7])
 
             self.data = data
 
@@ -109,7 +114,7 @@ class detalle:
 
                 # Consulta
                 opModificar = """SELECT id_pedido, detalle.id_piz, nom_piz, nom_tam,
-                cantidad, detalle.precio_piz FROM detalle JOIN pizza ON detalle.id_piz = pizza.id_piz
+                cantidad, detalle.precio_piz, precio_total FROM detalle JOIN pizza ON detalle.id_piz = pizza.id_piz
                 JOIN tamano ON pizza.id_tam = tamano.id_tam WHERE id_pedido = %(ped)s and
                 detalle.id_piz = %(piz)s"""
 
@@ -126,10 +131,10 @@ class insertar_detalle:
         self.insert_datos = tk.Toplevel()
 
         # Funcionalidades
+        self.__config_button()
         self.__config_window()
         self.__config_label()
         self.__config_entry()
-        self.__config_button()
 
     def __config_window(self):
         # Ajustes de ventana
@@ -159,9 +164,24 @@ class insertar_detalle:
         self.combo_piz.place(x = 110, y = 70, width = 150, height= 20)
         self.combo_piz["values"], self.ids_piz = self.__llenar_combo_piz()
 
-        # Entrada de cantidad
+        # Entrada de texto para cantidad
         self.cant = tk.Entry(self.insert_datos)
         self.cant.place(x = 110, y = 105, width = 150, height = 20)
+
+        # Validación de combobox de tamaños
+        if (self.ids_ped != [] and self.ids_piz != []):
+            # Si combo de pizzas no está vacío, se coloca por defecto el primer ítem
+            self.combo_piz.insert(0, self.combo_piz["values"][0])
+            self.combo_piz.config(state = "readonly")
+
+            # Si combo de pedidos no está vacío, se coloca por defecto el primer ítem
+            self.combo_ped.insert(0, self.combo_ped["values"][0])
+            self.combo_ped.config(state = "readonly")
+        else:
+            texto = "Debe haber registros en PEDIDO y PIZZA"
+            messagebox.showerror("Problema de inserción", texto)
+            # Destruye ventana
+            self.insert_datos.destroy()
 
     def __llenar_combo_ped(self):
         opLCombo = "SELECT id_pedido FROM pedido"
@@ -217,7 +237,6 @@ class modificar_detalle:
         self.insert_datos.resizable(width = 0, height = 0)
 
     def __config_label(self):
-        print("config")
         # Definición de entradas de texto para la clase detalle
         pedido_lab = tk.Label(self.insert_datos, text = "Pedido: ")
         pedido_lab.place(x = 10, y = 35, width = 120, height = 20)
@@ -248,7 +267,9 @@ class modificar_detalle:
 
         # Se insertan datos actuales del registro de detalle
         self.combo_ped.insert(0, self.mod_select[0])
+        self.combo_ped.config(state = "readonly")
         self.combo_piz.insert(0, self.mod_select[2:4])
+        self.combo_piz.config(state = "readonly")
         self.cant.insert(0, self.mod_select[4])
 
     def __llenar_combo_ped(self):
