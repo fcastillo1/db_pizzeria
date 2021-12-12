@@ -18,7 +18,7 @@ class filtro_precio_pizza:
         # Se crea una nueva ventana superior a la principal
         self.root = tk.Toplevel()
         # Se define el tamaño de la ventana
-        self.root.geometry('300x270')
+        self.root.geometry('300x200')
         # Se define el título de la ventana
         self.root.title("Filtrar pizzas por precio")
         # Se añade color al fondo de la ventana
@@ -36,16 +36,16 @@ class filtro_precio_pizza:
         # Botón para realizar la consulta y generar tabla
         btn_ok = tk.Button(self.root, text = "Consultar",
             command = self.valida_filtro, bg = 'green', fg = 'white')
-        btn_ok.place(x = 100, y = 230, width = 80, height = 20)
+        btn_ok.place(x = 50, y = 160, width = 80, height = 20)
 
         # Botón para cancelar la consulta
         btn_cancel = tk.Button(self.root, text = "Cancelar",
             command = self.root.destroy, bg = 'red', fg = 'white')
-        btn_cancel.place(x = 210, y = 230, width = 80, height = 20)
+        btn_cancel.place(x = 170, y = 160, width = 80, height = 20)
 
     def __config_label(self):
         # Definición de entradas de texto
-        precio_lab = tk.Label(self.root, text = "Seleccione una opción:", bg = "light cyan")
+        precio_lab = tk.Label(self.root, text = "Seleccione una opción:", bg = "light cyan", fg = "black")
         precio_lab.place(x = 40, y = 10, width = 160, height = 20)
 
 
@@ -53,17 +53,17 @@ class filtro_precio_pizza:
         self.var =IntVar()
         # Recibe filtro menor o igual a
         self.num1 = tk.Entry(self.root)
-        self.num1.place(x = 180, y = 40, width = 60, height = 20)
+        self.num1.place(x = 180, y = 50, width = 60, height = 20)
         # Ajustes radiobutton
-        self.r1 = tk.Radiobutton(self.root, highlightthickness=0, bd = 0, bg ="light cyan", variable=self.var, text = "Menor o igual a:", value = 1)
-        self.r1.place(x = 40, y = 40)
+        self.r1 = tk.Radiobutton(self.root, highlightthickness=0, bd = 0, bg ="light cyan", fg="blue", variable=self.var, text = "Menor o igual a:", value = 1)
+        self.r1.place(x = 40, y = 50)
 
         # Recibe filtro menor o igual a
         self.num2 = tk.Entry(self.root)
-        self.num2.place(x = 180, y = 80, width = 60, height = 20)
+        self.num2.place(x = 180, y = 100, width = 60, height = 20)
         # Ajustes radiobbutton
-        self.r2 = tk.Radiobutton(self.root, highlightthickness=0, bd = 0, bg ="light cyan", variable=self.var, text = "Mayor o igual a:", value = 2)
-        self.r2.place(x = 40, y = 80)
+        self.r2 = tk.Radiobutton(self.root, highlightthickness=0, bd = 0, bg ="light cyan", fg="blue", variable=self.var, text = "Mayor o igual a:", value = 2)
+        self.r2.place(x = 40, y = 100)
 
     def transforma_int(self, valor):
         # Intenta transformar a int
