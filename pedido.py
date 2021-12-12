@@ -18,7 +18,7 @@ class pedido:
 
         # Toplevel es una ventana que está un nivel arriba que la principal
         self.root = tk.Toplevel()
-        self.root.geometry('850x400')
+        self.root.geometry('840x400')
         self.root.title("Pedido")
         self.root.config(bg = "light cyan")
         self.root.resizable(width = 0, height = 0)
@@ -52,7 +52,7 @@ class pedido:
         self.treeview.column("id_veh", minwidth = 150, width = 105, stretch = False)
 
         # Ubica treeview
-        self.treeview.place(x = 0, y = 0, height = 350, width = 850)
+        self.treeview.place(x = 0, y = 0, height = 350, width = 845)
         # Llenado del treeview
         self.llenar_treeview_pedido()
         self.root.after(0, self.llenar_treeview_pedido)
@@ -128,10 +128,10 @@ class insertar_pedido:
         # Funcionalidades
         #self.__calendar()
     #    self.__grad_date()
+        self.__config_button()
         self.__config_window()
         self.__config_label()
         self.__config_entry()
-        self.__config_button()
 
     def __calendar(self):
         self.insert_datos.geometry("400x400")
@@ -198,6 +198,26 @@ class insertar_pedido:
         self.combo_vehiculo = ttk.Combobox(self.insert_datos)
         self.combo_vehiculo.place(x = 110, y = 180, width = 150, height= 20)
         self.combo_vehiculo["values"], self.ids_veh = self.__llenar_combo3()
+
+        # Validación de 3 combobox
+        if (self.ids_veh != [] and self.ids_clie != [] and self.ids_rep != []):
+            # Si combo de cliente no está vacío, se coloca por defecto el primer ítem
+            self.combo_cliente.insert(0, self.combo_cliente["values"][0])
+            self.combo_cliente.config(state = "readonly")
+
+            # Si combo de repartidor no está vacío, se coloca por defecto el primer ítem
+            self.combo_repartidor.insert(0, self.combo_repartidor["values"][0])
+            self.combo_repartidor.config(state = "readonly")
+
+            # Si combo de vehiculo no está vacío, se coloca por defecto el primer ítem
+            self.combo_vehiculo.insert(0, self.combo_vehiculo["values"][0])
+            self.combo_vehiculo.config(state = "readonly")
+        else:
+            # Si una de las tablas está vacía, muestra error
+            texto = "Debe haber registros en CLIENTE, REPARTIDOR Y VEHÍCULO"
+            messagebox.showerror("Problema de inserción", texto)
+            # Destruye ventana
+            self.insert_datos.destroy()
 
     def __llenar_combo1(self):
         opLCombo1 = "SELECT rut_clie FROM cliente"
@@ -316,8 +336,11 @@ class modificar_pedido:
         self.fecha_pedido.insert(0, self.mod_select[2])
         self.fecha_reparto.insert(0, self.mod_select[3])
         self.combo_cliente.insert(0, self.mod_select[4])
+        self.combo_cliente.config(state = "readonly")
         self.combo_repartidor.insert(0, self.mod_select[5])
+        self.combo_repartidor.config(state = "readonly")
         self.combo_vehiculo.insert(0, self.mod_select[6])
+        self.combo_vehiculo.config(state = "readonly")
 
     def __llenar_combo1(self):
         opLCombo1 = "SELECT rut_clie FROM cliente"
