@@ -110,10 +110,10 @@ class insertar_pizza:
         self.insert_datos = tk.Toplevel()
 
         # Funcionalidades
+        self.__config_button()
         self.__config_window()
         self.__config_label()
         self.__config_entry()
-        self.__config_button()
 
     def __config_window(self):
         # Ajustes de ventana
@@ -145,6 +145,18 @@ class insertar_pizza:
         self.combo = ttk.Combobox(self.insert_datos)
         self.combo.place(x = 110, y = 140, width = 150, height= 20)
         self.combo["values"], self.ids = self.__llenar_combo()
+
+        # Validación de combobox de ciudades
+        if self.ids != []:
+            # Si no está vacío, se coloca por defecto el primer ítem
+            self.combo.insert(0, self.combo["values"][0])
+            self.combo.config(state = "readonly")
+        else:
+            # Advierte que no hay registros en la tabla tamano
+            texto = "Ingresar registros en TAMANO"
+            messagebox.showerror("Problema de inserción", texto)
+            # Destruye ventana
+            self.insert_datos.destroy()
 
     def __llenar_combo(self):
         opLCombo = "SELECT id_tam, nom_tam FROM tamano"
