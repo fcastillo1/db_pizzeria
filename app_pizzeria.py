@@ -176,12 +176,12 @@ class aplicacion:
 
         # Se muestran las opciones del menú con las distintas gráficas (histograma)
         graficas_menu.add_command(label = "Histograma", command = self.__mostrar_histograma)
-        graficas_menu.add_command(label = "Pie", command = self.__mostrar_rep_tiempo)
+        graficas_menu.add_command(label = "Gráfica 2")
 
         # Se genera un espacio
         graficas_menu.add_separator()
 
-        graficas_menu.add_command(label = "Graficas Dinamicas 1")
+        graficas_menu.add_command(label = "Graficas Dinamicas PIE", command = self.__mostrar_rep_tiempo)
         graficas_menu.add_command(label = "Graficas Dinamicas 2")
 
         # Opción de consultas dinámicas
