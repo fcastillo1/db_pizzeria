@@ -17,7 +17,7 @@ class resumen_pedido:
         # Se crea una nueva ventana superior a la principal
         self.root = tk.Toplevel()
         # Se define el tamano de la ventana
-        self.root.geometry('300x270')
+        self.root.geometry('270x185')
         # Se define el título de la ventana
         self.root.title("PIZZAS POR PEDIDO")
         # Se añade color al fondo de la ventana
@@ -34,22 +34,22 @@ class resumen_pedido:
     def __config_button(self):
         btn_ok = tk.Button(self.root, text = "Generar",
             command = self.__generar_vista, bg = 'green', fg = 'white')
-        btn_ok.place(x = 100, y = 230, width = 80, height = 20)
+        btn_ok.place(x = 40, y = 140, width = 80, height = 20)
 
         # Crea botón para cancelar modificación y se destruye ventana
         btn_cancel = tk.Button(self.root, text = "Cancelar",
             command = self.root.destroy, bg = 'red', fg = 'white')
-        btn_cancel.place(x = 210, y = 230, width = 80, height = 20)
+        btn_cancel.place(x = 160, y = 140, width = 80, height = 20)
 
     def __config_label(self):
         # Definición de entradas de texto
         pedido_lab = tk.Label(self.root, text = "Pedido: ", bg = "light cyan")
-        pedido_lab.place(x = 10, y = 35, width = 140, height = 20)
+        pedido_lab.place(x = 5, y = 60, width = 105, height = 20)
 
     def __config_entry(self):
         # Combobox para seleccionar el pedido
         self.combo = ttk.Combobox(self.root)
-        self.combo.place(x = 110, y = 35, width = 150, height= 20)
+        self.combo.place(x = 90, y = 60, width = 150, height= 20)
         # Recepción de columna con ids de tabla pedido
         self.combo["values"], self.ids = self.__llenar_combo_pedido()
 
