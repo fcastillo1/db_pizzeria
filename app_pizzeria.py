@@ -26,7 +26,7 @@ from resumen_pedido import resumen_pedido
 from resumen_tipo import resumen_tipo
 from filtro_precio_pizza import filtro_precio_pizza
 from filtro_nombre_cliente import filtro_nombre_cliente
-from histograma import histograma
+from filtro_tam_precio import filtro_tam_precio
 from filtro_rep_tiempo import filtro_rep_tiempo
 from vista_rep_veh import vista_rep_veh
 from vista_clie_ciudad import vista_clie_ciudad
@@ -176,12 +176,12 @@ class aplicacion:
 
         # Se muestran las opciones del menú con las distintas gráficas (histograma)
         graficas_menu.add_command(label = "Histograma", command = self.__mostrar_histograma)
-        graficas_menu.add_command(label = "Gráfica 2")
+        graficas_menu.add_command(label = "Pie", command = self.__mostrar_rep_tiempo)
 
         # Se genera un espacio
         graficas_menu.add_separator()
 
-        graficas_menu.add_command(label = "Graficas Dinamicas PIE", command = self.__mostrar_rep_tiempo)
+        graficas_menu.add_command(label = "Graficas Dinamicas 1")
         graficas_menu.add_command(label = "Graficas Dinamicas 2")
 
         # Opción de consultas dinámicas
@@ -290,7 +290,7 @@ class aplicacion:
 
     # Muestra info de histograma y llama a la clase histograma a partir de archivo
     def __mostrar_histograma(self):
-        histograma(self.root, self.db)
+        filtro_tam_precio(self.root, self.db)
 
     # Muestra info de pie plot y llama a la clase filtro_rep_tiempo
     def __mostrar_rep_tiempo(self):
