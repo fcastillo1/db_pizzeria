@@ -33,7 +33,7 @@ class resumen_pedido:
 
     def __config_button(self):
         btn_ok = tk.Button(self.root, text = "Generar",
-            command = self.__generar_vista, bg = 'green', fg = 'white')
+            command = self.__query_dinamica, bg = 'green', fg = 'white')
         btn_ok.place(x = 40, y = 140, width = 80, height = 20)
 
         # Crea botón para cancelar modificación y se destruye ventana
@@ -54,8 +54,8 @@ class resumen_pedido:
         self.combo["values"], self.ids = self.__llenar_combo_pedido()
 
         # Validación de combobox
-        if self.validar_combo_pedido() == True:
-            # Si está vacío, se coloca por defecto el primer ítem
+        if self.ids != []:
+            # Si no está vacío, se coloca por defecto el primer ítem
             self.combo.insert(0, self.combo["values"][0])
             self.combo.config(state = "readonly")
         else:
@@ -65,11 +65,6 @@ class resumen_pedido:
             # Destruye ventana
             self.root.destroy()
 
-    def validar_combo_pedido(self):
-        # Si hay registros en tabla pedido, retorna true
-        if self.ids != []:
-            return True
-
     def __llenar_combo_pedido(self):
         # Consulta para obtener detalles del combo
         opLCombo = "SELECT id_pedido FROM pedido"
@@ -77,20 +72,19 @@ class resumen_pedido:
         # Retorna ids de pedidos
         return [i[0] for i in self.data], [i[0] for i in self.data]
 
-    def __generar_vista(self):
-        sql = """CREATE OR REPLACE VIEW resumen_pedido AS SELECT nom_piz, nom_tam,
-        cantidad, detalle.precio_piz FROM detalle JOIN pizza ON
+    def __query_dinamica(self):
+        sql = """SELECT nom_piz, nom_tam, cantidad, detalle.precio_piz FROM detalle JOIN pizza ON
         detalle.id_piz = pizza.id_piz JOIN tamano ON pizza.id_tam = tamano.id_tam
-        WHERE id_pedido = %(id)s; """
+        WHERE id_pedido = %(pedido)s"""
 
-        self.db.run_sql_vista(sql, {"id": self.ids[self.combo.current()]})
+        # Se obtienen resultados de la consulta
+        mod_select = self.db.run_select_filter(sql, {"pedido": self.ids[self.combo.current()]})
 
-        if self.validar_vista() == True:
-            # Se pasa como parámetro el pedido seleccionado
-            imprimir_resumen_pedido(self.db, self.ids[self.combo.current()])
-
+        if(mod_select) != []:
+            # Se pasa como parámetro todo el resultado del sql
+            select_resumen_pedido(self.db, mod_select)
         else:
-            # No hay registros en la tabla pizza
+            # No hay pizzas registradas para el pedido
             texto = "¿Desea intentar con otra opción?"
             opcion = messagebox.askretrycancel("Sin resultados", texto)
 
@@ -98,29 +92,22 @@ class resumen_pedido:
             if opcion == False:
                 self.root.destroy()
 
-    def validar_vista(self):
-        sql = "SELECT nom_piz, nom_tam, cantidad, precio_piz FROM resumen_pedido"
-        select_vista = self.db.run_select(sql)
-
-        if select_vista != []:
-            return True
-
-class imprimir_resumen_pedido:
+class select_resumen_pedido:
     def __init__(self, db, pedido):
         self.db = db
         self.data = []
-        self.pedido = pedido
+        self.mod_select = pedido
 
         # Ventana emergente
         self.tabla = tk.Toplevel()
         self.tabla.geometry('500x300')
-        texto_titulo = "Listado de PIZZAS en PEDIDO " + str(self.pedido)
+        texto_titulo = "Listado de PIZZAS"
         self.tabla.title(texto_titulo)
         self.tabla.resizable(width = 0, height = 0)
 
-        self.__config_treeview_vista()
+        self.__config_treeview_filtro()
 
-    def __config_treeview_vista(self):
+    def __config_treeview_filtro(self):
         self.treeview = ttk.Treeview(self.tabla)
         # Configuración de nombres de cada columna
         self.treeview.configure(show = "headings", columns = ("nom_piz", "nom_tam", "cantidad", "precio_piz"))
@@ -138,15 +125,12 @@ class imprimir_resumen_pedido:
         # Ubica treeview
         self.treeview.place(x = 0, y = 0, height = 350, width = 850)
         # Llenado del treeview
-        self.llenar_treeview_vista()
-        self.tabla.after(0, self.llenar_treeview_vista)
+        self.llenar_treeview_filtro()
+        self.tabla.after(0, self.llenar_treeview_filtro)
 
-    def llenar_treeview_vista(self):
-        # Se obtienen vehículos ingresadas
-        opTreeview = "SELECT nom_piz, nom_tam, cantidad, precio_piz FROM resumen_pedido"
-
+    def llenar_treeview_filtro(self):
         # Guarda info obtenida tras la consulta
-        data = self.db.run_select(opTreeview)
+        data = self.mod_select
 
         # Evalúa si el contenido de la tabla en la app es distinto al de la db
         if(data != self.data):

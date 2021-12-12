@@ -167,7 +167,6 @@ class aplicacion:
         menu_opciones.add_cascade(label = "Vistas", menu = vistas_menu)
 
         # Despliegue de las vistas
-        # vistas_menu.add_command(label = "Resumen pedido", command = self.__mostrar_vista_pedido)
         # vistas_menu.add_command(label = "Resumen tipo", command = self.__mostrar_vista_vehiculo)
         vistas_menu.add_command(label = "Pedido x repartidor x vehículo", command = self.__mostrar_vista_rep_veh)
         vistas_menu.add_command(label = "Pedido x cliente x ciudad", command = self.__mostrar_vista_clie_ciudad)
@@ -191,6 +190,7 @@ class aplicacion:
         menu_opciones.add_cascade(label = "Dinámicas", menu = dinamicas_menu)
 
         # Consulta para filtrar pizzas por precio
+        dinamicas_menu.add_command(label = "Resumen por pedido", command = self.__mostrar_resumen_pedido)
         dinamicas_menu.add_command(label = "Precio pizza", command = self.__mostrar_precio_pizza)
         dinamicas_menu.add_command(label = "Nombre de cliente", command = self.__mostrar_capacidad_tipo)
 
@@ -262,8 +262,8 @@ class aplicacion:
         repartidor(self.root, self.db)
 
     # Muestra info de resumen_pedido y llama a la clase resumen_pedido a partir de archivo
-    # def __mostrar_vista_pedido(self):
-    #     resumen_pedido(self.root, self.db)
+    def __mostrar_resumen_pedido(self):
+        resumen_pedido(self.root, self.db)
 
     # Muestra info de detalle_tipo y llama a la clase detalle_tipo a partir de archivo
     # def __mostrar_vista_vehiculo(self):
