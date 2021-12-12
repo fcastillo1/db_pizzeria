@@ -55,12 +55,12 @@ class vista_rep_veh:
         self.treeview.heading("patente", text = "Patente")
 
         self.treeview.column("id_pedido", minwidth = 50, width = 100, stretch = False)
-        self.treeview.column("rut_rep", minwidth = 100, width = 100, stretch = False)
+        self.treeview.column("rut_rep", minwidth = 100, width = 150, stretch = False)
         self.treeview.column("nom_rep", minwidth = 100, width = 150, stretch = False)
         self.treeview.column("ape_rep", minwidth = 100, width = 150, stretch = False)
         self.treeview.column("id_veh", minwidth = 50, width = 100, stretch = False)
-        self.treeview.column("patente", minwidth = 50, width = 100, stretch = False)
-        self.treeview.place(x = 0, y = 0, height = 350, width = 600)
+        self.treeview.column("patente", minwidth = 50, width = 150, stretch = False)
+        self.treeview.place(x = 0, y = 0, height = 400, width = 800)
         # Llenado del treeview
         self.llenar_treeview_vista()
 
@@ -86,6 +86,6 @@ class vista_rep_veh:
             self.data = data
 
     def __crear_botones_vista(self):
-        b4 = tk.Button(self.root, text = "Salir", bg='red', fg='white',
+        b4 = tk.Button(self.root, text = "Aceptar", bg='green', fg='blue',
             command=self.root.destroy)
-        b4.place(x = 450, y = 350, width = 150, height = 50)
+        b4.place(x = 290, y = 350, width = 200, height = 50)
