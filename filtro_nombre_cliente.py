@@ -130,6 +130,7 @@ class select_cliente:
 
         #  Configuración del treeview
         self.__config_treeview_filtro()
+        self.__crear_botones_filtro_nomclie()
 
     def __config_treeview_filtro(self):
         self.treeview = ttk.Treeview(self.tabla)
@@ -173,3 +174,8 @@ class select_cliente:
                 self.treeview.insert("", "end", iid = i[0], values = i[0:4])
 
             self.data = data
+
+    def __crear_botones_filtro_nomclie(self):
+        b4 = tk.Button(self.tabla, text = "Aceptar", bg='green', fg='blue',
+            command=self.tabla.destroy)
+        b4.place(x = 150, y = 245, width = 200, height = 50)
