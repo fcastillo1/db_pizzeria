@@ -25,7 +25,11 @@ from ayuda import ayuda
 from resumen_pedido import resumen_pedido
 from detalle_tipo import detalle_tipo
 from filtro_precio_pizza import filtro_precio_pizza
+from filtro_nombre_cliente import filtro_nombre_cliente
 from histograma import histograma
+from filtro_rep_tiempo import filtro_rep_tiempo
+from vista_rep_veh import vista_rep_veh
+from vista_clie_ciudad import vista_clie_ciudad
 
 # Se define la clase que es de la aplicación y permite su uso
 class aplicacion:
@@ -163,8 +167,10 @@ class aplicacion:
         menu_opciones.add_cascade(label = "Vistas", menu = vistas_menu)
 
         # Despliegue de las vistas
-        vistas_menu.add_command(label = "Resumen pedido", command = self.__mostrar_vista_pedido)
-        vistas_menu.add_command(label = "Resumen tipo", command = self.__mostrar_vista_vehiculo)
+        # vistas_menu.add_command(label = "Resumen pedido", command = self.__mostrar_vista_pedido)
+        # vistas_menu.add_command(label = "Resumen tipo", command = self.__mostrar_vista_vehiculo)
+        vistas_menu.add_command(label = "Pedido x repartidor x vehículo", command = self.__mostrar_vista_rep_veh)
+        vistas_menu.add_command(label = "Pedido x cliente x ciudad", command = self.__mostrar_vista_clie_ciudad)
 
         # Se genera un menú con las opciones de las gráficas
         graficas_menu = Menu(menu_opciones, tearoff = 0, bg = "white")
@@ -172,6 +178,7 @@ class aplicacion:
 
         # Se muestran las opciones del menú con las distintas gráficas (histograma)
         graficas_menu.add_command(label = "Histograma", command = self.__mostrar_histograma)
+        graficas_menu.add_command(label = "Pie", command = self.__mostrar_rep_tiempo)
 
         # Se genera un espacio
         graficas_menu.add_separator()
@@ -185,6 +192,7 @@ class aplicacion:
 
         # Consulta para filtrar pizzas por precio
         dinamicas_menu.add_command(label = "Precio pizza", command = self.__mostrar_precio_pizza)
+        dinamicas_menu.add_command(label = "Nombre de cliente", command = self.__mostrar_capacidad_tipo)
 
         # Se construye el menú de ayuda con su color
         help_menu = Menu(menu_opciones, tearoff = 0, bg = "white")
@@ -254,20 +262,36 @@ class aplicacion:
         repartidor(self.root, self.db)
 
     # Muestra info de resumen_pedido y llama a la clase resumen_pedido a partir de archivo
-    def __mostrar_vista_pedido(self):
-        resumen_pedido(self.root, self.db)
+    # def __mostrar_vista_pedido(self):
+    #     resumen_pedido(self.root, self.db)
 
     # Muestra info de detalle_tipo y llama a la clase detalle_tipo a partir de archivo
-    def __mostrar_vista_vehiculo(self):
-        detalle_tipo(self.root, self.db)
+    # def __mostrar_vista_vehiculo(self):
+    #     detalle_tipo(self.root, self.db)
+
+    # Muestra info de vista_rep_veh
+    def __mostrar_vista_rep_veh(self):
+        vista_rep_veh(self.root, self.db)
+
+    # Muestra info de vista_clie_ciudad
+    def __mostrar_vista_clie_ciudad(self):
+        vista_clie_ciudad(self.root, self.db)
 
     # Muestra info de filtro_precio_pizza y llama a la clase filtro_precio_pizza a partir de archivo
     def __mostrar_precio_pizza(self):
         filtro_precio_pizza(self.root, self.db)
 
+    # Muestra info de filtro_nombre_cliente y llama a la clase filtro_nombre_cliente a partir de archivo
+    def __mostrar_capacidad_tipo(self):
+        filtro_nombre_cliente(self.root, self.db)
+
     # Muestra info de histograma y llama a la clase histograma a partir de archivo
     def __mostrar_histograma(self):
         histograma(self.root, self.db)
+
+    # Muestra info de pie plot y llama a la clase filtro_rep_tiempo
+    def __mostrar_rep_tiempo(self):
+        filtro_rep_tiempo(self.root, self.db)
 
 def main():
     # Se conecta a la base de datos

@@ -34,13 +34,13 @@ class DB_pizzeria:
             # Termina la aplicación
             exit()
 
-    def run_sql_vista(self, sql, params):
+    def run_sql_vista(self, sql):
         try:
             # Ejecuta el select
-            self.cursor.execute(sql, params)
+            self.cursor.execute(sql)
 
         except mysql.connector.Error as err:
-            texto_error = "No se ha podido visualizar la tabla."
+            texto_error = "No se ha podido generar la vista."
             messagebox.showerror(message = texto_error, title = "Error")
             print("No se pueden obtener los datos")
             print(err)
@@ -65,6 +65,8 @@ class DB_pizzeria:
 
     # Función que corre una consulta select para un registro específico
     def run_select_filter(self, sql, params):
+        print("sql", sql)
+        print("params", params)
         # realiza la excepcion para obtener los datos (tablas) de la base de datos
         try:
             # Ejecuta consulta
