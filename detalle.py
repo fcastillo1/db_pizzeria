@@ -12,7 +12,7 @@ class detalle:
 
         # Toplevel es una ventana que está un nivel arriba que la principal
         self.root = tk.Toplevel()
-        self.root.geometry('710x400')
+        self.root.geometry('720x400')
         self.root.title("Detalle")
         self.root.config(bg = "light cyan")
         self.root.resizable(width = 0, height = 0)
@@ -58,16 +58,16 @@ class detalle:
     def __crear_botones_detalle(self):
         b1 = tk.Button(self.root, text = "Insertar detalle", bg ='snow',
             fg = 'green', command = self.__insertar_detalle)
-        b1.place(x = 0, y = 350, width = 150, height = 50)
+        b1.place(x = 0, y = 350, width = 180, height = 50)
         b2 = tk.Button(self.root, text = "Modificar detalle", bg ='snow',
             fg = 'orange', command = self.__modificar_detalle)
-        b2.place(x = 150, y = 350, width = 150, height = 50)
+        b2.place(x = 180, y = 350, width = 180, height = 50)
         b3 = tk.Button(self.root, text = "Eliminar detalle", bg='snow',
             fg = 'red', command = self.__eliminar_detalle)
-        b3.place(x = 300, y = 350, width = 150, height = 50)
+        b3.place(x = 360, y = 350, width = 180, height = 50)
         b4 = tk.Button(self.root, text = "Salir", command = self.root.destroy,
             bg = 'red', fg = 'white')
-        b4.place(x = 450, y = 350, width = 170, height = 50)
+        b4.place(x = 540, y = 350, width = 180, height = 50)
 
     def llenar_treeview_detalle(self):
         # Se obtienen detalles ingresadas
@@ -168,7 +168,7 @@ class insertar_detalle:
         self.cant = tk.Entry(self.insert_datos)
         self.cant.place(x = 110, y = 105, width = 150, height = 20)
 
-        # Validación de combobox de tamaños
+        # Validación de combobox de pedido y pizza
         if (self.ids_ped != [] and self.ids_piz != []):
             # Si combo de pizzas no está vacío, se coloca por defecto el primer ítem
             self.combo_piz.insert(0, self.combo_piz["values"][0])
@@ -178,6 +178,7 @@ class insertar_detalle:
             self.combo_ped.insert(0, self.combo_ped["values"][0])
             self.combo_ped.config(state = "readonly")
         else:
+            # Si una de las tablas está vacía, muestra error
             texto = "Debe haber registros en PEDIDO y PIZZA"
             messagebox.showerror("Problema de inserción", texto)
             # Destruye ventana
