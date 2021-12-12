@@ -17,7 +17,7 @@ class detalle_tipo:
         # Se crea una nueva ventana superior a la principal
         self.root = tk.Toplevel()
         # Se define el tamano de la ventana
-        self.root.geometry('300x270')
+        self.root.geometry('270x185')
         # Se define el título de la ventana
         self.root.title("DETALLE DE TIPO")
         # Se añade color al fondo de la ventana
@@ -34,22 +34,22 @@ class detalle_tipo:
     def __config_button(self):
         btn_ok = tk.Button(self.root, text = "Generar",
             command = self.__generar_vista, bg = 'green', fg = 'white')
-        btn_ok.place(x = 100, y = 230, width = 80, height = 20)
+        btn_ok.place(x = 40, y = 140, width = 80, height = 20)
 
         # Crea botón para cancelar modificación y se destruye ventana
         btn_cancel = tk.Button(self.root, text = "Cancelar",
             command = self.root.destroy, bg = 'red', fg = 'white')
-        btn_cancel.place(x = 210, y = 230, width = 80, height = 20)
+        btn_cancel.place(x = 160, y = 140, width = 80, height = 20)
 
     def __config_label(self):
         # Definición de entradas de texto
         pedido_lab = tk.Label(self.root, text = "Tipo: ", bg = "light cyan")
-        pedido_lab.place(x = 10, y = 35, width = 140, height = 20)
+        pedido_lab.place(x = 5, y = 60, width = 105, height = 20)
 
     def __config_entry(self):
         # Combobox para seleccionar el tipo
         self.combo = ttk.Combobox(self.root)
-        self.combo.place(x = 110, y = 35, width = 150, height= 20)
+        self.combo.place(x = 90, y = 60, width = 150, height= 20)
 
         # Recepción de columna nombre e ids de tabla tipo
         self.combo["values"], self.ids = self.__llenar_combo_tipo()
@@ -125,7 +125,13 @@ class imprimir_detalle_tipo:
         self.tabla.resizable(width = 0, height = 0)
 
         # Configuración del treeview
+        self.__config_button1()
         self.__config_treeview_vista()
+
+    def __config_button1(self):
+        btn_ok = tk.Button(self.tabla, text = "Aceptar",
+            command = self.tabla.destroy, bg = 'green', fg = 'white')
+        btn_ok.place(x = 40, y = 470, width = 80, height = 20)
 
     def __config_treeview_vista(self):
         self.treeview = ttk.Treeview(self.tabla)
@@ -136,12 +142,12 @@ class imprimir_detalle_tipo:
         self.treeview.heading("capacidad_tipo", text = "Capacidad")
 
         # Configuración de tamaños de cada columna
-        self.treeview.column("id_veh", minwidth = 150, width = 100, stretch = False)
-        self.treeview.column("patente", minwidth = 150, width = 100, stretch = False)
-        self.treeview.column("capacidad_tipo", minwidth = 150, width = 100, stretch = False)
+        self.treeview.column("id_veh", minwidth = 150, width = 165, stretch = False)
+        self.treeview.column("patente", minwidth = 150, width = 170, stretch = False)
+        self.treeview.column("capacidad_tipo", minwidth = 150, width = 165, stretch = False)
 
         # Ubica treeview
-        self.treeview.place(x = 0, y = 0, height = 350, width = 850)
+        self.treeview.place(x = 0, y = 0, height = 500, width = 850)
         # Llenado del treeview
         self.llenar_treeview_vista()
         self.tabla.after(0, self.llenar_treeview_vista)
