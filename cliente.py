@@ -10,14 +10,13 @@ class cliente:
         self.db = db
         self.data = []
 
-        # Toplevel es una ventana que está un nivel arriba que la principal
+        # Se declara variable para abrir una ventana emergente sobre ventana principal
         self.root = tk.Toplevel()
         self.root.geometry('800x400')
         self.root.title("Clientes")
         self.root.config(bg="light cyan")
         self.root.resizable(width = 0, height = 0)
-
-        # Ventana nueva
+        # Es una ventana temporal de la ventana principal
         self.root.transient(root)
 
         # Visualización de clientes registrados en la base de datos
@@ -27,15 +26,21 @@ class cliente:
         self.__crear_botones_cliente()
 
     def __config_treeview_cliente(self):
+        # Generación del Treeview
         self.treeview = ttk.Treeview(self.root)
-        self.treeview.configure(show = "headings", columns = ("rut_cli", "nom_clie", "ape_clie",
-            "tel_clie", "dir_clie", "id_ciudad"))
+        # Se determinan los campos de las columnas
+        self.treeview.configure(show = "headings", columns = ("rut_cli", "nom_clie",
+                                "ape_clie", "tel_clie", "dir_clie", "id_ciudad"))
+
+        # Para cada columna se especifica el nombre a mostrar
         self.treeview.heading("rut_cli", text = "Rut")
         self.treeview.heading("nom_clie", text = "Nombre")
         self.treeview.heading("ape_clie", text = "Apellido")
         self.treeview.heading("tel_clie", text = "Teléfono")
         self.treeview.heading("dir_clie", text = "Dirección")
         self.treeview.heading("id_ciudad", text = "Ciudad")
+
+        # Configuraciones de cada columna
         self.treeview.column("rut_cli", minwidth = 150, width = 110, stretch = False)
         self.treeview.column("nom_clie", minwidth = 150, width = 120, stretch = False)
         self.treeview.column("ape_clie", minwidth = 150, width = 120, stretch = False)
@@ -43,21 +48,28 @@ class cliente:
         self.treeview.column("dir_clie", minwidth = 150, width = 220, stretch = False)
         self.treeview.column("id_ciudad", minwidth = 150, width = 110, stretch = False)
         self.treeview.place(x = 0, y = 0, height = 350, width = 800)
+
         # Llenado del treeview
         self.llenar_treeview_cliente()
-
         self.root.after(0, self.llenar_treeview_cliente)
 
     def __crear_botones_cliente(self):
-        b1 = tk.Button(self.root, text = "Insertar cliente", bg='snow',
-            fg='green', command = self.__insertar_cliente)
+        # Botón abre nueva ventana para insertar un cliente
+        b1 = tk.Button(self.root, text = "Insertar cliente", bg = 'snow',
+                        fg = 'green', command = self.__insertar_cliente)
         b1.place(x = 0, y = 350, width = 200, height = 50)
-        b2 = tk.Button(self.root, text = "Modificar cliente", bg='snow',
-            fg='orange', command = self.__modificar_cliente)
+
+        # Botón abre nueva ventana para modificar cliente seleccionado
+        b2 = tk.Button(self.root, text = "Modificar cliente", bg = 'snow',
+                        fg = 'orange', command = self.__modificar_cliente)
         b2.place(x = 200, y = 350, width = 200, height = 50)
-        b3 = tk.Button(self.root, text = "Eliminar cliente", bg='snow', fg='red',
-        command = self.__eliminar_cliente)
+
+        # Botón permite eliminar el cliente seleccionado
+        b3 = tk.Button(self.root, text = "Eliminar cliente", bg = 'snow', fg = 'red',
+                        command = self.__eliminar_cliente)
         b3.place(x = 400, y = 350, width = 200, height = 50)
+
+        # Permite salir de la ventana de cliente
         b4 = tk.Button(self.root, text = "Salir", command=self.root.destroy, bg='red', fg='white')
         b4.place(x = 600, y = 350, width = 200, height = 50)
 
@@ -85,21 +97,30 @@ class cliente:
         insertar_cliente(self.db, self)
 
     def __eliminar_cliente(self):
-        if messagebox.askyesno(message="¿Realmente quieres borrar el registro?", title = "Alerta")== True:
+        texto_msj = "¿Realmente quieres borrar el registro?"
+
+        # Si hay un elemento seleccionado, se confirma eliminación
+        if ((self.treeview.focus() != "") and
+            (messagebox.askyesno(message = texto_msj, title = "Alerta") == True)):
+
             opEliminar = "DELETE FROM cliente where rut_clie = %(rut_clie)s"
             self.db.run_sql(opEliminar, {"rut_clie": self.treeview.focus()}, "D")
             self.llenar_treeview_cliente()
 
     def __modificar_cliente(self):
-        if messagebox.askyesno(message="¿Realmente quieres modificar el registro?", title = "Alerta")== True:
-            if(self.treeview.focus() != ""):
-                opModificar = """SELECT rut_clie, nom_clie, ape_clie, tel_clie, dir_clie,
-                nom_ciudad from cliente join ciudad on cliente.id_ciudad = ciudad.id_ciudad
-                WHERE rut_clie = %(rut)s"""
+        texto_msj = "¿Realmente quieres modificar el registro?"
+        # Si hay un elemento seleccionado, se confirma modificación
+        if ((self.treeview.focus() != "") and
+            (messagebox.askyesno(message =  texto_msj, title = "Alerta") == True)):
 
-                # Se consulta en la tabla cliente por el rut del registro a modificar
-                mod_select = self.db.run_select_filter(opModificar, {"rut": self.treeview.focus()})[0]
-                modificar_cliente(self.db, self, mod_select)
+            # SQL para obtener datos de registro a modificar
+            opModificar = """SELECT rut_clie, nom_clie, ape_clie, tel_clie, dir_clie,
+            nom_ciudad from cliente join ciudad on cliente.id_ciudad = ciudad.id_ciudad
+            WHERE rut_clie = %(rut)s"""
+
+            # Se consulta en la tabla cliente por el rut del registro a modificar
+            mod_select = self.db.run_select_filter(opModificar, {"rut": self.treeview.focus()})[0]
+            modificar_cliente(self.db, self, mod_select)
 
 class insertar_cliente:
     def __init__(self, db, padre):
@@ -110,10 +131,10 @@ class insertar_cliente:
         self.insert_datos = tk.Toplevel()
 
         # Funcionalidades
+        self.__config_button()
         self.__config_window()
         self.__config_label()
         self.__config_entry()
-        self.__config_button()
 
     def __config_window(self):
         # Ajustes de ventana
@@ -137,7 +158,7 @@ class insertar_cliente:
         ciu_lab.place(x = 10, y = 160, width = 120, height = 20)
 
     def __config_entry(self):
-        # Se obtiene texto para ingresar clientes
+        # Se insertan múltiples entradas de texto
         self.rut = tk.Entry(self.insert_datos)
         self.rut.place(x = 110, y = 10, width = 150, height = 20)
         self.nombre = tk.Entry(self.insert_datos)
@@ -148,38 +169,43 @@ class insertar_cliente:
         self.telefono.place(x = 110, y = 100, width = 150, height = 20)
         self.direccion = tk.Entry(self.insert_datos)
         self.direccion.place(x = 110, y = 130, width = 150, height = 20)
+
+        # Se inserta el combobox
         self.combo = ttk.Combobox(self.insert_datos)
         self.combo.place(x = 110, y = 160, width = 150, height= 20)
         self.combo["values"], self.ids = self.__llenar_combo()
 
+        # Validación de combobox de ciudades
+        if self.ids != []:
+            # Si no está vacío, se coloca por defecto el primer ítem
+            self.combo.insert(0, self.combo["values"][0])
+            self.combo.config(state = "readonly")
+        else:
+            # Advierte que no hay registros en la tabla ciudad
+            texto = "Ingresar registros en CIUDAD"
+            messagebox.showerror("Problema de inserción", texto)
+            # Destruye ventana
+            self.insert_datos.destroy()
+
     def __llenar_combo(self):
+        # Consulta para obtener registros de tabla ciudad
         opLCombo = "SELECT id_ciudad, nom_ciudad FROM ciudad"
         self.data = self.db.run_select(opLCombo)
+        # Retorna nombre e id de ciudad
         return [i[1] for i in self.data], [i[0] for i in self.data]
 
     def __config_button(self):
         # Crea botón aceptar ingreso y se enlaza a evento
         btn_ok = tk.Button(self.insert_datos, text = "Aceptar",
-            command = self.__insertar, bg='green', fg='white')
+                            command = self.__insertar, bg='green', fg='white')
         btn_ok.place(x=100, y =200, width = 80, height = 20)
 
         # Crea botón para cancelar ingreso y se destruye ventana
         btn_cancel = tk.Button(self.insert_datos, text = "Cancelar",
-            command = self.insert_datos.destroy, bg='red', fg='white')
+                                command = self.insert_datos.destroy, bg='red', fg='white')
         btn_cancel.place(x=210, y =200, width = 80, height = 20)
 
-    # def validar_combobox(valor):
-    #     bandera = 0;
-    #
-    #     print(valor)
-    #
-    #     if bandera == 0:
-    #         return True
-
     def __insertar(self):
-
-        # if validar_combobox(self.ids[self.combo.get()]) is True:
-
         # Inserción de cliente
         opInsert = """INSERT cliente (rut_clie, nom_clie, ape_clie, tel_clie, dir_clie, id_ciudad)
                 values (%(rut)s, %(nombre)s, %(apellido)s, %(telefono)s, %(direccion)s, %(ciudad)s)"""
@@ -247,6 +273,7 @@ class modificar_cliente:
         self.telefono.insert(0, self.mod_select[3])
         self.direccion.insert(0, self.mod_select[4])
         self.combo.insert(0, self.mod_select[5])
+        self.combo.config(state = "readonly")
 
     def __llenar_combo(self):
         opLlenar = "SELECT id_ciudad, nom_ciudad FROM ciudad"
