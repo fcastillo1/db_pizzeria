@@ -25,7 +25,6 @@ from ayuda import ayuda
 from resumen_pedido import resumen_pedido
 from detalle_tipo import detalle_tipo
 from filtro_precio_pizza import filtro_precio_pizza
-from filtro_nombre_cliente import filtro_nombre_cliente
 from histograma import histograma
 
 # Se define la clase que es de la aplicación y permite su uso
@@ -58,50 +57,46 @@ class aplicacion:
         image_ciudad = image_ciudad.resize((63, 45), Image.ANTIALIAS)
         self.reset_img1 = ImageTk.PhotoImage(image_ciudad)
 
-        # Se sube una Imagen al botón pedido
-        image_pedido = Image.open("pedido.jpg")
-        image_pedido = image_pedido.resize((63, 45), Image.ANTIALIAS)
-        self.reset_img2 = ImageTk.PhotoImage(image_pedido)
-
         # Se sube una Imagen al botón cliente
         image_cliente = Image.open("cliente.jpg")
         image_cliente = image_cliente.resize((63, 45), Image.ANTIALIAS)
-        self.reset_img3 = ImageTk.PhotoImage(image_cliente)
+        self.reset_img2 = ImageTk.PhotoImage(image_cliente)
 
-        # Se sube una Imagen al botón cliente
-        image_cliente = Image.open("cliente.jpg")
-        image_cliente = image_cliente.resize((63, 45), Image.ANTIALIAS)
-        self.reset_img3 = ImageTk.PhotoImage(image_cliente)
+        # Se sube una Imagen al botón tipo
+        image_tipo = Image.open("tipo.jpg")
+        image_tipo = image_tipo.resize((63, 45), Image.ANTIALIAS)
+        self.reset_img3 = ImageTk.PhotoImage(image_tipo)
 
-        # Se sube una Imagen al botón pizza
-        image_pizza = Image.open("pizza.jpg")
-        image_pizza = image_pizza.resize((63, 45), Image.ANTIALIAS)
-        self.reset_img4 = ImageTk.PhotoImage(image_pizza)
+        # Se sube una Imagen al botón vehículo
+        image_vehiculo = Image.open("vehiculo.jpg")
+        image_vehiculo = image_vehiculo.resize((63, 45), Image.ANTIALIAS)
+        self.reset_img4 = ImageTk.PhotoImage(image_vehiculo)
 
         # Se sube una Imagen al botón repartidor
         image_repartidor = Image.open("repartidor.jpg")
         image_repartidor = image_repartidor.resize((63, 45), Image.ANTIALIAS)
         self.reset_img5 = ImageTk.PhotoImage(image_repartidor)
 
-        # Se sube una Imagen al botón vehículo
-        image_vehiculo = Image.open("vehiculo.jpg")
-        image_vehiculo = image_vehiculo.resize((63, 45), Image.ANTIALIAS)
-        self.reset_img6 = ImageTk.PhotoImage(image_vehiculo)
+        # Se sube una Imagen al botón tamaño
+        image_tamano = Image.open("tamano.jpg")
+        image_tamano = image_tamano.resize((63, 45), Image.ANTIALIAS)
+        self.reset_img6 = ImageTk.PhotoImage(image_tamano)
+
+        # Se sube una Imagen al botón pizza
+        image_pizza = Image.open("pizza.jpg")
+        image_pizza = image_pizza.resize((63, 45), Image.ANTIALIAS)
+        self.reset_img7 = ImageTk.PhotoImage(image_pizza)
+
+        # Se sube una Imagen al botón pedido
+        image_pedido = Image.open("pedido.jpg")
+        image_pedido = image_pedido.resize((63, 45), Image.ANTIALIAS)
+        self.reset_img8 = ImageTk.PhotoImage(image_pedido)
 
         # Se sube una Imagen al botón detalle
         image_detalle = Image.open("detalle.jpg")
         image_detalle = image_detalle.resize((63, 45), Image.ANTIALIAS)
-        self.reset_img7 = ImageTk.PhotoImage(image_detalle)
+        self.reset_img9 = ImageTk.PhotoImage(image_detalle)
 
-        # Se sube una Imagen al botón tamaño
-        image_tamano = Image.open("tamano.jpg")
-        image_tamano = image_tamano.resize((63, 45), Image.ANTIALIAS)
-        self.reset_img8 = ImageTk.PhotoImage(image_tamano)
-
-        # Se sube una Imagen al botón tipo
-        image_tipo = Image.open("tipo.jpg")
-        image_tipo = image_tipo.resize((63, 45), Image.ANTIALIAS)
-        self.reset_img9 = ImageTk.PhotoImage(image_tipo)
 
         # Creación de los botones principales
         # Creación botón ciudad con su texto e información para su funcionamiento
@@ -113,32 +108,32 @@ class aplicacion:
         command = self.__mostrar_cliente, width=140 , bg='snow', fg='black').place(x=200, y = 40)
 
         # Creación botón pedido con su texto e información para su funcionamiento
-        boton_pedido = Button(self.root, text = "Pedido",  image = self.reset_img3, compound = 'top',
-        command = self.__mostrar_pedido,  width=140, bg='snow', fg='black').place(x=20, y = 130)
+        boton_pedido = Button(self.root, text = "Tipo Vehículo",  image = self.reset_img3, compound = 'top',
+        command = self.__mostrar_tipo,  width=140, bg='snow', fg='black').place(x=20, y = 130)
 
         # Creación botón detalle con su texto e información para su funcionamiento
-        boton_pedido = Button(self.root, text = "Detalle", image = self.reset_img7, compound = 'top',
-        command = self.__mostrar_detalle,  width=140, bg='snow', fg='black').place(x=200, y = 130)
+        boton_pedido = Button(self.root, text = "Vehículo", image = self.reset_img4, compound = 'top',
+        command = self.__mostrar_vehiculo,  width=140, bg='snow', fg='black').place(x=200, y = 130)
 
         # Creación botón pizza con su texto e información para su funcionamiento
-        boton_pizza = Button(self.root, text = "Pizza", image = self.reset_img4, compound = 'top',
-        command = self.__mostrar_pizza, width=140 , bg='snow', fg='black').place(x=20, y=220)
+        boton_pizza = Button(self.root, text = "Repartidor", image = self.reset_img5, compound = 'top',
+        command = self.__mostrar_repartidor, width=140 , bg='snow', fg='black').place(x=20, y=220)
 
         # Creación botón tamaño con su texto e información para su funcionamiento
-        boton_pizza = Button(self.root, text = "Tamaño", image = self.reset_img8, compound = 'top',
+        boton_pizza = Button(self.root, text = "Tamaño Pizza", image = self.reset_img6, compound = 'top',
         command = self.__mostrar_tamano, width=140 , bg='snow', fg='black').place(x=200, y=220)
 
         # Creación botón cvehículo con su texto e información para su funcionamiento
-        boton_vehiculo = Button(self.root, text = "Vehículo",  image = self.reset_img6, compound = 'top',
-        command = self.__mostrar_vehiculo, width=140 , bg='snow', fg='black').place(x=20, y=310)
+        boton_vehiculo = Button(self.root, text = "Pizza",  image = self.reset_img7, compound = 'top',
+        command = self.__mostrar_pizza, width=140 , bg='snow', fg='black').place(x=20, y=310)
 
         # Creación botón tipo con su texto e información para su funcionamiento
-        boton_vehiculo = Button(self.root, text = "Tipo", image = self.reset_img9, compound = 'top',
-        command = self.__mostrar_tipo, width=140 , bg='snow', fg='black').place(x=200, y=310)
+        boton_vehiculo = Button(self.root, text = "Pedido", image = self.reset_img8, compound = 'top',
+        command = self.__mostrar_pedido, width=140 , bg='snow', fg='black').place(x=200, y=310)
 
         # Creación botón repartidor con su texto e información para su funcionamiento
-        boton_repartidor = Button(self.root, text = "Repartidor",  image = self.reset_img5, compound = 'top',
-        command = self.__mostrar_repartidor, width=140 , bg='snow', fg='black').place(x=115, y=400)
+        boton_repartidor = Button(self.root, text = "Detalle Pedido",  image = self.reset_img9, compound = 'top',
+        command = self.__mostrar_detalle, width=140 , bg='snow', fg='black').place(x=115, y=400)
 
         # Creación botón salir que permite cierre de la app
         boton_salir = Button(self.root, text = "Salir", command = self.root.destroy,
@@ -173,20 +168,23 @@ class aplicacion:
 
         # Se genera un menú con las opciones de las gráficas
         graficas_menu = Menu(menu_opciones, tearoff = 0, bg = "white")
-        menu_opciones.add_cascade(label = "Graficas", menu = graficas_menu)
+        menu_opciones.add_cascade(label = "Gráficas", menu = graficas_menu)
 
         # Se muestran las opciones del menú con las distintas gráficas (histograma)
         graficas_menu.add_command(label = "Histograma", command = self.__mostrar_histograma)
-        graficas_menu.add_command(label = "Otra grafica")
-        graficas_menu.add_command(label = "Otra grafica2")
+
+        # Se genera un espacio
+        graficas_menu.add_separator()
+
+        graficas_menu.add_command(label = "Graficas Dinamicas 1")
+        graficas_menu.add_command(label = "Graficas Dinamicas 2")
 
         # Opción de consultas dinámicas
         dinamicas_menu = Menu(menu_opciones, tearoff = 0, bg = "white")
         menu_opciones.add_cascade(label = "Dinámicas", menu = dinamicas_menu)
 
         # Consulta para filtrar pizzas por precio
-        dinamicas_menu.add_command(label = "Precio de pizza", command = self.__mostrar_precio_pizza)
-        dinamicas_menu.add_command(label = "Nombre de cliente", command = self.__mostrar_capacidad_tipo)
+        dinamicas_menu.add_command(label = "Precio pizza", command = self.__mostrar_precio_pizza)
 
         # Se construye el menú de ayuda con su color
         help_menu = Menu(menu_opciones, tearoff = 0, bg = "white")
@@ -197,7 +195,7 @@ class aplicacion:
 
     # Esta funcion permite anadir una imagen a la aplicacion
     def __agregarImagenInicial(self):
-        frame = LabelFrame(self.root, text = "\t \t APLICACIÓN PIZZERIA IL ITALIANO \t", relief = tk.FLAT)
+        frame = LabelFrame(self.root, text = "\t \t APLICACIÓN PIZZERÍA IL ITALIANO \t", relief = tk.FLAT)
         # Se define la ubicación del frame
         frame.place(x = 400, y = 60)
 
@@ -266,10 +264,6 @@ class aplicacion:
     # Muestra info de filtro_precio_pizza y llama a la clase filtro_precio_pizza a partir de archivo
     def __mostrar_precio_pizza(self):
         filtro_precio_pizza(self.root, self.db)
-
-    # Muestra info de filtro_nombre_cliente y llama a la clase filtro_nombre_cliente a partir de archivo
-    def __mostrar_capacidad_tipo(self):
-        filtro_nombre_cliente(self.root, self.db)
 
     # Muestra info de histograma y llama a la clase histograma a partir de archivo
     def __mostrar_histograma(self):
