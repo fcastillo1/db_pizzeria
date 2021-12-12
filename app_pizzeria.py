@@ -23,7 +23,7 @@ from pedido import pedido
 from informacion import informacion
 from ayuda import ayuda
 from resumen_pedido import resumen_pedido
-from detalle_tipo import detalle_tipo
+from resumen_tipo import resumen_tipo
 from filtro_precio_pizza import filtro_precio_pizza
 from filtro_nombre_cliente import filtro_nombre_cliente
 from histograma import histograma
@@ -167,7 +167,6 @@ class aplicacion:
         menu_opciones.add_cascade(label = "Vistas", menu = vistas_menu)
 
         # Despliegue de las vistas
-        # vistas_menu.add_command(label = "Resumen tipo", command = self.__mostrar_vista_vehiculo)
         vistas_menu.add_command(label = "Pedido x repartidor x vehículo", command = self.__mostrar_vista_rep_veh)
         vistas_menu.add_command(label = "Pedido x cliente x ciudad", command = self.__mostrar_vista_clie_ciudad)
 
@@ -189,10 +188,14 @@ class aplicacion:
         dinamicas_menu = Menu(menu_opciones, tearoff = 0, bg = "white")
         menu_opciones.add_cascade(label = "Dinámicas", menu = dinamicas_menu)
 
-        # Consulta para filtrar pizzas por precio
+        # Consulta para filtrar vehículos por tipo (resumen de tipo)
+        dinamicas_menu.add_command(label = "Resumen tipo", command = self.__mostrar_resumen_tipo)
+        # Consulta para filtrar detalle por pedido (resumen de pedido)
         dinamicas_menu.add_command(label = "Resumen por pedido", command = self.__mostrar_resumen_pedido)
+        # Consulta para filtrar pizzas por precio
         dinamicas_menu.add_command(label = "Precio pizza", command = self.__mostrar_precio_pizza)
-        dinamicas_menu.add_command(label = "Nombre de cliente", command = self.__mostrar_capacidad_tipo)
+        # Consulta para filtrar clientes por nombre
+        dinamicas_menu.add_command(label = "Nombre de cliente", command = self.__mostrar_nombre_cliente)
 
         # Se construye el menú de ayuda con su color
         help_menu = Menu(menu_opciones, tearoff = 0, bg = "white")
@@ -265,9 +268,9 @@ class aplicacion:
     def __mostrar_resumen_pedido(self):
         resumen_pedido(self.root, self.db)
 
-    # Muestra info de detalle_tipo y llama a la clase detalle_tipo a partir de archivo
-    # def __mostrar_vista_vehiculo(self):
-    #     detalle_tipo(self.root, self.db)
+    # Muestra info de resumen_tipo y llama a la clase resumen_tipo a partir de archivo
+    def __mostrar_resumen_tipo(self):
+        resumen_tipo(self.root, self.db)
 
     # Muestra info de vista_rep_veh
     def __mostrar_vista_rep_veh(self):
@@ -282,7 +285,7 @@ class aplicacion:
         filtro_precio_pizza(self.root, self.db)
 
     # Muestra info de filtro_nombre_cliente y llama a la clase filtro_nombre_cliente a partir de archivo
-    def __mostrar_capacidad_tipo(self):
+    def __mostrar_nombre_cliente(self):
         filtro_nombre_cliente(self.root, self.db)
 
     # Muestra info de histograma y llama a la clase histograma a partir de archivo
