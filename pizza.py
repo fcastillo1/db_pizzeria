@@ -146,7 +146,7 @@ class insertar_pizza:
         self.combo.place(x = 110, y = 140, width = 150, height= 20)
         self.combo["values"], self.ids = self.__llenar_combo()
 
-        # Validación de combobox de ciudades
+        # Validación de combobox de tamaños
         if self.ids != []:
             # Si no está vacío, se coloca por defecto el primer ítem
             self.combo.insert(0, self.combo["values"][0])
@@ -159,9 +159,10 @@ class insertar_pizza:
             self.insert_datos.destroy()
 
     def __llenar_combo(self):
+        # Consulta en tabla tamano
         opLCombo = "SELECT id_tam, nom_tam FROM tamano"
         self.data = self.db.run_select(opLCombo)
-        # Se muestra nom_tam
+        # Retorna nombre de tamaño e id
         return [i[1] for i in self.data], [i[0] for i in self.data]
 
     def __config_button(self):
@@ -234,6 +235,7 @@ class modificar_pizza:
         self.id.insert(0, self.mod_select[0])
         self.nombre.insert(0, self.mod_select[1])
         self.combo.insert(0, self.mod_select[2])
+        self.combo.config(state = "readonly")
         self.precio.insert(0, self.mod_select[3])
 
     def __llenar_combo(self):

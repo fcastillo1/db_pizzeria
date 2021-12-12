@@ -116,10 +116,10 @@ class insertar_vehiculo:
         self.insert_datos = tk.Toplevel()
 
         # Funcionalidades
+        self.__config_button()
         self.__config_window()
         self.__config_label()
         self.__config_entry()
-        self.__config_button()
 
     def __config_window(self):
         # Ajustes de ventana
@@ -147,6 +147,18 @@ class insertar_vehiculo:
         self.combo = ttk.Combobox(self.insert_datos)
         self.combo.place(x = 110, y = 100, width = 150, height= 20)
         self.combo["values"], self.ids = self.__llenar_combo()
+
+        # Validación de combobox de tipos de vehículo
+        if self.ids != []:
+            # Si no está vacío, se coloca por defecto el primer ítem
+            self.combo.insert(0, self.combo["values"][0])
+            self.combo.config(state = "readonly")
+        else:
+            # Advierte que no hay registros en la tabla tipo
+            texto = "Ingresar registros en TIPO"
+            messagebox.showerror("Problema de inserción", texto)
+            # Destruye ventana
+            self.insert_datos.destroy()
 
     def __llenar_combo(self):
         opLCombo = "SELECT id_tipo, nom_tipo FROM tipo"
@@ -220,6 +232,7 @@ class modificar_vehiculo:
         self.id.insert(0, self.mod_select[0])
         self.patente.insert(0, self.mod_select[1])
         self.combo.insert(0, self.mod_select[2])
+        self.combo.config(state = "readonly")
 
     def __llenar_combo(self):
         opLCombo = "SELECT id_tipo, nom_tipo FROM tipo"
