@@ -18,7 +18,7 @@ class filtro_nombre_cliente:
         # Se crea una nueva ventana superior a la principal
         self.root = tk.Toplevel()
         # Se define el tamaño de la ventana
-        self.root.geometry('300x270')
+        self.root.geometry('300x200')
         # Se define el título de la ventana
         self.root.title("Filtrar clientes por nombre")
         # Se añade color al fondo de la ventana
@@ -36,12 +36,12 @@ class filtro_nombre_cliente:
         # Botón para realizar la consulta y generar tabla
         btn_ok = tk.Button(self.root, text = "Consultar",
             command = self.valida_filtro, bg = 'green', fg = 'white')
-        btn_ok.place(x = 100, y = 230, width = 80, height = 20)
+        btn_ok.place(x = 50, y = 160, width = 80, height = 20)
 
         # Botón para cancelar la consulta
         btn_cancel = tk.Button(self.root, text = "Cancelar",
             command = self.root.destroy, bg = 'red', fg = 'white')
-        btn_cancel.place(x = 210, y = 230, width = 80, height = 20)
+        btn_cancel.place(x = 170, y = 160, width = 80, height = 20)
 
     def __config_label(self):
         # Instrucción para el usuario
@@ -52,17 +52,17 @@ class filtro_nombre_cliente:
         self.var =IntVar()
         # Recibe filtro por nombre
         self.nom = tk.Entry(self.root)
-        self.nom.place(x = 180, y = 40, width = 60, height = 20)
+        self.nom.place(x = 130, y = 50, width = 150, height = 20)
         # Ajustes radiobutton
-        self.r1 = tk.Radiobutton(self.root, highlightthickness=0, bd = 0, bg ="light cyan", variable=self.var, text = "Nombre:", value = 1)
-        self.r1.place(x = 40, y = 40)
+        self.r1 = tk.Radiobutton(self.root, highlightthickness=0, bd = 0, bg ="light cyan", fg="blue", variable=self.var, text = "Nombre:", value = 1)
+        self.r1.place(x = 30, y = 50)
 
         # Recibe filtro por apellido
         self.ape = tk.Entry(self.root)
-        self.ape.place(x = 180, y = 80, width = 60, height = 20)
+        self.ape.place(x = 130, y = 100, width = 150, height = 20)
         # Ajustes radiobbutton
-        self.r2 = tk.Radiobutton(self.root, highlightthickness=0, bd = 0, bg ="light cyan", variable=self.var, text = "Apellido:", value = 2)
-        self.r2.place(x = 40, y = 80)
+        self.r2 = tk.Radiobutton(self.root, highlightthickness=0, bd = 0, bg ="light cyan", fg="blue", variable=self.var, text = "Apellido:", value = 2)
+        self.r2.place(x = 30, y = 100)
 
     def valida_filtro(self):
         # Se obtiene tipo de búsqueda elegida
