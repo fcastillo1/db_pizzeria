@@ -233,4 +233,4 @@ class select_rep:
 
     def __config_button(self):
         boton_salir = Button(self.ventana, text = "Salir", command = self.ventana.destroy,
-        width = 25, bg='green', fg='white').place(x = 210, y = 450)
+        width = 25, bg='green', fg='white').place(x = 180, y = 450)
