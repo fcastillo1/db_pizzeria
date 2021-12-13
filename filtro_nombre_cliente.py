@@ -54,14 +54,14 @@ class filtro_nombre_cliente:
         self.nom = tk.Entry(self.root)
         self.nom.place(x = 130, y = 50, width = 150, height = 20)
         # Ajustes radiobutton
-        self.r1 = tk.Radiobutton(self.root, highlightthickness=0, bd = 0, bg ="light cyan", fg="blue", variable=self.var, text = "Nombre:", value = 1)
+        self.r1 = tk.Radiobutton(self.root, highlightthickness=0, bd = 0, bg ="light cyan", fg="black", variable=self.var, text = "Nombre:", value = 1)
         self.r1.place(x = 30, y = 50)
 
         # Recibe filtro por apellido
         self.ape = tk.Entry(self.root)
         self.ape.place(x = 130, y = 100, width = 150, height = 20)
         # Ajustes radiobbutton
-        self.r2 = tk.Radiobutton(self.root, highlightthickness=0, bd = 0, bg ="light cyan", fg="blue", variable=self.var, text = "Apellido:", value = 2)
+        self.r2 = tk.Radiobutton(self.root, highlightthickness=0, bd = 0, bg ="light cyan", fg="black", variable=self.var, text = "Apellido:", value = 2)
         self.r2.place(x = 30, y = 100)
 
     def valida_filtro(self):
@@ -176,6 +176,6 @@ class select_cliente:
             self.data = data
 
     def __crear_botones_filtro_nomclie(self):
-        b4 = tk.Button(self.tabla, text = "Aceptar", bg='green', fg='blue',
+        b4 = tk.Button(self.tabla, text = "Aceptar", bg='green', fg='black',
             command=self.tabla.destroy)
-        b4.place(x = 150, y = 245, width = 200, height = 50)
+        b4.place(x = 150, y = 245, width = 200, height = 40)
