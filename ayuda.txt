@@ -1,5 +1,6 @@
-1. Para poder anadir, modificar o eliminar algún dato de interés se tiene que ir directamente a la ventan principal y seleccionar el área en donde se desea manipular la informacion.
-2. Cada uno de los tópicos tiene su nombre y una foto relacionada a la información. Cabe destacar que al acceder a alguna ventana al momento de ingrear los datos este ingreso es de forma manual o por medio de un menú desplegable.
+1. Para poder añadir, modificar o eliminar algún dato de interés se tiene que ir directamente a la ventana principal de interes (previamente señalada con nombre e imagen) y seleccionar en donde se desea manipular la información.
+2. Cada uno de los tópicos tiene su nombre y una foto relacionada a la información. Cabe destacar que al acceder a alguna ventana al momento de ingrear los datos este ingreso es de forma manual o por medio de un menú desplegable (combobox).
 3. Las fechas deben ingresarse cumpliendo con el formato AAAA-MM-DD HH:MM:SS. 
 4. Los datos telefónicos, de precio y cantidades son tipo entero (exclusivamente números).
 5. Los datos de nombres, apellidos, direcciones, entre otros, admiten tanto números como letras.
+6. La aplicación cuenta con un menú desplegable en donde hay información de esta y donde se puede salir. También cuenta con vistas generales de algunos datos, gráficas dinámicas en cuanto al tamaño de la pizza e información del reparto y finalmente cuenta con otras consultas dinámicas que permiten el resumen y filtro de datos de interés.
