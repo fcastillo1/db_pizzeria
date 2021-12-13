@@ -26,9 +26,9 @@ class filtro_rep_tiempo:
         # Se crea una nueva ventana superior a la principal
         self.root = tk.Toplevel()
         # Se define el tamaño de la ventana
-        self.root.geometry('320x270')
+        self.root.geometry('320x230')
         # Se define el título de la ventana
-        self.root.title("Filtrar repartidor")
+        self.root.title("Tiempo de entrega según repartidor")
         # Se añade color al fondo de la ventana
         self.root.config(bg = "light cyan")
         # Esta opción permite cambiar el tamano de la venta
@@ -44,26 +44,26 @@ class filtro_rep_tiempo:
         # Botón para realizar la consulta y generar tabla
         btn_ok = tk.Button(self.root, text = "Consultar",
             command = self.valida_filtro, bg = 'green', fg = 'white')
-        btn_ok.place(x = 100, y = 230, width = 80, height = 20)
+        btn_ok.place(x = 50, y = 180, width = 80, height = 20)
 
         # Botón para cancelar la consulta
         btn_cancel = tk.Button(self.root, text = "Cancelar",
             command = self.root.destroy, bg = 'red', fg = 'white')
-        btn_cancel.place(x = 210, y = 230, width = 80, height = 20)
+        btn_cancel.place(x = 170, y = 180, width = 80, height = 20)
 
     def __config_label(self):
         # Instrucción de selección de repartidor para el usuario
         etiqueta = tk.Label(self.root, text = "Seleccione un repartidor:", bg = "light cyan")
-        etiqueta.place(x = 40, y = 10, width = 160, height = 20)
+        etiqueta.place(x = 40, y = 25, width = 160, height = 20)
 
         # Selección de análisis por ciudad o en general
         etiqueta = tk.Label(self.root, text = "Seleccione una opción:", bg = "light cyan")
-        etiqueta.place(x = 35, y = 60, width = 160, height = 20)
+        etiqueta.place(x = 35, y = 80, width = 160, height = 20)
 
     def __config_entry(self):
         # Combobox para seleccionar el repartidor
         self.combo_rep = ttk.Combobox(self.root)
-        self.combo_rep.place(x = 40, y = 35, width = 150, height= 20)
+        self.combo_rep.place(x = 40, y = 50, width = 150, height= 20)
 
         # Recepción de columna nombre e ids de tabla tipo
         self.combo_rep["values"], self.ids_rep = self.__llenar_combo_rep()
@@ -72,14 +72,24 @@ class filtro_rep_tiempo:
 
         # Ajustes radiobutton1 de selección de una ciudad
         self.r1 = tk.Radiobutton(self.root, highlightthickness=0, bd = 0, bg ="light cyan", variable=self.var, text = "Por ciudad:", value = 1)
-        self.r1.place(x = 40, y = 80)
+        self.r1.place(x = 40, y = 105)
 
         # Combobox de ciudades ingresadas
         self.combo_ciudad = ttk.Combobox(self.root)
-        self.combo_ciudad.place(x = 145, y = 80, width = 150, height= 20)
+        self.combo_ciudad.place(x = 145, y = 105, width = 150, height= 20)
 
         # Recepción de ciudades e ids correspondientes
         self.combo_ciudad["values"], self.ids_ciudad = self.__llenar_combo_ciudad()
+
+        # Ajustes radiobbutton2 general
+        self.r2 = tk.Radiobutton(self.root, highlightthickness=0, bd = 0, bg = "light cyan", variable=self.var, text = "Ver general", value = 2)
+        self.r2.place(x = 40, y = 140)
+
+        # Validación de combobox ciudad
+        if self.ids_ciudad != []:
+            # Se coloca por defecto el primer ítem
+            self.combo_ciudad.insert(0, self.combo_ciudad["values"][0])
+            self.combo_ciudad.config(state = "readonly")
 
         # Validación de combobox de repartidor
         if self.ids_rep != []:
@@ -93,15 +103,6 @@ class filtro_rep_tiempo:
             # Destruye ventana
             self.root.destroy()
 
-        # Validación de combobox ciudad
-        if self.ids_ciudad != []:
-            # Se coloca por defecto el primer ítem
-            self.combo_ciudad.insert(0, self.combo_ciudad["values"][0])
-            self.combo_ciudad.config(state = "readonly")
-
-        # Ajustes radiobbutton2 general
-        self.r2 = tk.Radiobutton(self.root, highlightthickness=0, bd = 0, bg = "light cyan", variable=self.var, text = "Ver general", value = 2)
-        self.r2.place(x = 40, y = 110)
 
     def valida_filtro(self):
         # Se obtiene opción elegido por el usuario
@@ -161,12 +162,12 @@ class filtro_rep_tiempo:
         pedido.rut_clie = cliente.rut_clie JOIN ciudad ON cliente.id_ciudad = ciudad.id_ciudad WHERE %s""" % filtro
 
         # Se obtienen resultados de la consulta
-        mod_select = self.db.run_select(sql)
+        seleccion = self.db.run_select(sql)
 
         # Se obtienen resultados
-        if(mod_select) != []:
+        if(seleccion) != []:
             # Se pasa como parámetro todo el resultado del sql
-            select_rep(self.db, mod_select)
+            select_rep(self.db, seleccion)
         else:
             # El repartidor no ha participado en ningún pedido
             texto = "¿Desea intentar con otra opción?"
@@ -177,10 +178,10 @@ class filtro_rep_tiempo:
                 self.root.destroy()
 
 class select_rep:
-    def __init__(self, db, mod_select):
+    def __init__(self, db, seleccion):
         self.db = db
         self.data = []
-        self.mod_select = mod_select
+        self.seleccion = seleccion
 
         # Ventana emergente
         self.ventana= tk.Toplevel()
@@ -188,10 +189,14 @@ class select_rep:
         self.ventana.title("Cantidad de horas por pedido")
         self.ventana.config(bg = "white")
 
+        self.__grafica()
+        self.__config_button()
+
+    def __grafica(self):
         # Cuenta las ocurrencias de cada hora y genera diccionario donde la llave
         # corresponde a la cantidad de horas y el valor al n° de pedidos que se han
         # demorado ese tiempo en entregar
-        data = Counter(i[1] for i in self.mod_select)
+        data = Counter(i[1] for i in self.seleccion)
 
         # Plot
         fig = plt.figure(figsize = (6, 6), dpi = 100)
@@ -225,3 +230,7 @@ class select_rep:
         canvasbar = FigureCanvasTkAgg(fig, master = self.ventana)
         canvasbar.draw()
         canvasbar.get_tk_widget().place(x = 0, y = 40)
+
+    def __config_button(self):
+        boton_salir = Button(self.ventana, text = "Salir", command = self.ventana.destroy,
+        width = 25, bg='green', fg='white').place(x = 180, y = 450)
