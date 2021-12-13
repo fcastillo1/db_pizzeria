@@ -65,8 +65,6 @@ class DB_pizzeria:
 
     # Función que corre una consulta select para un registro específico
     def run_select_filter(self, sql, params):
-        print("sql", sql)
-        print("params", params)
         # realiza la excepcion para obtener los datos (tablas) de la base de datos
         try:
             # Ejecuta consulta
@@ -126,7 +124,6 @@ class DB_pizzeria:
 def validar_run_sql(params):
     # Se genera una bandera
     bandera = 0;
-
     for key in params:
         # Si un atributo es NULL, a excepción de patente, se incrementa bandera
         if not params[key]:
