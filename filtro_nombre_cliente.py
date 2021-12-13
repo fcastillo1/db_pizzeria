@@ -176,6 +176,6 @@ class select_cliente:
             self.data = data
 
     def __crear_botones_filtro_nomclie(self):
-        b4 = tk.Button(self.tabla, text = "Aceptar", bg='green', fg='black',
+        b4 = tk.Button(self.tabla, text = "Aceptar", bg='green', fg='white',
             command=self.tabla.destroy)
         b4.place(x = 150, y = 245, width = 200, height = 40)
