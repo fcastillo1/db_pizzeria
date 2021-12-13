@@ -52,6 +52,9 @@ class detalle:
         self.llenar_treeview_detalle()
         self.root.after(0, self.llenar_treeview_detalle)
 
+        # Se define atributo para selección de registro
+        self.actual = ""
+
         # Ajuste treeview para seleccionar registros con dos claves primarias
         self.treeview.bind('<ButtonRelease-1>', self.selec_registro)
 
