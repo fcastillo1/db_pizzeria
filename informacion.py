@@ -39,7 +39,7 @@ class informacion:
     # Esta funcion sera la encargada de crear el mensaje
     def __crear_mensaje(self):
         # se imprime el mensaje que el usuario podra ver en pantalla
-        mensaje_informacion = Message(self.root, text = "VERSION 1.1.1 Esta aplicacion fue desarrollada por Francisca Castillo y Rocio Rodriguez para la creacion de la pizzeria Il Italiano", bg="light cyan")
+        mensaje_informacion = Message(self.root, text = "VERSIÓN 1.1.1" + "/n" + "Esta aplicación fue desarrollada por Francisca Castillo y Rocío Rodríguez para la creación de la pizzería Il Italiano", bg="light cyan")
         # permitira el posicionamiento del mensaje
         mensaje_informacion.pack()
         # Empieza a correr la interfaz
