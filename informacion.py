@@ -16,7 +16,7 @@ class informacion:
         # Se crea una nueva ventana superior a la principal
         self.root = tk.Toplevel()
         # Se define el tamano de la ventana
-        self.root.geometry('300x200')
+        self.root.geometry('300x220')
         # Se define el título de la ventana
         self.root.title("Informacion APP")
         # Se añade color al fondo de la ventana
@@ -34,12 +34,12 @@ class informacion:
         # se define el nombre del boton, su texto y algunos detalles de su formtato
         boton_aceptar = Button(self.root, text="Aceptar", command=self.root.destroy, bg='green', fg='white')
         # Se establece la ubicacion del boton
-        boton_aceptar.place(x=110, y= 150)
+        boton_aceptar.place(x =100, y = 150, width = 100)
 
     # Esta funcion sera la encargada de crear el mensaje
     def __crear_mensaje(self):
         # se imprime el mensaje que el usuario podra ver en pantalla
-        mensaje_informacion = Message(self.root, text = "VERSIÓN 1.1.1" + "/n" + "Esta aplicación fue desarrollada por Francisca Castillo y Rocío Rodríguez para la creación de la pizzería Il Italiano", bg="light cyan")
+        mensaje_informacion = Message(self.root, text = "VERSIÓN 1.1.1" + "\n" + "Esta aplicación fue desarrollada por Francisca Castillo y Rocío Rodríguez para la creación de la pizzería Il Italiano", bg="light cyan")
         # permitira el posicionamiento del mensaje
         mensaje_informacion.pack()
         # Empieza a correr la interfaz
