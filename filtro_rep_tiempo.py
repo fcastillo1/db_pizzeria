@@ -26,7 +26,7 @@ class filtro_rep_tiempo:
         # Se crea una nueva ventana superior a la principal
         self.root = tk.Toplevel()
         # Se define el tamaño de la ventana
-        self.root.geometry('320x230')
+        self.root.geometry('320x270')
         # Se define el título de la ventana
         self.root.title("Filtrar repartidor")
         # Se añade color al fondo de la ventana
@@ -44,29 +44,42 @@ class filtro_rep_tiempo:
         # Botón para realizar la consulta y generar tabla
         btn_ok = tk.Button(self.root, text = "Consultar",
             command = self.valida_filtro, bg = 'green', fg = 'white')
-        btn_ok.place(x = 50, y = 180, width = 80, height = 20)
+        btn_ok.place(x = 100, y = 230, width = 80, height = 20)
 
         # Botón para cancelar la consulta
         btn_cancel = tk.Button(self.root, text = "Cancelar",
             command = self.root.destroy, bg = 'red', fg = 'white')
-        btn_cancel.place(x = 170, y = 180, width = 80, height = 20)
+        btn_cancel.place(x = 210, y = 230, width = 80, height = 20)
 
     def __config_label(self):
         # Instrucción de selección de repartidor para el usuario
         etiqueta = tk.Label(self.root, text = "Seleccione un repartidor:", bg = "light cyan")
-        etiqueta.place(x = 40, y = 50, width = 160, height = 20)
+        etiqueta.place(x = 40, y = 10, width = 160, height = 20)
 
         # Selección de análisis por ciudad o en general
         etiqueta = tk.Label(self.root, text = "Seleccione una opción:", bg = "light cyan")
-        etiqueta.place(x = 35, y = 15, width = 160, height = 20)
+        etiqueta.place(x = 35, y = 60, width = 160, height = 20)
 
     def __config_entry(self):
         # Combobox para seleccionar el repartidor
         self.combo_rep = ttk.Combobox(self.root)
-        self.combo_rep.place(x = 40, y = 70, width = 150, height= 20)
+        self.combo_rep.place(x = 40, y = 35, width = 150, height= 20)
 
         # Recepción de columna nombre e ids de tabla tipo
         self.combo_rep["values"], self.ids_rep = self.__llenar_combo_rep()
+
+        self.var =IntVar()
+
+        # Ajustes radiobutton1 de selección de una ciudad
+        self.r1 = tk.Radiobutton(self.root, highlightthickness=0, bd = 0, bg ="light cyan", variable=self.var, text = "Por ciudad:", value = 1)
+        self.r1.place(x = 40, y = 80)
+
+        # Combobox de ciudades ingresadas
+        self.combo_ciudad = ttk.Combobox(self.root)
+        self.combo_ciudad.place(x = 145, y = 80, width = 150, height= 20)
+
+        # Recepción de ciudades e ids correspondientes
+        self.combo_ciudad["values"], self.ids_ciudad = self.__llenar_combo_ciudad()
 
         # Validación de combobox de repartidor
         if self.ids_rep != []:
@@ -80,20 +93,7 @@ class filtro_rep_tiempo:
             # Destruye ventana
             self.root.destroy()
 
-        self.var =IntVar()
-
-        # Ajustes radiobutton1 de selección de una ciudad
-        self.r1 = tk.Radiobutton(self.root, highlightthickness=0, bd = 0, bg ="light cyan", variable=self.var, text = "Por ciudad:", value = 1)
-        self.r1.place(x = 40, y = 105)
-
-        # Combobox de ciudades ingresadas
-        self.combo_ciudad = ttk.Combobox(self.root)
-        self.combo_ciudad.place(x = 145, y = 105, width = 150, height= 20)
-
-        # Recepción de ciudades e ids correspondientes
-        self.combo_ciudad["values"], self.ids_ciudad = self.__llenar_combo_ciudad()
-
-        # Validación de combobox
+        # Validación de combobox ciudad
         if self.ids_ciudad != []:
             # Se coloca por defecto el primer ítem
             self.combo_ciudad.insert(0, self.combo_ciudad["values"][0])
@@ -101,7 +101,7 @@ class filtro_rep_tiempo:
 
         # Ajustes radiobbutton2 general
         self.r2 = tk.Radiobutton(self.root, highlightthickness=0, bd = 0, bg = "light cyan", variable=self.var, text = "Ver general", value = 2)
-        self.r2.place(x = 40, y = 140)
+        self.r2.place(x = 40, y = 110)
 
     def valida_filtro(self):
         # Se obtiene opción elegido por el usuario
