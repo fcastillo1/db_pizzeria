@@ -156,6 +156,6 @@ class select_resumen_tipo:
             self.data = data
 
     def __crear_botones_resumen_tipo(self):
-        b4 = tk.Button(self.tabla, text = "Aceptar", bg='green', fg='black',
+        b4 = tk.Button(self.tabla, text = "Aceptar", bg='green', fg='white',
             command=self.tabla.destroy)
         b4.place(x = 150, y = 245, width = 200, height = 40)
