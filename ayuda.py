@@ -18,7 +18,7 @@ class ayuda:
         # Se crea una nueva ventana superior a la principal
         self.root = tk.Toplevel()
         # Se define el tamano de la ventana
-        self.root.geometry('500x350')
+        self.root.geometry('650x400')
         # Se define el título de la ventana
         self.root.title("Ayuda")
         # Se añade color al fondo de la ventana
@@ -27,9 +27,9 @@ class ayuda:
         self.root.resizable(width = 0, height = 0)
         self.root.transient(root)
 
-        self.__informacion_botones()
-        # Se llama a cada una de las funciones que permiten su funcionamiento
         self.__funcion_boton()
+        # Se llama a cada una de las funciones que permiten su funcionamiento
+
         self.__crear_mensaje()
 
     # Se crea la función que permite el funcionamiento del botón aceptar
@@ -37,12 +37,7 @@ class ayuda:
         # Se define el nombre del botón, su texto y algunos detalles de su formato
         boton_aceptar = Button(self.root, text="Aceptar", command=self.root.destroy, bg='green', fg='white')
         # Se establece la ubicación del botón
-        boton_aceptar.place(x=220, y= 300)
-
-    def __informacion_botones(self):
-        exit_button = Button(self.root, text="Aceptar", command=self.root.destroy, bg='green', fg='white')
-        exit_button.place(x=220, y= 300)
-        #self.root.mainloop()
+        boton_aceptar.place(x =250, y = 350, width = 150)
 
     # Esta función es la encargada de crear el mensaje
     def __crear_mensaje(self):
