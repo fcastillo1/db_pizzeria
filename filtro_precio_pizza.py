@@ -55,14 +55,14 @@ class filtro_precio_pizza:
         self.num1 = tk.Entry(self.root)
         self.num1.place(x = 180, y = 50, width = 60, height = 20)
         # Ajustes radiobutton
-        self.r1 = tk.Radiobutton(self.root, highlightthickness=0, bd = 0, bg ="light cyan", fg="blue", variable=self.var, text = "Menor o igual a:", value = 1)
+        self.r1 = tk.Radiobutton(self.root, highlightthickness=0, bd = 0, bg ="light cyan", fg="black", variable=self.var, text = "Menor o igual a:", value = 1)
         self.r1.place(x = 40, y = 50)
 
         # Recibe filtro menor o igual a
         self.num2 = tk.Entry(self.root)
         self.num2.place(x = 180, y = 100, width = 60, height = 20)
         # Ajustes radiobbutton
-        self.r2 = tk.Radiobutton(self.root, highlightthickness=0, bd = 0, bg ="light cyan", fg="blue", variable=self.var, text = "Mayor o igual a:", value = 2)
+        self.r2 = tk.Radiobutton(self.root, highlightthickness=0, bd = 0, bg ="light cyan", fg="black", variable=self.var, text = "Mayor o igual a:", value = 2)
         self.r2.place(x = 40, y = 100)
 
     def transforma_int(self, valor):
@@ -186,6 +186,6 @@ class select_pizza:
             self.data = data
 
     def __crear_botones_filtro_preciopiz(self):
-        b4 = tk.Button(self.tabla, text = "Aceptar", bg='green', fg='blue',
+        b4 = tk.Button(self.tabla, text = "Aceptar", bg='green', fg='black',
             command=self.tabla.destroy)
-        b4.place(x = 150, y = 245, width = 200, height = 50)
+        b4.place(x = 150, y = 245, width = 200, height = 40)
