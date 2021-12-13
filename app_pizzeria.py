@@ -174,8 +174,8 @@ class aplicacion:
         graficas_menu = Menu(menu_opciones, tearoff = 0, bg = "white")
         menu_opciones.add_cascade(label = "Gráficas", menu = graficas_menu)
 
-        graficas_menu.add_command(label = "Gráficas Dinámicas Histograma", command = self.__mostrar_histograma)
-        graficas_menu.add_command(label = "Gráficas Dinámicas Torta", command = self.__mostrar_rep_tiempo)
+        graficas_menu.add_command(label = "Frecuencia de precios según tamaño", command = self.__mostrar_histograma)
+        graficas_menu.add_command(label = "Desempeño del repartidor en el tiempo", command = self.__mostrar_rep_tiempo)
 
         # Opción de consultas dinámicas
         dinamicas_menu = Menu(menu_opciones, tearoff = 0, bg = "white")
