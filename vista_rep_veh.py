@@ -86,6 +86,6 @@ class vista_rep_veh:
             self.data = data
 
     def __crear_botones_vista(self):
-        b4 = tk.Button(self.root, text = "Aceptar", bg='green', fg='blue',
+        b4 = tk.Button(self.root, text = "Aceptar", bg='green', fg='white',
             command=self.root.destroy)
-        b4.place(x = 290, y = 350, width = 200, height = 50)
+        b4.place(x = 290, y = 350, width = 200, height = 40)
