@@ -57,47 +57,47 @@ class aplicacion:
     # Esta funcion permite la creación de los botones principales de la app
     def __crearBotones(self):
         # Se sube una Imagen al botón ciudad
-        image_ciudad = Image.open("ciudad.jpg")
+        image_ciudad = Image.open("imagenes/ciudad.jpg")
         image_ciudad = image_ciudad.resize((63, 45), Image.ANTIALIAS)
         self.reset_img1 = ImageTk.PhotoImage(image_ciudad)
 
         # Se sube una Imagen al botón cliente
-        image_cliente = Image.open("cliente.jpg")
+        image_cliente = Image.open("imagenes/cliente.jpg")
         image_cliente = image_cliente.resize((63, 45), Image.ANTIALIAS)
         self.reset_img2 = ImageTk.PhotoImage(image_cliente)
 
         # Se sube una Imagen al botón tipo
-        image_tipo = Image.open("tipo.jpg")
+        image_tipo = Image.open("imagenes/tipo.jpg")
         image_tipo = image_tipo.resize((63, 45), Image.ANTIALIAS)
         self.reset_img3 = ImageTk.PhotoImage(image_tipo)
 
         # Se sube una Imagen al botón vehículo
-        image_vehiculo = Image.open("vehiculo.jpg")
+        image_vehiculo = Image.open("imagenes/vehiculo.jpg")
         image_vehiculo = image_vehiculo.resize((63, 45), Image.ANTIALIAS)
         self.reset_img4 = ImageTk.PhotoImage(image_vehiculo)
 
         # Se sube una Imagen al botón repartidor
-        image_repartidor = Image.open("repartidor.jpg")
+        image_repartidor = Image.open("imagenes/repartidor.jpg")
         image_repartidor = image_repartidor.resize((63, 45), Image.ANTIALIAS)
         self.reset_img5 = ImageTk.PhotoImage(image_repartidor)
 
         # Se sube una Imagen al botón tamaño
-        image_tamano = Image.open("tamano.jpg")
+        image_tamano = Image.open("imagenes/tamano.jpg")
         image_tamano = image_tamano.resize((63, 45), Image.ANTIALIAS)
         self.reset_img6 = ImageTk.PhotoImage(image_tamano)
 
         # Se sube una Imagen al botón pizza
-        image_pizza = Image.open("pizza.jpg")
+        image_pizza = Image.open("imagenes/pizza.jpg")
         image_pizza = image_pizza.resize((63, 45), Image.ANTIALIAS)
         self.reset_img7 = ImageTk.PhotoImage(image_pizza)
 
         # Se sube una Imagen al botón pedido
-        image_pedido = Image.open("pedido.jpg")
+        image_pedido = Image.open("imagenes/pedido.jpg")
         image_pedido = image_pedido.resize((63, 45), Image.ANTIALIAS)
         self.reset_img8 = ImageTk.PhotoImage(image_pedido)
 
         # Se sube una Imagen al botón detalle
-        image_detalle = Image.open("detalle.jpg")
+        image_detalle = Image.open("imagenes/detalle.jpg")
         image_detalle = image_detalle.resize((63, 45), Image.ANTIALIAS)
         self.reset_img9 = ImageTk.PhotoImage(image_detalle)
 
@@ -174,15 +174,8 @@ class aplicacion:
         graficas_menu = Menu(menu_opciones, tearoff = 0, bg = "white")
         menu_opciones.add_cascade(label = "Gráficas", menu = graficas_menu)
 
-        # Se muestran las opciones del menú con las distintas gráficas (histograma)
-        graficas_menu.add_command(label = "Histograma", command = self.__mostrar_histograma)
-        graficas_menu.add_command(label = "Pie", command = self.__mostrar_rep_tiempo)
-
-        # Se genera un espacio
-        graficas_menu.add_separator()
-
-        graficas_menu.add_command(label = "Graficas Dinamicas 1")
-        graficas_menu.add_command(label = "Graficas Dinamicas 2")
+        graficas_menu.add_command(label = "Gráficas Dinamicas Histograma", command = self.__mostrar_histograma)
+        graficas_menu.add_command(label = "Gráficas Dinamicas Torta", command = self.__mostrar_rep_tiempo)
 
         # Opción de consultas dinámicas
         dinamicas_menu = Menu(menu_opciones, tearoff = 0, bg = "white")
@@ -192,10 +185,14 @@ class aplicacion:
         dinamicas_menu.add_command(label = "Resumen tipo", command = self.__mostrar_resumen_tipo)
         # Consulta para filtrar detalle por pedido (resumen de pedido)
         dinamicas_menu.add_command(label = "Resumen por pedido", command = self.__mostrar_resumen_pedido)
+
+        # Se genera un espacio
+        dinamicas_menu.add_separator()
+
         # Consulta para filtrar pizzas por precio
-        dinamicas_menu.add_command(label = "Precio pizza", command = self.__mostrar_precio_pizza)
+        dinamicas_menu.add_command(label = "Filtro precio pizza", command = self.__mostrar_precio_pizza)
         # Consulta para filtrar clientes por nombre
-        dinamicas_menu.add_command(label = "Nombre de cliente", command = self.__mostrar_nombre_cliente)
+        dinamicas_menu.add_command(label = "Filtro nombre/apellido cliente", command = self.__mostrar_nombre_cliente)
 
         # Se construye el menú de ayuda con su color
         help_menu = Menu(menu_opciones, tearoff = 0, bg = "white")
@@ -211,7 +208,7 @@ class aplicacion:
         frame.place(x = 400, y = 60)
 
         # Imagen principal de la ventana abierta a partir de un archivo
-        image = Image.open("imagenpizza.jpg")
+        image = Image.open("imagenes/imagenpizza.jpg")
 
         # Se define el tamaño de la imagen
         photo = ImageTk.PhotoImage(image.resize((450, 350), Image.ANTIALIAS))
