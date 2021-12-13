@@ -17,7 +17,7 @@ class filtro_tam_precio:
         # Se crea una nueva ventana superior a la principal
         self.root = tk.Toplevel()
         # Se define el tamaño de la ventana
-        self.root.geometry('320x270')
+        self.root.geometry('320x200')
         # Se define el título de la ventana
         self.root.title("Filtrar tamaño")
         # Se añade color al fondo de la ventana
@@ -35,23 +35,25 @@ class filtro_tam_precio:
         # Botón para realizar la consulta y generar tabla
         btn_ok = tk.Button(self.root, text = "Consultar",
             command = self.__query_dinamica, bg = 'green', fg = 'white')
-        btn_ok.place(x = 100, y = 230, width = 80, height = 20)
+        btn_ok.place(x = 50, y = 160, width = 80, height = 20)
 
         # Botón para cancelar la consulta
         btn_cancel = tk.Button(self.root, text = "Cancelar",
             command = self.root.destroy, bg = 'red', fg = 'white')
-        btn_cancel.place(x = 210, y = 230, width = 80, height = 20)
+        btn_cancel.place(x = 190, y = 160, width = 80, height = 20)
 
     def __config_label(self):
         # Instrucción de selección de repartidor para el usuario
-        etiqueta = tk.Label(self.root, text = "Seleccione un tamaño:", bg = "light cyan")
-        etiqueta.place(x = 40, y = 10, width = 160, height = 20)
+        etiqueta = tk.Label(self.root, text = "Seleccione una opción:", bg = "light cyan")
+        etiqueta.place(x = 40, y = 35, width = 160, height = 20)
+
+        etiqueta_tam = tk.Label(self.root, text = "Tamaño:", bg = "light cyan", fg = "black")
+        etiqueta_tam.place(x = 15, y = 85, width = 120, height = 20)
 
     def __config_entry(self):
         # Combobox para seleccionar el tamano
         self.combo = ttk.Combobox(self.root)
-        self.combo.place(x = 90, y = 60, width = 150, height= 20)
-
+        self.combo.place(x = 125, y = 85, width = 150, height= 20)
         # Recepción de columna nombre e ids de tabla tamano
         self.combo["values"], self.ids = self.__llenar_combo_tamano()
 
