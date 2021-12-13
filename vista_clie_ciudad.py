@@ -85,7 +85,7 @@ class vista_clie_ciudad:
             self.data = data
 
     def __crear_botones_vista(self):
-        b4 = tk.Button(self.root, text = "Salir", bg='green', fg='blue',
+        b4 = tk.Button(self.root, text = "Salir", bg='green', fg='white',
             command=self.root.destroy)
-        b4.place(x = 290, y = 350, width = 200, height = 50)
+        b4.place(x = 290, y = 350, width = 200, height = 40)
 
