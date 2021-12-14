@@ -95,6 +95,7 @@ class vista_rep_veh:
 
     def __crear_botones_vista(self):
         # Creación de un botón para aceptar y salir de la vista
-        bt_aceptar = tk.Button(self.root, text = "Aceptar", bg='green', fg='white',
+        btn_ok = tk.Button(self.root, text = "Aceptar", bg='green', fg='white',
             command=self.root.destroy)
-        bt_aceptar.place(x = 290, y = 350, width = 200, height = 40)
+        # Configuraciones del botón sobre ubicación del botón y tamaño
+        btn_ok.place(x = 290, y = 350, width = 200, height = 40)
