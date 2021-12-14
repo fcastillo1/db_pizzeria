@@ -58,7 +58,13 @@ El desarrollo de este proyecto ha contemplado los siguientes pasos:
  
  * Tambien dentro del repositorio se cuenta con dos archivos txt los cuales son: 
     * ayuda.txt (Este detalla la ayuda el mensaje de ayuda al usuario el cual se imprime para que este lo vea)
-    * funcionalidades.txt (Este archivo contiene los triggers, funciones y tambien procedimientos que se realizo)
+    * funcionalidades.txt (Este archivo contiene los triggers, funciones y tambien procedimientos que se realizo). ESTE ARCHIVO DEBE SER AGREGADO POR EL USUARIO DESPUES DE QUE SE CREE LA BASE DE DATOS PARA EL FUNCIONAMIENTO Y COMPROBACION.
+    El usuario debe seguir los comandos e instrucciones para su uso:
+    - mysql -u root -p
+    - use db_pizzeria
+    - delimiter // 
+    - agregar el trigger, funcion o procedimiento
+    - //
  
  * El repositorio cuenta ademas con una carpeta llamada imagenes en la cual estan todas las imagenes de los botones de la ventana principal de la aplicacion, tambien es una ruta necesaria.
 
