@@ -11,8 +11,10 @@ class pizza:
         self.db = db
         self.data = []
 
-        # Toplevel es una ventana que está un nivel arriba que la principal
+        # Ventana emergente para mostrar información de la tabla pizza
         self.root = tk.Toplevel()
+        
+        # Configuraciones de la ventana
         self.root.geometry('600x400')
         self.root.title("Pizzas")
         self.root.config(bg = "light cyan")
@@ -28,38 +30,53 @@ class pizza:
         self.__crear_botones_pizza()
 
     def __config_treeview_pizza(self):
+        # Se crea el treeview que muestra registros de la tabla pizza
         self.treeview = ttk.Treeview(self.root)
+        # Se definen las columnas que mostrará el treeview
         self.treeview.configure(show = "headings", columns = ("id_piz", "nom_piz", "id_tam", "precio_piz"))
+        
+        # Para cada columna se establece un nombre representativo
         self.treeview.heading("id_piz", text = "ID")
         self.treeview.heading("nom_piz", text = "Nombre")
         self.treeview.heading("id_tam", text = "Tamaño")
         self.treeview.heading("precio_piz", text = "Precio")
+        
+        # Ajustes de tamaño para cada columna
         self.treeview.column("id_piz", minwidth = 150, width = 150, stretch = False)
         self.treeview.column("nom_piz", minwidth = 150, width = 150, stretch = False)
         self.treeview.column("id_tam", minwidth = 150, width = 150, stretch = False)
         self.treeview.column("precio_piz", minwidth = 150, width = 150, stretch = False)
-        # Ubica treeview
+        
+        # Ubicación del treeview
         self.treeview.place(x = 0, y = 0, height = 350, width = 600)
+        
         # Llenado del treeview
         self.llenar_treeview_pizza()
         self.root.after(0, self.llenar_treeview_pizza)
 
     def __crear_botones_pizza(self):
+        # Se define un botón que permite abrir una nueva ventana para insertar una pizza
         b1 = tk.Button(self.root, text = "Insertar pizza", bg='snow',
             fg='green', command = self.__insertar_pizza)
         b1.place(x = 0, y = 350, width = 150, height = 50)
+        
+        # Se define un botón para modificar un registro seleccionado
         b2 = tk.Button(self.root, text = "Modificar pizza", bg='snow',
             fg='orange', command = self.__modificar_pizza)
         b2.place(x = 150, y = 350, width = 150, height = 50)
+        
+        # Permite la eliminación de un registro del treeview
         b3 = tk.Button(self.root, text = "Eliminar pizza", bg='snow', fg='red',
         command = self.__eliminar_pizza)
         b3.place(x = 300, y = 350, width = 150, height = 50)
+        
+        # Destruye la ventana que muestra las pizzas
         b4 = tk.Button(self.root, text = "Salir", command=self.root.destroy,
             bg='red', fg='white')
         b4.place(x = 450, y = 350, width = 150, height = 50)
 
     def llenar_treeview_pizza(self):
-        # Se obtienen pizzas ingresadas
+        # Se obtienen pizzas que están en la tabla pizza y el nombre del tamaño
         opTreeview = """SELECT id_piz, nom_piz, nom_tam, precio_piz from pizza
         join tamano on pizza.id_tam = tamano.id_tam;"""
 
@@ -79,37 +96,46 @@ class pizza:
             self.data = data
 
     def __insertar_pizza(self):
+        # Llama a clase que permite ingresar pizza
         insertar_pizza(self.db, self)
 
     def __eliminar_pizza(self):
+        # Consulta si hay un registro seleccionado en el treeview
         if(self.treeview.focus() != ""):
+            # Confirma eliminación del registro seleccionado
             if messagebox.askyesno(message="¿Realmente quieres borrar el registro?", title = "Alerta")== True:
+                # Consulta para eliminar el registro de acuerdo a id
                 opEliminar = "DELETE FROM pizza where id_piz = %(id_piz)s"
+                # Ejuta la eliminación del registro
                 self.db.run_sql(opEliminar, {"id_piz": self.treeview.focus()}, "D")
+                
+                # Actualiza el treeview
                 self.llenar_treeview_pizza()
 
     def __modificar_pizza(self):
+         # Consulta si hay un registro seleccionado en el treeview
         if(self.treeview.focus() != ""):
+            # Confirma la modificación del registro seleccionado
             if messagebox.askyesno(message="¿Realmente quieres modificar el registro?", title = "Alerta")== True:
+                # Consulta para obtener información del registro seleccionado según id
                 opModificar = """SELECT id_piz, nom_piz, nom_tam, precio_piz from pizza
                 join tamano on pizza.id_tam = tamano.id_tam WHERE id_piz = %(id)s"""
 
                 # Se consulta en la tabla pizza por el id del registro a modificar
                 mod_select = self.db.run_select_filter(opModificar, {"id": self.treeview.focus()})[0]
+                # Llama a clase que permite modificar el registro
                 modificar_pizza(self.db, self, mod_select)
-
-    def __mostrar_tamano(self):
-        tamano(self.root, self.db)
 
 class insertar_pizza:
     def __init__(self, db, padre):
+        # Padre corresponde a la ventana principal de las pizzas
         self.padre = padre
         self.db = db
 
-        # Ventana emergente
+        # Ventana emergente para insertar nueva pizza
         self.insert_datos = tk.Toplevel()
 
-        # Funcionalidades
+        # Funcionalidades de la ventana
         self.__config_button()
         self.__config_window()
         self.__config_label()
@@ -122,7 +148,7 @@ class insertar_pizza:
         self.insert_datos.resizable(width=0, height=0)
 
     def __config_label(self):
-        # Definición de entradas de texto para la clase pizza
+        # Etiquetas para organizar entradas de texto para la clase pizza
         id_lab = tk.Label(self.insert_datos, text = "ID: ")
         id_lab.place(x = 10, y = 20, width = 120, height = 20)
         nom_lab = tk.Label(self.insert_datos, text = "Nombre: ")
@@ -133,7 +159,8 @@ class insertar_pizza:
         tam_lab.place(x = 10, y = 140, width = 120, height = 20)
 
     def __config_entry(self):
-        # Se obtiene texto para ingresar pizzas
+        # Se obtiene texto para ingresar pizzas mediante entradas de texto
+        # Permite ingresar id de la pizza,, nombre y precio
         self.id = tk.Entry(self.insert_datos)
         self.id.place(x = 110, y = 20, width = 150, height = 20)
         self.nombre = tk.Entry(self.insert_datos)
@@ -155,13 +182,14 @@ class insertar_pizza:
             # Advierte que no hay registros en la tabla tamano
             texto = "Ingresar registros en TAMANO"
             messagebox.showerror("Problema de inserción", texto)
-            # Destruye ventana
+            # Destruye ventana de ingreso de pizzas
             self.insert_datos.destroy()
 
     def __llenar_combo(self):
-        # Consulta en tabla tamano
+        # Consulta en tabla tamano para obtener información
         opLCombo = "SELECT id_tam, nom_tam FROM tamano"
         self.data = self.db.run_select(opLCombo)
+        
         # Retorna nombre de tamaño e id
         return [i[1] for i in self.data], [i[0] for i in self.data]
 
@@ -177,23 +205,32 @@ class insertar_pizza:
         btn_cancel.place(x=210, y =200, width = 80, height = 20)
 
     def __insertar(self): #Insercion en la base de datos.
-        # Inserción de pizza
+        # Inserción de pizza en la base de datos
         opInsert = """INSERT pizza (id_piz, nom_piz, id_tam, precio_piz) values
             (%(id)s, %(nombre)s, %(tamano)s, %(precio)s)"""
 
         # Se ejecuta consulta
         self.db.run_sql(opInsert, {"id": self.id.get(),"nombre": self.nombre.get(),
         "precio": self.precio.get(), "tamano": self.ids[self.combo.current()]}, "I")
-
+        
+        # Se destruye ventana de ingreso
         self.insert_datos.destroy()
+        # Se actualiza el treeview de la ventana principal
         self.padre.llenar_treeview_pizza()
 
 class modificar_pizza:
     def __init__(self, db, padre, mod_select):
+        # Se recibe ventana principal
         self.padre = padre
         self.db = db
+        
+        # Información actual del registro a modificar
         self.mod_select = mod_select
+        
+        # Creación de ventana emergente para la modificación
         self.insert_datos = tk.Toplevel()
+        
+        # Funcionalidades de la ventana
         self.__config_window()
         self.__config_label()
         self.__config_entry()
@@ -218,6 +255,7 @@ class modificar_pizza:
 
     def __config_entry(self):
         # Se obtiene texto para ingresar pizzas
+        # Permite modificar id, nombre y precio
         self.id = tk.Entry(self.insert_datos)
         self.id.place(x = 110, y = 20, width = 150, height = 20)
         self.nombre = tk.Entry(self.insert_datos)
@@ -225,13 +263,15 @@ class modificar_pizza:
         self.precio = tk.Entry(self.insert_datos)
         self.precio.place(x = 110, y = 100, width = 150, height = 20)
 
-        # Combobox
+        # Combobox que permite modificar el tamaño
         self.combo = ttk.Combobox(self.insert_datos)
         self.combo.place(x = 110, y = 140, width = 150, height= 20)
         self.combo["values"], self.ids = self.__llenar_combo()
-
-        # Se insertan valores actuales
+        
+        # Se obtiene id actual del registro a modificar
         self.id_viejo = self.mod_select[0]
+        
+        # Se insertan valores actuales del registro a modificar
         self.id.insert(0, self.mod_select[0])
         self.nombre.insert(0, self.mod_select[1])
         self.combo.insert(0, self.mod_select[2])
@@ -239,9 +279,11 @@ class modificar_pizza:
         self.precio.insert(0, self.mod_select[3])
 
     def __llenar_combo(self):
+        # Obtiene la información de la tabla tamaño
         opLCombo = "SELECT id_tam, nom_tam FROM tamano"
         self.data = self.db.run_select(opLCombo)
-        # Se muestra nom_tam
+        
+        # Se retorna el nombre e id del tamaño
         return [i[1] for i in self.data], [i[0] for i in self.data]
 
     def __config_button(self):
@@ -256,11 +298,16 @@ class modificar_pizza:
         btn_cancel.place(x = 210, y = 200, width = 80, height = 20)
 
     def __modificar(self):
+        # Consulta que permite actualizar el registro seleccionado usando id 
         opEdicion = """UPDATE pizza set id_piz = %(id)s, nom_piz = %(nombre)s,
             id_tam = %(tamano)s, precio_piz = %(precio)s WHERE id_piz = %(id_viejo)s"""
-
+        
+        # Se ejecuta consulta
         self.db.run_sql(opEdicion, {"id": self.id.get(),"nombre": self.nombre.get(),
         "precio": self.precio.get(), "tamano": self.ids[self.combo.current()], "id_viejo": self.id_viejo}, "U")
-
+        
+        # Destruye ventana de modificación
         self.insert_datos.destroy()
+        
+        # Actualiza treeview
         self.padre.llenar_treeview_pizza()
