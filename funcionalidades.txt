@@ -1,0 +1,90 @@
+CREATE TRIGGER ins_detalle_before BEFORE INSERT ON detalle
+FOR EACH ROW
+BEGIN
+SET NEW.precio_piz = registrar_precio(NEW.id_piz);
+SET NEW.precio_total = registrar_precio_total(NEW.precio_piz, NEW.cantidad);
+END;
+
+
+CREATE TRIGGER upd_detalle_before BEFORE UPDATE ON detalle
+FOR EACH ROW
+BEGIN
+SET NEW.precio_piz = registrar_precio(NEW.id_piz);
+SET NEW.precio_total = registrar_precio_total(NEW.precio_piz, NEW.cantidad);
+END;
+
+
+CREATE FUNCTION registrar_precio(pizza int) returns int deterministic
+BEGIN
+declare precio_individual int;
+set precio_individual = (select precio_piz from pizza where id_piz = pizza);
+return precio_individual;
+END;
+
+
+CREATE FUNCTION registrar_precio_total(pizza int, cantidad int) returns int deterministic
+BEGIN
+declare precio_final int;
+set precio_final = pizza * cantidad;
+return precio_final;
+END;
+
+
+CREATE TRIGGER ins_detalle_after AFTER INSERT ON detalle
+FOR EACH ROW
+BEGIN
+CALL calcular_total(NEW.id_pedido, NEW.cantidad);
+END;
+
+
+CREATE TRIGGER upd_detalle_after AFTER UPDATE ON detalle
+FOR EACH ROW
+BEGIN
+CALL actualizar_total(OLD.id_pedido, NEW.id_pedido, NEW.cantidad);
+END;
+
+
+CREATE TRIGGER del_detalle_pedido_after AFTER DELETE on detalle
+FOR EACH ROW
+BEGIN
+CALL calcular_total(OLD.id_pedido, OLD.cantidad);
+END;
+
+
+CREATE PROCEDURE calcular_total(pedido int, cantidad int) 
+BEGIN
+DECLARE suma int;
+SET suma = (select sum(precio_total) from detalle where id_pedido = pedido);
+IF suma <> 0 then
+UPDATE pedido SET total_pedido = suma where id_pedido = pedido;
+ELSE
+UPDATE pedido SET total_pedido = 0 where id_pedido = pedido;
+END IF;
+END;
+
+
+CREATE PROCEDURE actualizar_total(ped_antiguo int, ped_nuevo int, cantidad int)
+BEGIN
+DECLARE suma_nuevo int;
+DECLARE suma_antiguo int;
+SET suma_nuevo = (select sum(precio_total) from detalle where id_pedido = ped_nuevo);
+SET suma_antiguo = (select sum(precio_total) from detalle where id_pedido = ped_antiguo);
+IF ped_antiguo = ped_nuevo THEN
+IF suma_nuevo <> 0 THEN
+UPDATE pedido SET total_pedido = suma_nuevo where id_pedido = ped_nuevo;
+ELSE
+UPDATE pedido SET total_pedido = 0 where id_pedido = ped_nuevo;
+END IF;
+ELSE
+IF suma_nuevo <> 0 THEN
+UPDATE pedido SET total_pedido = suma_nuevo where id_pedido = ped_nuevo;
+ELSE
+UPDATE pedido SET total_pedido = 0 where id_pedido = ped_nuevo;
+END IF;
+IF suma_antiguo <> 0 THEN
+UPDATE pedido SET total_pedido = suma_antiguo where id_pedido = ped_antiguo;
+ELSE
+UPDATE pedido SET total_pedido = 0 where id_pedido = ped_antiguo;
+END IF;
+END IF;
+END;
