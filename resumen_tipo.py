@@ -31,26 +31,33 @@ class resumen_tipo:
         self.__config_label()
         self.__config_entry()
 
+    # Se define la configuracion del boton de la ventana que tendra 2 opciones
     def __config_button(self):
+         # la primera opcion es que se pueda generar la muestra del resumen
         btn_ok = tk.Button(self.root, text = "Generar",
             command = self.__query_dinamica, bg = 'green', fg = 'white')
+        # se define la ubicacion del boton
         btn_ok.place(x = 40, y = 140, width = 80, height = 20)
 
         # Crea botón para cancelar modificación y se destruye ventana
         btn_cancel = tk.Button(self.root, text = "Cancelar",
             command = self.root.destroy, bg = 'red', fg = 'white')
+        # se define la ubicacion del boton
         btn_cancel.place(x = 160, y = 140, width = 80, height = 20)
-
+        
+    # se define el label que permitira la entrada del texto o seleccion con combobox
     def __config_label(self):
         # Definición de entradas de texto
         pedido_lab = tk.Label(self.root, text = "Tipo: ", bg = "light cyan")
+        # se define el lugar donde estara la entrada de texto
         pedido_lab.place(x = 5, y = 60, width = 105, height = 20)
 
+    # Se define como sera la configuracion de la entrada de los datos
     def __config_entry(self):
         # Combobox para seleccionar el tipo
         self.combo = ttk.Combobox(self.root)
+        # Se define la posicion del combobox
         self.combo.place(x = 90, y = 60, width = 150, height= 20)
-
         # Recepción de columna nombre e ids de tabla tipo
         self.combo["values"], self.ids = self.__llenar_combo_tipo()
 
@@ -66,35 +73,43 @@ class resumen_tipo:
             # Destruye ventana
             self.root.destroy()
 
+    # se crea la funcion que permitira que se llene el combobox con la informacion
     def __llenar_combo_tipo(self):
         # Consulta para obtener detalles del combo
         opLCombo = "SELECT id_tipo, nom_tipo FROM tipo"
+        # se lleva a cabo la consulta de llenarlo con mysql
         self.data = self.db.run_select(opLCombo)
 
         # Se retorna nombre del timpo y el id correspondiente
         return [i[1] for i in self.data], [i[0] for i in self.data]
 
+    # Se genera la funcion que permitira la creacion de la consulta dinamica
     def __query_dinamica(self):
+        # se lleva a cabo la consulta mediante el uso de sql y de los comandos de este
         sql = """SELECT vehiculo.id_veh,
         patente, capacidad_tipo FROM tipo JOIN vehiculo ON tipo.id_tipo = vehiculo.id_tipo
         WHERE tipo.id_tipo = %(id)s;"""
 
         # Se obtienen resultados de la consulta
         tipo = self.db.run_select_filter(sql, {"id": self.ids[self.combo.current()]})
-
+        # se establece la condicion de que si el tipo es diferente a vacio
         if(tipo) != []:
             # Se pasa como parámetro todo el resultado del sql
             select_resumen_tipo(self.db, tipo)
         else:
             # No hay vehículos registrados para el tipo
             texto = "¿Desea intentar con otra opción?"
+            # imprime el mensaje con la condicion
             opcion = messagebox.askretrycancel("Sin resultados", texto)
 
             # Sale de la ventana
             if opcion == False:
                 self.root.destroy()
 
+                
+# se crea la clase que permite la seleccion del resumen del tipo (vehiculo)
 class select_resumen_tipo:
+    # se define la funcion con los parametros iniciales
     def __init__(self, db, tipo):
         self.db = db
         self.data = []
@@ -106,20 +121,19 @@ class select_resumen_tipo:
         self.tabla = tk.Toplevel()
 
         # Ajustes de ventana
+        # se define el tamaño de la ventana
         self.tabla.geometry('500x300')
+        # se define el titulo de la ventana y algunas caracteristicas
         texto_titulo = "Listado de VEHÍCULOS según TIPO "
         self.tabla.title(texto_titulo)
         self.tabla.resizable(width = 0, height = 0)
 
         # Configuración del treeview
         self.__config_treeview_vista()
+        # configuracion de los botones de la ventana de resumen
         self.__crear_botones_resumen_tipo()
 
-    def __config_button1(self):
-        btn_ok = tk.Button(self.tabla, text = "Aceptar",
-            command = self.tabla.destroy, bg = 'green', fg = 'white')
-        btn_ok.place(x = 40, y = 470, width = 80, height = 20)
-
+    # se define la funcion que permite mostrar el treeview de la vista
     def __config_treeview_vista(self):
         self.treeview = ttk.Treeview(self.tabla)
         # Configuración de nombres de cada columna
@@ -139,6 +153,7 @@ class select_resumen_tipo:
         self.llenar_treeview_vista()
         self.tabla.after(0, self.llenar_treeview_vista)
 
+    # se genera la funcion que permite llenar el treeview de la vista
     def llenar_treeview_vista(self):
         # Guarda info obtenida tras la consulta
         data = self.tipo
@@ -155,7 +170,10 @@ class select_resumen_tipo:
 
             self.data = data
 
+    # se define la funcion que permite la configuracion del boton
     def __crear_botones_resumen_tipo(self):
+         # el boton sera aceptar y se definen algunas caracteristicas fisicas
         b4 = tk.Button(self.tabla, text = "Aceptar", bg='green', fg='white',
             command=self.tabla.destroy)
+        # se define cual sera la ubicacion del boton
         b4.place(x = 150, y = 245, width = 200, height = 40)
