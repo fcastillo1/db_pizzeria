@@ -46,6 +46,22 @@ El desarrollo de este proyecto ha contemplado los siguientes pasos:
 * Extras a los que se accede desde la ventana principal (menú superior):
     * ayuda.py
     * informacion.py
+* Extras para evaluar la funcionalidad de la aplicacion (menú superior):
+    * filtro_nombre_cliente.py (Consulta dinamica tabulada para realizar un filtro)
+    * filtro_precio_pizza.py (Consulta dinamica tabulada para realizar un filtro)
+    * filtro_rep_tiempo.py (Consulta dinamica grafica genera un grafico de torta)
+    * filtro_tam_precio.py (Consulta dinamica grafica genera histograma)
+    * resumen_pedido.py (Consulta dinamica tabulada en modo de resumen)
+    * resumen_tipo.py (Consulta dinamica tabulada en modo de resumen)
+    * vista_clie_ciudad.py (Vistas)
+    * vista_rep_veh.py (Vistas)
+ 
+ * Tambien dentro del repositorio se cuenta con dos archivos txt los cuales son: 
+    * ayuda.txt (Este detalla la ayuda el mensaje de ayuda al usuario el cual se imprime para que este lo vea)
+    * funcionalidades.txt (Este archivo contiene los triggers, funciones y tambien procedimientos que se realizo)
+ 
+ * El repositorio cuenta ademas con una carpeta llamada imagenes en la cual estan todas las imagenes de los botones de la ventana principal de la aplicacion, tambien es una ruta necesaria.
+
 
 ## Prerequisitos
 * Sistema operativo Linux versión igual o superior a 18.04
@@ -71,13 +87,16 @@ El desarrollo de este proyecto ha contemplado los siguientes pasos:
    * Ejecutar el siguiente comando tar xvf python-3.8.5.tgz cd Python-3.8.5 ./configure --prefix= make -j4 make install
  
 ### Librerías
-1. Instalar mysql-connector: 
+1. Instalar tkinter: 
+* sudo apt-get install python3-tk.
+2. Instalar mysql-connector: 
 * pip install mysql-connector-python
-2. Instalar matplotlib: 
+3. Instalar matplotlib: 
 * pip install matplotlib
-3. Instalar tk calendar:
+4. Instalar tk calendar:
 * pip install tkcalendar
-sudo apt-get install python3-pil.imagetk
+* sudo apt-get install 
+* python3-pil.imagetk
 
 ## Ejecutando pruebas
 
@@ -98,7 +117,7 @@ Fuera de MySQL, colocar en terminal:
 * Ubuntu: Sistema operativo.
 * Python: Lenguaje de programación.
 * Atom: Editor de código.
-* OTROS
+
 
 ## Versiones
 ### Versiones de herramientas: 
@@ -114,5 +133,11 @@ Fuera de MySQL, colocar en terminal:
 
 ## Expresiones de gratitud
 A los ejemplos en la plataforma de Educandus de Alejandro Valdes: Tambien al ayudante del modulo por aclaracion de dudas y a la informacion obtenida algunas paginas web que se usaron para guiar el proceso las cuales son:
-INGRESAR LINK!
 
+- https://docs.python.org/es/3/library/tk.html
+- https://www.youtube.com/watch?v=iPXiZALnZFg
+- https://likegeeks.com/es/ejemplos-de-la-gui-de-python/
+- https://www.youtube.com/watch?v=5OKzCXha4Co
+- https://www.youtube.com/watch?v=sbDuhgEEZpk
+- https://recursospython.com/guias-y-manuales/lista-desplegable-combobox-en-tkinter/
+- https://www.tutorialspoint.com/python3/tk_label.html
