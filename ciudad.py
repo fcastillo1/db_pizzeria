@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# se importa la librerias a utilizar desde Tkinter
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 
+# se define la clase de la ciudad
 class ciudad:
     def __init__(self, root, db):
         self.db = db
@@ -12,6 +14,7 @@ class ciudad:
 
         # Ventana emergente que permite observar treeview de ciudad y realizar operaciones
         self.root = tk.Toplevel()
+        # se definen algunas caracteristicas de la ventana
         self.root.geometry('600x400')
         self.root.title("Ciudad")
         self.root.config(bg="light cyan")
