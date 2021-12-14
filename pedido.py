@@ -7,6 +7,7 @@ from tkinter import Menu
 from tkinter import messagebox
 from tkcalendar import Calendar, DateEntry
 
+# se importan los archivos a trabajar
 from cliente import cliente
 from repartidor import repartidor
 from vehiculo import vehiculo
@@ -126,27 +127,11 @@ class insertar_pedido:
         self.insert_datos = tk.Toplevel()
 
         # Funcionalidades
-        #self.__calendar()
-    #    self.__grad_date()
+
         self.__config_button()
         self.__config_window()
         self.__config_label()
         self.__config_entry()
-
-    def __calendar(self):
-        self.insert_datos.geometry("400x400")
-        cal = Calendar(self.insert_datos, selectmode = 'day', year = 2020, month = 5)
-        cal.pack(pady = 20)
-
-    def __grad_date(self):
-        date.config(text = "Selected Date is: " + cal.get_date())
-        # Add Button and Label
-        boton_calendar = tk.Button(self.insert_datos, text = "Get Date", command = self.__grad_date).pack(pady = 20)
-        date = Label(self.insert_datos, text = "")
-        date.pack(pady = 20)
-
-        # Execute Tkinter
-        #self.root.mainloop()
 
     def __config_window(self):
         # Ajustes de ventana
@@ -173,10 +158,22 @@ class insertar_pedido:
         # Se obtiene texto para ingresar vehículos
         self.id = tk.Entry(self.insert_datos)
         self.id.place(x = 110, y = 30, width = 150, height = 20)
-        self.fecha_pedido = tk.Entry(self.insert_datos)
+        # se define la entrada de texto del pedido a partir del calendario
+        # en este sentido se definen las caracteristicas del calendario
+        self.fecha_pedido = DateEntry(self.insert_datos, width=20, headersbackground = "light cyan",
+                             headersforeground = "black", bg ='white', fg ='black',
+                             borderwidth=2, year = 2021, month = 12 )
+        # se define la ubicacion
         self.fecha_pedido.place(x = 110, y = 60, width = 150, height = 20)
-        self.fecha_reparto = tk.Entry(self.insert_datos)
+
+        # se define la entrada de texto del pedido a partir del calendario
+        # en este sentido se definen las caracteristicas del calendario
+        self.fecha_reparto = DateEntry(self.insert_datos, width=20, headersbackground = "light cyan",
+                             headersforeground = "black", bg ='white', fg ='black',
+                             borderwidth=2, year = 2021, month = 12 )
+        # se define su ubiacion
         self.fecha_reparto.place(x = 110, y = 90, width = 150, height = 20)
+
         self.cliente = tk.Entry(self.insert_datos)
         self.cliente.place(x = 110, y = 120, width = 150, height = 20)
         self.repartidor = tk.Entry(self.insert_datos)
@@ -254,7 +251,7 @@ class insertar_pedido:
             (%(id)s, 0, %(fecha_pedido)s, %(fecha_reparto)s, %(cliente)s, %(repartidor)s, %(vehiculo)s)"""
 
         # Se ejecuta consulta
-        self.db.run_sql(opInsert, {"id": self.id.get(), "fecha_pedido": self.fecha_pedido.get(), "fecha_reparto": self.fecha_reparto.get(),
+        self.db.run_sql(opInsert, {"id": self.id.get(), "fecha_pedido": self.fecha_pedido.get_date(), "fecha_reparto": self.fecha_reparto.get_date(),
         "cliente": self.ids_clie[self.combo_cliente.current()], "repartidor": self.ids_rep[self.combo_repartidor.current()],
         "vehiculo": self.ids_veh[self.combo_vehiculo.current()]}, "I")
 
@@ -301,9 +298,20 @@ class modificar_pedido:
         self.id.place(x = 110, y = 10, width = 150, height = 20)
         self.total = tk.Entry(self.insert_datos)
         self.total.place(x = 110, y = 40, width = 150, height = 20)
-        self.fecha_pedido = tk.Entry(self.insert_datos)
+        # se define la entrada de texto del pedido a partir del calendario
+        # en este sentido se definen las caracteristicas del calendario
+        self.fecha_pedido = DateEntry(self.insert_datos, width=20, headersbackground = "light cyan",
+                             headersforeground = "black", bg ='white', fg ='black',
+                             borderwidth=2, year = 2021, month = 12 )
+        # se define la ubicacion
         self.fecha_pedido.place(x = 110, y = 70, width = 150, height = 20)
-        self.fecha_reparto = tk.Entry(self.insert_datos)
+
+        # se define la entrada de texto del pedido a partir del calendario
+        # en este sentido se definen las caracteristicas del calendario
+        self.fecha_reparto = DateEntry(self.insert_datos, width=20, headersbackground = "light cyan",
+                             headersforeground = "black", bg ='white', fg ='black',
+                             borderwidth=2, year = 2021, month = 12 )
+        # se define su ubiacion
         self.fecha_reparto.place(x = 110, y = 100, width = 150, height = 20)
         self.cliente = tk.Entry(self.insert_datos)
         self.cliente.place(x = 110, y = 130, width = 150, height = 20)
@@ -379,7 +387,7 @@ class modificar_pedido:
             WHERE id_pedido = %(id_viejo)s"""
 
         self.db.run_sql(opEdicion, {"id": self.id.get(),"total": self.total.get(),
-        "fecha_pedido": self.fecha_pedido.get(), "fecha_reparto": self.fecha_reparto.get(),
+        "fecha_pedido": self.fecha_pedido.get_date(), "fecha_reparto": self.fecha_reparto.get_date(),
         "cliente": self.ids_clie[self.combo_cliente.current()], "repartidor": self.ids_rep[self.combo_repartidor.current()],
         "vehiculo": self.ids_veh[self.combo_vehiculo.current()], "id_viejo" : self.id_viejo}, "U")
 
