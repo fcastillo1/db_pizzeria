@@ -111,15 +111,15 @@ class aplicacion:
         boton_cliente = Button(self.root, text = "Cliente",  image = self.reset_img2, compound = 'top',
         command = self.__mostrar_cliente, width=140 , bg='snow', fg='black').place(x=200, y = 40)
 
-        # Creación botón pedido con su texto e información para su funcionamiento
+        # Creación botón tipo_vehiculo con su texto e información para su funcionamiento
         boton_pedido = Button(self.root, text = "Tipo Vehículo",  image = self.reset_img3, compound = 'top',
         command = self.__mostrar_tipo,  width=140, bg='snow', fg='black').place(x=20, y = 130)
 
-        # Creación botón detalle con su texto e información para su funcionamiento
+        # Creación botón vehiculo con su texto e información para su funcionamiento
         boton_pedido = Button(self.root, text = "Vehículo", image = self.reset_img4, compound = 'top',
         command = self.__mostrar_vehiculo,  width=140, bg='snow', fg='black').place(x=200, y = 130)
 
-        # Creación botón pizza con su texto e información para su funcionamiento
+        # Creación botón repartidor con su texto e información para su funcionamiento
         boton_pizza = Button(self.root, text = "Repartidor", image = self.reset_img5, compound = 'top',
         command = self.__mostrar_repartidor, width=140 , bg='snow', fg='black').place(x=20, y=220)
 
@@ -127,15 +127,15 @@ class aplicacion:
         boton_pizza = Button(self.root, text = "Tamaño Pizza", image = self.reset_img6, compound = 'top',
         command = self.__mostrar_tamano, width=140 , bg='snow', fg='black').place(x=200, y=220)
 
-        # Creación botón cvehículo con su texto e información para su funcionamiento
+        # Creación botón pizza con su texto e información para su funcionamiento
         boton_vehiculo = Button(self.root, text = "Pizza",  image = self.reset_img7, compound = 'top',
         command = self.__mostrar_pizza, width=140 , bg='snow', fg='black').place(x=20, y=310)
 
-        # Creación botón tipo con su texto e información para su funcionamiento
+        # Creación botón pedido con su texto e información para su funcionamiento
         boton_vehiculo = Button(self.root, text = "Pedido", image = self.reset_img8, compound = 'top',
         command = self.__mostrar_pedido, width=140 , bg='snow', fg='black').place(x=200, y=310)
 
-        # Creación botón repartidor con su texto e información para su funcionamiento
+        # Creación botón detalle pedido con su texto e información para su funcionamiento
         boton_repartidor = Button(self.root, text = "Detalle Pedido",  image = self.reset_img9, compound = 'top',
         command = self.__mostrar_detalle, width=140 , bg='snow', fg='black').place(x=115, y=400)
 
@@ -293,11 +293,12 @@ class aplicacion:
     def __mostrar_rep_tiempo(self):
         filtro_rep_tiempo(self.root, self.db)
 
+# En el main es el menu que permite que todo el programa cumpla su funcionalidad
 def main():
     # Se conecta a la base de datos
     database = DB_pizzeria()
 
-    # La db se pasa como parámetro a la clase aplicación
+    # La base de datos se pasa como parámetro a la clase aplicación
     aplicacion(database)
 
 if __name__ == "__main__":
