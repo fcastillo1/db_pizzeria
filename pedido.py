@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# se importan las librerias a utilizar desde tkinter
 import tkinter as tk
 from tkinter import ttk
 from tkinter import Menu
@@ -19,6 +20,7 @@ class pedido:
 
         # Toplevel es una ventana que está un nivel arriba que la principal
         self.root = tk.Toplevel()
+        # se define la configuracion de la ventana principal
         self.root.geometry('840x400')
         self.root.title("Pedido")
         self.root.config(bg = "light cyan")
@@ -258,6 +260,7 @@ class insertar_pedido:
         self.insert_datos.destroy()
         self.padre.llenar_treeview_pedido()
 
+# se crea la clase que permitira la modificacion del pedido
 class modificar_pedido:
     def __init__(self, db, padre, mod_select):
         self.padre = padre
@@ -276,7 +279,7 @@ class modificar_pedido:
         self.insert_datos.resizable(width = 0, height = 0)
 
     def __config_label(self):
-        # Definición de entradas de texto para la clase pedido
+        # Definición de entradas de texto para la clase pedido tambien con place se define la ubicacion
         id_lab = tk.Label(self.insert_datos, text = "ID pedido: ")
         id_lab.place(x = 10, y = 10, width = 120, height = 20)
         total_lab = tk.Label(self.insert_datos, text = "Total: ")
@@ -351,12 +354,14 @@ class modificar_pedido:
         self.combo_vehiculo.config(state = "readonly")
 
     def __llenar_combo1(self):
+        # se llena el combobox con el comando de mysql
         opLCombo1 = "SELECT rut_clie FROM cliente"
         self.data = self.db.run_select(opLCombo1)
         # Se muestra nom_tipo
         return [i[0] for i in self.data], [i[0] for i in self.data]
 
     def __llenar_combo2(self):
+        # se llena el combobox con el comando de mysql
         opLCombo2 = "SELECT rut_rep FROM repartidor"
         self.data = self.db.run_select(opLCombo2)
         # Se muestra nom_tipo
@@ -381,11 +386,12 @@ class modificar_pedido:
         btn_cancel.place(x = 210, y = 230, width = 80, height = 20)
 
     def __modificar(self):
+        # se muestra la operacion que se realiza con los comandos de mysql para la edicion
         opEdicion = """UPDATE pedido set id_pedido = %(id)s, total_pedido = %(total)s,
             fecha_pedido = %(fecha_pedido)s, fecha_reparto = %(fecha_reparto)s,
             rut_clie = %(cliente)s, rut_rep = %(repartidor)s, id_veh = %(vehiculo)s
             WHERE id_pedido = %(id_viejo)s"""
-
+        # se lleva a cabo la edicion
         self.db.run_sql(opEdicion, {"id": self.id.get(),"total": self.total.get(),
         "fecha_pedido": self.fecha_pedido.get_date(), "fecha_reparto": self.fecha_reparto.get_date(),
         "cliente": self.ids_clie[self.combo_cliente.current()], "repartidor": self.ids_rep[self.combo_repartidor.current()],
