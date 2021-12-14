@@ -59,19 +59,19 @@ class repartidor:
         # se definen sus aspectos y posicion
         b1.place(x = 0, y = 350, width = 150, height = 50)
         
-         #  se crea el segundo boton que permite la insercion
+         #  se crea el segundo boton que permite la modificacion
         b2 = tk.Button(self.root, text = "Modificar repartidor", bg ='snow',
             fg = 'orange', command = self.__modificar_repartidor)
         # se definen sus aspectos y posicion
         b2.place(x = 150, y = 350, width = 150, height = 50)
         
-         #  se crea el tercer boton que permite la insercion
+         #  se crea el tercer boton que permite la eliminacion
         b3 = tk.Button(self.root, text = "Eliminar repartidor", bg = 'snow',
             fg = 'red', command = self.__eliminar_repartidor)
          # se definen sus aspectos y posicion
         b3.place(x = 300, y = 350, width = 150, height = 50)
         
-         #  se crea el cuarto boton que permite la insercion
+         #  se crea el cuarto boton que permite la salida de la ventana
         b4 = tk.Button(self.root, text = "Salir", command = self.root.destroy,
             bg = 'red', fg = 'white')
          # se definen sus aspectos y posicion
